@@ -31,6 +31,15 @@
   }
   loadIndex();
 
+  // Cloud Run scales to zero; wake it once per session so live calls (map token, search) are fast later.
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      if (sessionStorage.getItem('artopath_warm') || !window.API_BASE) return;
+      sessionStorage.setItem('artopath_warm', '1');
+      realFetch(window.API_BASE.replace(/\/api\/?$/, '') + '/readyz', { mode: 'no-cors' }).catch(() => {});
+    } catch (e) { /* storage blocked: skip warm-up */ }
+  });
+
   function apiKey(url) {
     // Returns path relative to ".../api/" + sorted query, or null if not an API call.
     const base = window.API_BASE;
