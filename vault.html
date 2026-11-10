@@ -1,0 +1,3161 @@
+<!-- 
+  FILE: vault.html
+  PURPOSE: Collection View (3D Closet/Grid)
+  CONTEXT: Displays the user's saved works. Currently features a grid view with filter chips.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vault - Artopath</title>
+
+  <!-- ========================================
+       CSS IMPORTS
+       Style: Impressionist + Ghibli + Patagonia
+       ======================================== -->
+  <link rel="stylesheet" href="css/base.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/components.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/pages.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/animations.css?v=e0ffeb0">
+
+</head>
+
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#worksGrid" class="skip-link">Skip to main content</a>
+
+  <!-- ========================================
+       VAULT PAGE (Collection Grid)
+       - All saved works
+       - Filter by type (movie/artwork)
+       - Card hover effects
+       ======================================== -->
+  <main class="vault-page" role="main">
+    <!-- Header -->
+    <div class="vault-header animate-fade-in" style="position: relative;">
+
+      <h1>Your Vault</h1>
+      <p class="text-muted" style="margin-top: var(--space-sm);">
+        Your personal collection of captured artworks and films
+      </p>
+
+      <!-- View Toggle Icons + Export/Import (Upper Right) -->
+      <div class="view-toggle-icons" style="position: absolute; top: 0; right: 0; display: flex; gap: var(--space-xs); align-items: center;">
+        <!-- Export Button -->
+        <button class="view-icon-btn" data-action="show-export" title="Export Vault Data" aria-label="Export vault data">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+        <!-- Import Button -->
+        <button class="view-icon-btn" data-action="trigger-import" title="Import Vault Data" aria-label="Import vault data">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </button>
+        <!-- Divider -->
+        <div style="width: 1px; height: 20px; background: var(--card-border); margin: 0 var(--space-xs);"></div>
+        <!-- View Toggle Buttons -->
+        <button class="view-icon-btn" data-action="switch-view" data-view="list" title="List View" aria-label="Switch to list view">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </button>
+        <button class="view-icon-btn active" data-action="switch-view" data-view="grid" title="Grid View" aria-label="Switch to grid view" aria-pressed="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+        <button class="view-icon-btn" data-action="switch-view" data-view="constellation" title="Star Map" aria-label="Switch to constellation view">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="5" r="1.5"></circle>
+            <circle cx="5" cy="12" r="1.5"></circle>
+            <circle cx="19" cy="12" r="1.5"></circle>
+            <circle cx="8" cy="19" r="1.5"></circle>
+            <circle cx="16" cy="19" r="1.5"></circle>
+            <line x1="12" y1="5" x2="5" y2="12"></line>
+            <line x1="12" y1="5" x2="19" y2="12"></line>
+            <line x1="5" y1="12" x2="8" y2="19"></line>
+            <line x1="19" y1="12" x2="16" y2="19"></line>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- Primary Tab Bar: Works vs People -->
+      <div class="vault-tabs" role="tablist" aria-label="Collection tabs" style="margin-top: var(--space-lg); display: flex; justify-content: center; gap: var(--space-md);">
+        <button class="vault-tab active" data-action="switch-tab" data-tab="works" role="tab" aria-selected="true" aria-controls="worksSection">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          Works
+        </button>
+        <button class="vault-tab" data-action="switch-tab" data-tab="people" role="tab" aria-selected="false" aria-controls="peopleSection">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          People
+        </button>
+      </div>
+
+      <!-- Stage Pills (3-stage lifecycle) -->
+      <div class="chips-container" id="stageFilters" style="margin-top: var(--space-md); justify-content: center;">
+        <button class="chip chip-theme filter-chip" data-action="filter-stage" data-stage="discovery" style="display: flex; align-items: center; gap: 4px;">
+          <span style="opacity: 0.6;">&#9678;</span> Discovery
+        </button>
+        <button class="chip chip-theme filter-chip active" data-action="filter-stage" data-stage="vault" style="display: flex; align-items: center; gap: 4px;">
+          Vault
+        </button>
+        <button class="chip chip-emotion filter-chip" data-action="filter-stage" data-stage="loved" style="display: flex; align-items: center; gap: 4px;">
+          <span style="color: var(--accent-rust);">&#9829;</span> Loved
+        </button>
+        <button class="chip chip-type filter-chip" data-action="filter-stage" data-stage="all">
+          All
+        </button>
+      </div>
+
+      <!-- Type Filter Chips (for Works tab) -->
+      <div class="chips-container" id="worksFilters" style="margin-top: var(--space-sm); justify-content: center;">
+        <button class="chip chip-type filter-chip active" data-action="filter-works" data-filter="all">
+          All Types
+        </button>
+        <button class="chip chip-theme filter-chip" data-action="filter-works" data-filter="movie">
+          Movies
+        </button>
+        <button class="chip chip-emotion filter-chip" data-action="filter-works" data-filter="artwork">
+          Artworks
+        </button>
+        <!-- Sort Dropdown -->
+        <div class="sort-dropdown" style="margin-left: var(--space-md);">
+          <select id="workSort" class="sort-select" data-action="sort-works">
+            <option value="recent">Recently Added</option>
+            <option value="az">A-Z</option>
+            <option value="imdb">IMDb Score</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter Chips (for People tab) -->
+      <div class="chips-container" id="peopleFilters" style="margin-top: var(--space-md); justify-content: center; display: none;">
+        <button class="chip chip-type filter-chip active" data-action="filter-people" data-filter="all">
+          All People
+        </button>
+        <button class="chip chip-director filter-chip" data-action="filter-people" data-filter="director">
+          Directors
+        </button>
+        <button class="chip chip-artist filter-chip" data-action="filter-people" data-filter="artist">
+          Artists
+        </button>
+        <button class="chip chip-composer filter-chip" data-action="filter-people" data-filter="composer">
+          Composers
+        </button>
+        <button class="chip chip-actor filter-chip" data-action="filter-people" data-filter="actor">
+          Cast
+        </button>
+        <!-- Sort Dropdown -->
+        <div class="sort-dropdown" style="margin-left: var(--space-md);">
+          <select id="personSort" class="sort-select" data-action="sort-people">
+            <option value="workCount">Most Works</option>
+            <option value="name">A-Z</option>
+            <option value="role">By Role</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Constellation Canvas (Star Map view) -->
+    <div id="constellationSection" style="display: none; width: 100%; height: calc(100vh - 200px); position: relative;">
+      <canvas id="constellationCanvas" style="width: 100%; height: 100%;"></canvas>
+      <div style="position: absolute; bottom: var(--space-md); left: 50%; transform: translateX(-50%); display: flex; gap: var(--space-xs);">
+        <button class="chip chip-type" onclick="Constellation.clusterBy('creator')">By Creator</button>
+        <button class="chip chip-theme" onclick="Constellation.clusterBy('genre')">By Genre</button>
+        <button class="chip chip-emotion" onclick="Constellation.clusterBy('theme')">By Theme</button>
+        <button class="chip chip-type" onclick="Constellation.clusterBy('graph')">By Graph</button>
+        <button class="chip chip-type" onclick="Constellation.clusterBy('none')">Free</button>
+      </div>
+    </div>
+
+    <!-- Works Grid (List/Grid views) -->
+    <div class="vault-grid-wrapper" id="worksSection" role="tabpanel" aria-labelledby="worksTab">
+      <!-- Wooden Strips (5 strips) -->
+      <div class="wooden-strips" aria-hidden="true">
+        <div class="wooden-strip" style="top: 10%;"></div>
+        <div class="wooden-strip" style="top: 30%;"></div>
+        <div class="wooden-strip" style="top: 50%;"></div>
+        <div class="wooden-strip" style="top: 70%;"></div>
+        <div class="wooden-strip" style="top: 90%;"></div>
+      </div>
+      <!-- Works Grid -->
+      <div class="vault-grid stagger-children" id="worksGrid" role="list" aria-label="Works collection" style="display: grid;">
+        <!-- Cards populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- People Grid -->
+    <div class="vault-grid-wrapper" id="peopleSection" role="tabpanel" aria-labelledby="peopleTab" style="display: none;">
+      <div class="people-grid stagger-children" id="peopleGrid" role="list" aria-label="People collection" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-xl); padding: var(--space-xl);">
+        <!-- Person cards populated by JavaScript -->
+      </div>
+    </div>
+
+
+    <!-- Empty State -->
+    <div id="emptyState" style="display: none; text-align: center; padding: var(--space-3xl);">
+      <p id="emptyMessage" class="text-muted" style="font-size: 1.125rem;">No works found</p>
+      <a id="emptyAction" href="index.html" class="btn btn-primary" style="margin-top: var(--space-lg);">
+        Start Exploring
+      </a>
+    </div>
+  </main>
+
+  <!-- ========================================
+       FLOATING NAVIGATION
+       ======================================== -->
+  <nav class="floating-nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9,22 9,12 15,12 15,22" />
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="vault.html" class="nav-item active" aria-current="page">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path
+          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+      </svg>
+      <span>Vault</span>
+    </a>
+    <a href="explore.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="10" r="3" />
+        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+      </svg>
+      <span>Explore</span>
+    </a>
+    <a href="dna.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+      </svg>
+      <span>DNA</span>
+    </a>
+    <button class="nav-item nav-search" title="Search (Cmd+K)" aria-label="Search collection">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <span>Search</span>
+    </button>
+  </nav>
+
+  <!-- ========================================
+       SEARCH MODAL
+       ======================================== -->
+  <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-labelledby="vaultSearchTitle">
+    <div class="search-container">
+      <h2 id="vaultSearchTitle" class="sr-only">Search your collection</h2>
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search artworks and movies..."
+          autocomplete="off" aria-label="Search your collection">
+        <button class="search-close" aria-label="Close search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults" role="listbox" aria-live="polite"></div>
+      <div class="search-hint">
+        <kbd>↑</kbd> <kbd>↓</kbd> to navigate · <kbd>Enter</kbd> to select · <kbd>Esc</kbd> to close
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       EXPORT MODAL
+       ======================================== -->
+  <div class="search-modal" id="exportModal" data-modal="export">
+    <div class="search-container">
+      <div style="text-align: center; padding: var(--space-xl);">
+        <h2 style="color: var(--text-light); margin-bottom: var(--space-md);">Export Your Vault</h2>
+        <p class="text-muted" style="margin-bottom: var(--space-xl);">
+          Download your personal art collection data in your preferred format
+        </p>
+
+        <!-- Export Format Buttons -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-md); max-width: 400px; margin: 0 auto;">
+          <button class="export-format-btn" data-action="export-json">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <div>
+              <div class="export-format-title">JSON Format</div>
+              <div class="export-format-desc">Complete data structure (recommended)</div>
+            </div>
+          </button>
+
+          <button class="export-format-btn" data-action="export-md">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <div>
+              <div class="export-format-title">Markdown Format</div>
+              <div class="export-format-desc">Obsidian-compatible notes</div>
+            </div>
+          </button>
+
+          <button class="export-format-btn" data-action="export-csv">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <rect x="8" y="13" width="8" height="6"></rect>
+            </svg>
+            <div>
+              <div class="export-format-title">CSV Format</div>
+              <div class="export-format-desc">Spreadsheet analysis</div>
+            </div>
+          </button>
+        </div>
+
+        <button class="btn" data-action="close-export" style="margin-top: var(--space-xl); background: transparent; border: 1px solid var(--card-border);">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       JAVASCRIPT (canonical order per M3)
+       ======================================== -->
+  <!-- 1. Utils (no dependencies) -->
+  <script src="js/utils/dom-utils.js?v=83b0b9f"></script>
+  <script src="js/utils/storage-utils.js?v=83b0b9f"></script>
+  <!-- 2. Core data -->
+  <script src="js/core/data.js?v=83b0b9f"></script>
+  <script src="js/core/movies.js?v=83b0b9f"></script>
+  <!-- 3. API layer -->
+  <script src="js/api/api-utils.js?v=4ba0d42"></script>
+  <!-- 4. Enrichment -->
+  <script src="js/enrichment/creatorImages.js?v=83b0b9f"></script>
+  <script src="js/enrichment/artwork-geo.js?v=83b0b9f"></script>
+  <script src="js/enrichment/movie-geo.js?v=83b0b9f"></script>
+  <!-- Vault Export/Import functionality -->
+  <script src="js/features/vault-export.js?v=83b0b9f"></script>
+  <script src="js/features/constellation-canvas.js?v=83b0b9f"></script>
+
+  <script src="js/features/identity-engine.js?v=83b0b9f"></script>
+  <script>
+    // ----------------------------------------
+    // POC: PLACEHOLDER SVG DATA URIS
+    // ----------------------------------------
+    const PLACEHOLDER_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect fill='%232d4a3e' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23a8d4e6' font-size='40' font-family='sans-serif'%3E?%3C/text%3E%3C/svg%3E";
+
+    function getInitialPlaceholder(name) {
+      const initial = name.charAt(0).toUpperCase();
+      return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Crect fill='%232d4a3e' width='70' height='70' rx='35'/%3E%3Ctext x='35' y='45' text-anchor='middle' fill='%23a8d4e6' font-size='28' font-family='system-ui'%3E${initial}%3C/text%3E%3C/svg%3E`;
+    }
+
+    function getTitlePlaceholder(title) {
+      const initial = title.charAt(0).toUpperCase();
+      return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'%3E%3Crect fill='%232d4a3e' width='300' height='400'/%3E%3Ctext x='150' y='210' text-anchor='middle' fill='%23a8d4e6' font-size='80' font-family='sans-serif'%3E${initial}%3C/text%3E%3C/svg%3E`;
+    }
+
+    // ----------------------------------------
+    // POC: MERGE ARTWORKS + MOVIES + LOCALSTORAGE VAULT + API WORKS
+    // ----------------------------------------
+    // Combine WORKS (artworks from data.js) with MOVIES (from movies.js)
+    // Also merge localStorage vault (works added via search)
+    // API works are merged in asynchronously via initializeWithAPIWorks()
+
+    // Use new sync-ready vault helpers from api-utils.js (ADR-020)
+    // getVaultWorks() returns works array, handles format migration automatically
+    function getLocalStorageVault() {
+      // Bridge to new helper - maintains backward compatibility
+      if (typeof getVaultWorks === 'function') {
+        return getVaultWorks();
+      }
+      return [];
+    }
+
+    // VAULT DATASET (async, canonical)
+    // Users must explicitly add works via search/browse to see them here
+    let ALL_WORKS = [];
+    let allWorksReady = null;
+
+    function mergeCanonicalWorks(...datasets) {
+      const merged = [];
+      const seen = new Set();
+      datasets.filter(Boolean).forEach(dataset => {
+        dataset.forEach(work => {
+          if (!work || !work.id) return;
+          if (seen.has(work.id)) {
+            console.warn('[Vault] Duplicate work id skipped:', work.id);
+            return;
+          }
+          seen.add(work.id);
+          merged.push(work);
+        });
+      });
+      return merged;
+    }
+
+    function getVaultSeedDataset() {
+      const localVault = getLocalStorageVault();
+      const merged = mergeCanonicalWorks(localVault);
+      ALL_WORKS = merged;
+      window.ALL_WORKS = merged;
+      return merged;
+    }
+
+    async function hydrateVaultDataset() {
+      if (typeof initializeWithAPIWorks === 'function') {
+        try {
+          const works = await initializeWithAPIWorks();
+          ALL_WORKS = works || [];
+          window.ALL_WORKS = ALL_WORKS;
+          return ALL_WORKS;
+        } catch (e) {
+          console.warn('[Vault] initializeWithAPIWorks failed, using local vault:', e);
+        }
+      }
+      return getVaultSeedDataset();
+    }
+
+    async function ensureAllWorksReady() {
+      if (!allWorksReady) {
+        const guard = window.StorageUtils?.guardAsyncInitialization;
+        if (typeof guard === 'function') {
+          allWorksReady = guard('Vault dataset bootstrap', hydrateVaultDataset, () => getVaultSeedDataset());
+        } else {
+          allWorksReady = (async () => {
+            try {
+              return await hydrateVaultDataset();
+            } catch (error) {
+              console.error('[Vault] ensureAllWorksReady failed:', error);
+              return getVaultSeedDataset();
+            }
+          })();
+        }
+      }
+      return allWorksReady;
+    }
+
+    console.log('Loaded vault works:', ALL_WORKS.length);
+    // ----------------------------------------
+    // VISITED PLACES STORAGE
+    // ----------------------------------------
+    const VISITED_PLACES_KEY = 'artopath_visited_places';
+
+    function getVisitedPlaces() {
+      const stored = localStorage.getItem(VISITED_PLACES_KEY);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function removeVisitedPlace(placeId) {
+      const visited = getVisitedPlaces();
+      const filtered = visited.filter(v => v.id !== placeId);
+      localStorage.setItem(VISITED_PLACES_KEY, JSON.stringify(filtered));
+      // Re-render if currently showing visited
+      if (currentFilter === 'visited') {
+        renderWorks('visited');
+      }
+    }
+
+    /**
+     * Sync visited places with backend
+     * Fetches from API and merges with localStorage (API is source of truth)
+     */
+    async function syncVisitedPlaces() {
+      if (typeof getUserPlacesAPI !== 'function') {
+        console.log('[Vault] getUserPlacesAPI not available, skipping sync');
+        return;
+      }
+
+      try {
+        const apiPlaces = await getUserPlacesAPI('visited');
+        if (!apiPlaces || apiPlaces.length === 0) {
+          console.log('[Vault] No visited places from API');
+          return;
+        }
+
+        // Get current localStorage visited places
+        const localPlaces = getVisitedPlaces();
+
+        // Merge: API is source of truth, add any that aren't in local
+        const localIds = new Set(localPlaces.map(p => String(p.dbPlaceId || p.id)));
+        let added = 0;
+
+        apiPlaces.forEach(apiPlace => {
+          const placeId = String(apiPlace.place_id || apiPlace.id);
+          if (!localIds.has(placeId)) {
+            // Add API place to local storage
+            localPlaces.push({
+              id: `api_place_${placeId}`,
+              dbPlaceId: placeId,
+              title: apiPlace.place_name || apiPlace.name || 'Unknown Place',
+              type: 'location',
+              visitedAt: apiPlace.visited_at || new Date().toISOString(),
+              source: 'api'
+            });
+            added++;
+          }
+        });
+
+        if (added > 0) {
+          localStorage.setItem(VISITED_PLACES_KEY, JSON.stringify(localPlaces));
+          console.log(`[Vault] Synced ${added} visited places from API`);
+          // Re-render if showing visited
+          if (currentFilter === 'visited') {
+            renderWorks('visited');
+          }
+        }
+      } catch (error) {
+        console.log('[Vault] Visited places sync failed:', error.message);
+      }
+    }
+
+    // ----------------------------------------
+    // CURRENT FILTER STATE
+    // ----------------------------------------
+    let currentFilter = 'all';        // Type filter: 'all', 'movie', 'artwork'
+    let currentStageFilter = 'vault';   // Stage filter: 'all', 'vault', 'loved', 'discovery'
+    let currentView = 'grid'; // 'list', 'grid'
+    let currentWorkSort = 'recent';   // Work sort: 'recent', 'az', 'imdb'
+
+    // ----------------------------------------
+    // STAGE FILTER (Vault/Loved/Discovery)
+    // ----------------------------------------
+    function filterByStage(stage) {
+      currentStageFilter = stage;
+
+      document.querySelectorAll('#stageFilters .filter-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.stage === stage);
+      });
+
+      renderWorks(currentFilter);
+    }
+
+    /**
+     * Toggle loved status for a work
+     * Uses sync-ready vault helpers (ADR-020)
+     * @param {string} workId - The work ID to toggle
+     * @param {Event} event - Click event to stop propagation
+     */
+    function toggleLove(workId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      // Use new vault helper (ADR-020) which handles timestamps
+      if (typeof toggleVaultWorkLoved === 'function') {
+        const newStatus = toggleVaultWorkLoved(workId);
+        console.log('[Vault] Toggled love for', workId, '-> loved:', newStatus);
+      } else if (typeof window.toggleWorkLoved === 'function') {
+        // Fallback to dna-canvas.js function
+        const newStatus = window.toggleWorkLoved(workId);
+        console.log('[Vault] Toggled love for', workId, '-> loved:', newStatus);
+      } else {
+        // Final fallback: use updateWorkInVault helper
+        if (typeof updateWorkInVault === 'function') {
+          const isLoved = isWorkLoved(workId);
+          updateWorkInVault(workId, { loved: !isLoved });
+          console.log('[Vault] Toggled love for', workId, '-> loved:', !isLoved);
+        }
+      }
+
+      // Re-render to update UI
+      renderWorks(currentFilter);
+    }
+
+    /**
+     * Check if a work is loved
+     * Uses sync-ready vault helpers (ADR-020)
+     */
+    function isWorkLoved(workId) {
+      // Use new helper if available
+      if (typeof isWorkLovedInVault === 'function') {
+        return isWorkLovedInVault(workId);
+      }
+      // Fallback
+      const vault = getLocalStorageVault();
+      const work = vault.find(w => w.id === workId);
+      return work?.loved === true;
+    }
+
+    /**
+     * Check if a work is in localStorage vault
+     * With new model, all displayed works ARE vault works (no seed data shown)
+     * This helper is used for API sync checks
+     */
+    function isVaultWork(workId) {
+      // Use new helper if available
+      if (typeof isInVault === 'function') {
+        return isInVault(workId);
+      }
+      // Fallback
+      const vault = getLocalStorageVault();
+      return vault.some(w => w.id === workId);
+    }
+
+    // ----------------------------------------
+    // VIEW SWITCHING
+    // ----------------------------------------
+
+    function switchView(view) {
+      currentView = view;
+
+      // Update toggle icons
+      document.querySelectorAll('.view-icon-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === view);
+      });
+
+      // Add/remove class for grid wrapper styling
+      const gridWrapper = document.querySelector('.vault-grid-wrapper');
+      const vaultPage = document.querySelector('.vault-page');
+      const vaultHeader = document.querySelector('.vault-header');
+      const constellationSection = document.getElementById('constellationSection');
+
+      if (view === 'grid') {
+        gridWrapper.classList.add('grid-view-active');
+        if (vaultPage) vaultPage.classList.add('grid-view-active');
+        if (vaultHeader) vaultHeader.classList.add('grid-view-active');
+      } else {
+        gridWrapper.classList.remove('grid-view-active');
+        if (vaultPage) vaultPage.classList.remove('grid-view-active');
+        if (vaultHeader) vaultHeader.classList.remove('grid-view-active');
+      }
+
+      if (view === 'constellation') {
+        if (gridWrapper) gridWrapper.style.display = 'none';
+        if (constellationSection) constellationSection.style.display = 'block';
+        Constellation.init('constellationCanvas', ALL_WORKS);
+      } else {
+        if (constellationSection) constellationSection.style.display = 'none';
+        if (gridWrapper) gridWrapper.style.display = '';
+        Constellation.destroy();
+        renderWorks(currentFilter);
+      }
+    }
+
+    function getFilteredWorks() {
+      let works;
+      if (currentFilter === 'visited') {
+        works = getVisitedPlaces();
+      } else {
+        works = ALL_WORKS.filter(w => w.work_type !== 'location');
+        if (currentFilter !== 'all') {
+          // Use getTypeCategory for normalized filtering
+          if (currentFilter === 'artwork') {
+            works = works.filter(w => getTypeCategory(w) === 'artwork');
+          } else if (currentFilter === 'movie') {
+            works = works.filter(w => getTypeCategory(w) === 'movie');
+          } else {
+            works = works.filter(w => w.work_type === currentFilter);
+          }
+        }
+      }
+      return works;
+    }
+
+    // ----------------------------------------
+    // RENDER WORKS GRID
+    // ----------------------------------------
+    function renderWorks(filter = 'all') {
+      const grid = document.getElementById('worksGrid');
+      const emptyState = document.getElementById('emptyState');
+
+      if (!grid) {
+        console.error('worksGrid element not found');
+        return;
+      }
+
+      let works;
+
+      if (filter === 'visited') {
+        // Show visited places from localStorage
+        works = getVisitedPlaces();
+      } else {
+        // POC: Use ALL_WORKS (artworks + movies combined)
+        // Exclude locations - they only appear when user marks them as visited on map
+        works = ALL_WORKS.filter(w => w.work_type !== 'location');
+        if (filter !== 'all') {
+          // Use getTypeCategory to normalize API types (painting/drawing) to POC types (artwork/movie)
+          if (filter === 'artwork') {
+            works = works.filter(w => getTypeCategory(w) === 'artwork');
+          } else if (filter === 'movie') {
+            works = works.filter(w => getTypeCategory(w) === 'movie');
+          } else {
+            works = works.filter(w => w.work_type === filter);
+          }
+        }
+
+        // Apply stage filter (loved/discovery use localStorage stage; vault uses quality_tier filter below)
+        if (currentStageFilter !== 'all' && currentStageFilter !== 'vault') {
+          works = works.filter(w => {
+            const stage = w.user_stage || w.stage || 'discovery';
+            return stage === currentStageFilter;
+          });
+        }
+
+        // Only show enriched works (ai_expanded), not raw search stubs (reference/skeleton)
+        works = works.filter(w => {
+          const tier = w.tier || w.quality_tier || 'skeleton';
+          return tier === 'ai_expanded' || tier === 'enriched';
+        });
+      }
+
+      // Apply sort
+      if (currentWorkSort === 'az') {
+        works.sort((a, b) => (a.title_display || a.title || '').localeCompare(b.title_display || b.title || ''));
+      } else if (currentWorkSort === 'imdb') {
+        works.sort((a, b) => (b.rating_imdb || 0) - (a.rating_imdb || 0));
+      } else {
+        works.sort((a, b) => {
+          const ta = new Date(b.created_at || b.addedAt || 0).getTime();
+          const tb = new Date(a.created_at || a.addedAt || 0).getTime();
+          return ta - tb;
+        });
+      }
+
+      console.log('renderWorks called:', { filter, stage: currentStageFilter, sort: currentWorkSort, worksCount: works.length, currentView, allWorksCount: ALL_WORKS.length });
+
+      if (works.length === 0) {
+        if (currentView !== 'spatial') {
+          if (grid) grid.style.display = 'none';
+        }
+        if (emptyState) emptyState.style.display = 'block';
+
+        // Update empty state message based on filter
+        const emptyMsg = document.getElementById('emptyMessage');
+        const emptyBtn = document.getElementById('emptyAction');
+
+        if (filter === 'visited') {
+          emptyMsg.textContent = 'No places visited yet';
+          emptyBtn.textContent = 'Explore the Map';
+          emptyBtn.href = 'explore.html';
+        } else {
+          emptyMsg.textContent = 'No works found';
+          emptyBtn.textContent = 'Start Exploring';
+          emptyBtn.href = 'index.html';
+        }
+        return;
+      }
+
+      // Set display based on current view (only if not spatial)
+      if (currentView !== 'spatial') {
+        if (grid) grid.style.display = 'grid';
+      }
+      if (emptyState) emptyState.style.display = 'none';
+
+      if (filter === 'visited') {
+        // Render visited places with remove button
+        grid.innerHTML = works.map((place, index) => `
+          <div class="card hover-lift" style="animation-delay: ${index * 100}ms; position: relative;">
+            <!-- Remove Button -->
+            <button
+              data-action="remove-visited" data-place-id="${place.id}"
+              style="
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                z-index: 10;
+                background: rgba(0,0,0,0.6);
+                border: none;
+                color: #f5f0e8;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+              title="Remove from visited"
+            >×</button>
+
+            <a href="explore.html?highlight=${place.id}" style="text-decoration: none; color: inherit;">
+              <!-- Card Image -->
+              <div class="card-image-container" style="position: relative; overflow: hidden;">
+                <img
+                  src="${place.image}"
+                  alt="${place.name_display || ''}"
+                  class="card-image"
+                  onerror="this.src=getTitlePlaceholder('${(place.name_display || '').replace(/'/g, "\\'")}')"
+                >
+                <!-- Type Badge -->
+                <span class="chip chip-geo" style="position: absolute; top: var(--space-sm); left: var(--space-sm);">
+                  visited
+                </span>
+              </div>
+
+              <!-- Card Body -->
+              <div class="card-body">
+                <h3 class="card-title">${place.name_display || ''}</h3>
+                <p class="card-meta">${place.locationName}, ${place.city}</p>
+                <p class="text-muted" style="font-size: 0.75rem; margin-top: var(--space-sm);">
+                  Visited ${new Date(place.visitedAt).toLocaleDateString()}
+                </p>
+              </div>
+            </a>
+          </div>
+        `).join('');
+      } else {
+        // Render regular works (Grid or List view)
+        if (currentView === 'list') {
+          // List view: 3 columns with horizontal layout (image left, info right)
+          grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+          grid.style.gap = 'var(--space-lg)';
+          grid.innerHTML = works.map((work, index) => {
+            const isNew = isWorkNew(work.id);
+            // Use getTotalPlacesCount to include enriched places from localStorage + geo enrichments
+            const placesCount = getTotalPlacesCount(work);
+            const showPlacesCount = placesCount > 0 && work.source !== 'search';
+            const sourceParam = work.source === 'api' ? '&source=api' : '';
+            // Check if this is an AI-sourced work (added via search)
+            const isAISourced = work.source === 'search' || work.source === 'ai-enriched';
+            return `
+            <div class="card card-list-view" style="animation-delay: ${index * 50}ms; display: flex; flex-direction: row; align-items: center; gap: var(--space-md); position: relative;" data-work-id="${work.id}">
+              <!-- Kebab Menu - for AI-sourced works, show report option -->
+              ${isAISourced ? `
+                <div class="card-kebab-menu" style="top: var(--space-sm); right: var(--space-sm);" data-action="kebab-container">
+                  <button class="kebab-trigger" data-action="toggle-kebab" aria-label="Card options" aria-haspopup="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <circle cx="12" cy="5" r="2"/>
+                      <circle cx="12" cy="12" r="2"/>
+                      <circle cx="12" cy="19" r="2"/>
+                    </svg>
+                  </button>
+                  <div class="kebab-dropdown" role="menu">
+                    <button class="kebab-option kebab-option-report" role="menuitem" data-action="report-content" data-work-id="${work.id}" data-source-param="${sourceParam}">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                      </svg>
+                      Report Wrong Content
+                    </button>
+                  </div>
+                </div>
+              ` : ''}
+              <a href="work-detail.html?id=${work.id}${sourceParam}" style="text-decoration: none; color: inherit; display: flex; flex-direction: row; align-items: center; gap: var(--space-md); flex: 1;">
+                <!-- Framed Image -->
+                <div class="artwork-frame-container" style="flex-shrink: 0; position: relative;">
+                  <div class="artwork-frame">
+                    <div class="artwork-image-wrapper">
+                      <img
+                        src="${work.primary_image_url || ''}"
+                        alt="${work.title_display || ''}"
+                        class="card-image artwork-image"
+                        onerror="this.src=getTitlePlaceholder('${(work.title_display || '').replace(/'/g, "\\'")}')"
+                      >
+                      <!-- Reflection effect -->
+                      <div class="artwork-reflection"></div>
+                    </div>
+                  </div>
+                  <!-- Type Badge -->
+                  <span class="chip ${getChipClass(getTypeCategory(work))}" style="position: absolute; top: var(--space-sm); left: var(--space-sm); z-index: 2;">
+                    ${getTypeCategory(work)}
+                  </span>
+                  <!-- NEW Badge -->
+                  ${isNew ? '<span class="badge-new">NEW</span>' : ''}
+                  <!-- AI Badge - visual indicator for AI-sourced works -->
+                  ${isAISourced ? `
+                    <span class="badge-ai-generated" title="Added via AI search" style="top: ${isNew ? 'calc(var(--space-sm) + 22px)' : 'var(--space-sm)'};">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                      </svg>
+                      AI
+                    </span>
+                  ` : ''}
+                  <!-- Places Count Badge - only show for works with locally cached places -->
+                  ${showPlacesCount ? `
+                    <span class="badge-places">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3"/>
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                      </svg>
+                      ${placesCount}
+                    </span>
+                  ` : ''}
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body" style="flex: 1;">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+                    <h3 class="card-title" style="margin-bottom: 0;">${work.title_display || ''}</h3>
+                    ${getQualityBadgeHTML(work)}
+                  </div>
+                  <p class="card-meta">${getCreator(work) || 'Unknown'} · ${work.date_created_year || ''}</p>
+                  ${getTagsByType(work, 'theme').length > 0 ? `<p class="text-muted" style="font-size: 0.875rem; margin-top: var(--space-xs);">${getTagsByType(work, 'theme').slice(0, 3).join(', ')}</p>` : ''}
+                </div>
+              </a>
+            </div>
+          `}).join('');
+        } else {
+          // Grid view: 4 per row, hung on wooden strips
+          grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+          grid.style.gap = 'var(--space-xl)';
+          grid.innerHTML = works.map((work, index) => {
+            const isNew = isWorkNew(work.id);
+            // Use getTotalPlacesCount to include enriched places from localStorage + geo enrichments
+            const placesCount = getTotalPlacesCount(work);
+            const showPlacesCount = placesCount > 0 && work.source !== 'search';
+            const sourceParam = work.source === 'api' ? '&source=api' : '';
+            // Check if this is an AI-sourced work (added via search)
+            const isAISourced = work.source === 'search' || work.source === 'ai-enriched';
+            // No heart button in vault - love action happens on work-detail page
+            return `
+            <div class="card card-grid-view ${isNew ? 'has-new-badge' : ''}" style="animation-delay: ${index * 100}ms; position: relative;" data-work-id="${work.id}">
+              <!-- Kebab Menu - for AI-sourced works, show report option -->
+              ${isAISourced ? `
+                <div class="card-kebab-menu" data-action="kebab-container">
+                  <button class="kebab-trigger" data-action="toggle-kebab" aria-label="Card options" aria-haspopup="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <circle cx="12" cy="5" r="2"/>
+                      <circle cx="12" cy="12" r="2"/>
+                      <circle cx="12" cy="19" r="2"/>
+                    </svg>
+                  </button>
+                  <div class="kebab-dropdown" role="menu">
+                    <button class="kebab-option kebab-option-report" role="menuitem" data-action="report-content" data-work-id="${work.id}" data-source-param="${sourceParam}">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                      </svg>
+                      Report Wrong Content
+                    </button>
+                  </div>
+                </div>
+              ` : ''}
+              <!-- AI Badge - visual indicator for AI-sourced works -->
+              ${isAISourced ? `
+                <span class="badge-ai-generated" title="Added via AI search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                  AI
+                </span>
+              ` : ''}
+              <a href="work-detail.html?id=${work.id}${sourceParam}" style="text-decoration: none; color: inherit;">
+                <!-- Framed Image -->
+                <div class="artwork-frame-container-grid">
+                  <div class="artwork-frame-grid">
+                    <div class="artwork-image-wrapper-grid">
+                      <img
+                        src="${work.primary_image_url || ''}"
+                        alt="${work.title_display || ''}"
+                        class="card-image artwork-image-grid"
+                        onerror="this.src=getTitlePlaceholder('${(work.title_display || '').replace(/'/g, "\\'")}')"
+                      >
+                      <!-- Reflection effect -->
+                      <div class="artwork-reflection-grid"></div>
+                    </div>
+                  </div>
+                  <!-- Type Badge -->
+                  <span class="chip ${getChipClass(getTypeCategory(work))}" style="position: absolute; top: var(--space-sm); left: var(--space-sm); z-index: 2;">
+                    ${getTypeCategory(work)}
+                  </span>
+                  <!-- NEW Badge -->
+                  ${isNew ? '<span class="badge-new">NEW</span>' : ''}
+                  <!-- Score Badge - position adjusted if AI badge present -->
+                  ${work.scores?.imdb ? `
+                    <span class="score-mini" style="position: absolute; top: ${isNew || isAISourced ? 'calc(var(--space-sm) + 22px)' : 'var(--space-sm)'}; right: ${isAISourced ? 'calc(var(--space-sm) + 40px)' : 'var(--space-sm)'}; background: linear-gradient(135deg, #f5c518, #d4a008); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; z-index: 2;">
+                      ${work.scores.imdb}
+                    </span>
+                  ` : ''}
+                  <!-- Places Count Badge - only show for works with locally cached places -->
+                  ${showPlacesCount ? `
+                    <span class="badge-places">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3"/>
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                      </svg>
+                      ${placesCount}
+                    </span>
+                  ` : ''}
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body" style="text-align: center;">
+                  <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-xs); margin-bottom: var(--space-xs);">
+                    <h3 class="card-title" style="margin-bottom: 0;">${work.title_display || ''}</h3>
+                    ${getQualityBadgeHTML(work)}
+                  </div>
+                  <p class="card-meta">${getCreator(work) || 'Unknown'} · ${work.date_created_year || ''}</p>
+                </div>
+              </a>
+            </div>
+          `}).join('');
+        }
+      }
+    }
+
+    // ----------------------------------------
+    // CHECK IF WORK IS NEW (not yet viewed)
+    // ----------------------------------------
+    function isWorkNew(workId) {
+      // POC: Mark works as "new" if they haven't been viewed
+      // or if they were added recently (simulate with last 3 works in array)
+      const viewedWorks = JSON.parse(localStorage.getItem('viewedWorks') || '[]');
+      if (viewedWorks.includes(workId)) {
+        return false;
+      }
+      // For demo: also show "NEW" on specific works to showcase feature
+      const newWorksDemo = ['kill-bill-vol-1', 'paprika', 'charlie-angels'];
+      return newWorksDemo.includes(workId);
+    }
+
+    // Mark work as viewed (call from work-detail page)
+    function markWorkViewed(workId) {
+      const viewedWorks = JSON.parse(localStorage.getItem('viewedWorks') || '[]');
+      if (!viewedWorks.includes(workId)) {
+        viewedWorks.push(workId);
+        localStorage.setItem('viewedWorks', JSON.stringify(viewedWorks));
+      }
+    }
+
+    // ----------------------------------------
+    // GET TOTAL PLACES COUNT (including enriched)
+    // Counts: work.places + artopath_generated_{workId}.content.places + geo enrichments
+    // ----------------------------------------
+    function getTotalPlacesCount(work) {
+      if (!work || !work.id) return 0;
+
+      // 1. Count places directly on work
+      let count = work.places?.length || 0;
+
+      // 2. Count enriched places from artopath_generated_{workId}
+      try {
+        const genKey = 'artopath_generated_' + work.id;
+        const genData = localStorage.getItem(genKey);
+        if (genData) {
+          const parsed = JSON.parse(genData);
+          const enrichedPlaces = parsed?.content?.places || [];
+          // Only add unique places (by name)
+          const existingNames = new Set((work.places || []).map(p => p.name_display || p.name));
+          enrichedPlaces.forEach(p => {
+            const name = p.name_display || p.name;
+            if (!existingNames.has(name)) {
+              count++;
+              existingNames.add(name);
+            }
+          });
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+
+      // 3. Count geo enrichments from movie-geo.js (for screen works)
+      const workType = (work.work_type || work.type || '').toLowerCase();
+      const isScreenWork = ['movie', 'film', 'animation', 'anime', 'tv', 'series'].some(t => workType.includes(t));
+      if (isScreenWork && typeof getGeoEnrichmentsForMovie === 'function') {
+        const geoPlaces = getGeoEnrichmentsForMovie(work.id) || [];
+        const existingNames = new Set((work.places || []).map(p => p.name_display || p.name || p.placeName));
+        geoPlaces.forEach(p => {
+          const name = p.placeName || p.name_display || p.name;
+          if (!existingNames.has(name)) {
+            count++;
+            existingNames.add(name);
+          }
+        });
+      }
+
+      // 4. Count geo enrichments from artwork-geo.js (for artworks)
+      if (!isScreenWork && typeof getGeoEnrichmentsForWork === 'function') {
+        const geoPlaces = getGeoEnrichmentsForWork(work.id) || [];
+        const existingNames = new Set((work.places || []).map(p => p.name_display || p.name || p.placeName));
+        geoPlaces.forEach(p => {
+          const name = p.placeName || p.name_display || p.name;
+          if (!existingNames.has(name)) {
+            count++;
+            existingNames.add(name);
+          }
+        });
+      }
+
+      return count;
+    }
+
+    // ----------------------------------------
+    // GET CHIP CLASS BY TYPE
+    // ----------------------------------------
+    function getChipClass(type) {
+      switch (type) {
+        case 'movie': return 'chip-theme';
+        case 'artwork': return 'chip-emotion';
+        case 'location': return 'chip-geo';
+        default: return 'chip-type';
+      }
+    }
+
+    // ----------------------------------------
+    // GET QUALITY TIER BADGE HTML
+    // USE CASE: Display content quality status on work cards
+    // INTENTION: Help users identify enriched vs stub content
+    // ----------------------------------------
+    function getQualityBadgeHTML(work) {
+      // Quality tier badge (skeleton/basic/enriched/verified/featured)
+      const tier = work.quality_tier || 'skeleton';
+
+      // Map tier to icon and label
+      const tierConfig = {
+        skeleton: { icon: '\u25CB', label: 'Skeleton' },  // Circle outline
+        basic: { icon: '\u25D0', label: 'Basic' },      // Half-filled circle
+        enriched: { icon: '\u25CF', label: 'Enriched' }, // Filled circle
+        verified: { icon: '\u2713', label: 'Verified' }, // Checkmark
+        featured: { icon: '\u2605', label: 'Featured' }  // Star
+      };
+
+      return `<span class="quality-badge quality-badge--${tier}" title="${tier}"></span>`;
+    }
+
+    // ----------------------------------------
+    // KEBAB MENU FUNCTIONS
+    // USE CASE: Allow users to report wrong AI content from vault cards
+    // INTENTION: Provide quick access to regeneration flow
+    // ----------------------------------------
+
+    /**
+     * Toggle kebab dropdown menu visibility
+     * @param {HTMLElement} button - The kebab trigger button
+     * @param {Event} event - The click event
+     */
+    function toggleKebabMenu(button, event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const dropdown = button.nextElementSibling;
+      const isVisible = dropdown.classList.contains('visible');
+
+      // Close all other open dropdowns first
+      document.querySelectorAll('.kebab-dropdown.visible').forEach(d => {
+        d.classList.remove('visible');
+      });
+
+      // Toggle this dropdown
+      if (!isVisible) {
+        dropdown.classList.add('visible');
+
+        // Close dropdown when clicking outside
+        const closeHandler = (e) => {
+          if (!dropdown.contains(e.target) && e.target !== button) {
+            dropdown.classList.remove('visible');
+            document.removeEventListener('click', closeHandler);
+          }
+        };
+        // Delay adding listener to avoid immediate trigger
+        setTimeout(() => {
+          document.addEventListener('click', closeHandler);
+        }, 10);
+
+        // Close on Escape key
+        const escHandler = (e) => {
+          if (e.key === 'Escape') {
+            dropdown.classList.remove('visible');
+            document.removeEventListener('keydown', escHandler);
+            button.focus();
+          }
+        };
+        document.addEventListener('keydown', escHandler);
+      }
+    }
+
+    /**
+     * Navigate to work-detail page with regeneration panel open
+     * @param {string} workId - The work ID
+     * @param {string} sourceParam - Optional source parameter (e.g., '&source=api')
+     */
+    function reportWrongContent(workId, sourceParam) {
+      // Navigate to work-detail with showRegenerate=true to open the regeneration panel
+      const url = `work-detail.html?id=${workId}${sourceParam}&showRegenerate=true`;
+      window.location.href = url;
+    }
+
+    // Expose functions globally (per early-poc pattern - no ES6 modules)
+    window.toggleKebabMenu = toggleKebabMenu;
+    window.reportWrongContent = reportWrongContent;
+
+    // ----------------------------------------
+    // FILTER WORKS
+    // ----------------------------------------
+    function filterWorks(filter) {
+      currentFilter = filter;
+
+      // Update active chip
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.filter === filter);
+      });
+
+      // Re-render based on current view
+      renderWorks(filter);
+    }
+
+    // ----------------------------------------
+    // VAULT VALIDATION EVENT HANDLER
+    // Refresh display when stale entries are removed
+    // ----------------------------------------
+    window.addEventListener('vaultValidated', (event) => {
+      const { removedIds } = event.detail;
+      if (removedIds && removedIds.length > 0) {
+        console.log(`[Vault] ${removedIds.length} stale entries removed, refreshing...`);
+        ALL_WORKS = ALL_WORKS.filter(w => !removedIds.includes(w.id));
+        renderWorks(currentFilter);
+      }
+    });
+
+    // ----------------------------------------
+    // INITIALIZE
+    // ----------------------------------------
+    async function initializeVault() {
+      // Check for tab parameter in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam === 'people') {
+        switchVaultTab('people');
+      }
+
+      // Get grid element
+      const grid = document.getElementById('worksGrid');
+
+      // Set default view to grid
+      currentView = 'grid';
+      document.querySelectorAll('.view-icon-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === 'grid');
+      });
+
+      // Add grid view class
+      const gridWrapper = document.querySelector('.vault-grid-wrapper');
+      const vaultPage = document.querySelector('.vault-page');
+      const vaultHeader = document.querySelector('.vault-header');
+      if (gridWrapper) {
+        gridWrapper.classList.add('grid-view-active');
+      }
+      if (vaultPage) {
+        vaultPage.classList.add('grid-view-active');
+      }
+      if (vaultHeader) {
+        vaultHeader.classList.add('grid-view-active');
+      }
+
+      // Show loading state while fetching API works (prevents flicker)
+      if (grid) {
+        grid.innerHTML = '<div class="vault-loading" style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Loading collection...</div>';
+        grid.style.display = 'grid';
+      }
+
+      // Load vault cache from API, then fetch works
+      await loadVaultCache();
+      try {
+        ALL_WORKS = await ensureAllWorksReady();
+        console.log('Vault initialized with all works:', ALL_WORKS.length);
+      } catch (error) {
+        console.log('[Vault] Dataset unavailable, using local works only', error);
+      }
+
+      // Single render after all data is ready
+      renderWorks('all');
+
+      // Background validation: Check localStorage vault entries against API
+      // Runs AFTER initial render to avoid blocking the UI
+      if (typeof validateVaultEntries === 'function') {
+        validateVaultEntries().catch(err => {
+          console.log('[Vault] Background validation error:', err);
+        });
+      }
+
+      // Sync visited places from backend (runs after initial render)
+      syncVisitedPlaces().catch(err => {
+        console.log('[Vault] Visited places sync error:', err);
+      });
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeVault);
+    } else {
+      initializeVault();
+    }
+
+    // ----------------------------------------
+    // GLOBAL SEARCH FUNCTIONS
+    // ----------------------------------------
+    let selectedIndex = -1;
+    let searchResults = [];
+
+    function openSearchModal() {
+      document.getElementById('searchModal').classList.add('active');
+      document.getElementById('searchInput').focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.remove('active');
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchResults').innerHTML = '';
+      document.getElementById('searchResults').classList.remove('has-results');
+      selectedIndex = -1;
+      searchResults = [];
+      document.body.style.overflow = '';
+    }
+
+    function escapeAttr(value) {
+      return String(value ?? '').replace(/"/g, '&quot;');
+    }
+
+    async function handleSearch(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      if (!query.trim()) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('has-results');
+        searchResults = [];
+        selectedIndex = -1;
+        return;
+      }
+
+      try {
+        await ensureAllWorksReady();
+      } catch (e) {
+        console.warn('[Vault] ensureAllWorksReady failed in search, using available data:', e);
+      }
+      const queryLower = query.toLowerCase();
+      searchResults = ALL_WORKS
+        .filter(w => w.work_type !== 'location')
+        .filter(work => {
+          const titleMatch = (work.title_display || '').toLowerCase().includes(queryLower);
+          const creatorMatch = (getCreator(work) || '').toLowerCase().includes(queryLower);
+          const originalMatch = (work.title_original || '').toLowerCase().includes(queryLower);
+          return titleMatch || creatorMatch || originalMatch;
+        })
+        .slice(0, 8);
+
+      if (searchResults.length === 0) {
+        // No local results - offer AI search option
+        const safeQuery = escapeAttr(query);
+        resultsContainer.innerHTML = `
+          <div class="search-no-results">
+            No works found in your vault for "${escapeHtml(query)}"
+          </div>
+          <div class="search-result-item search-ai-option"
+               data-action="ai-search"
+               data-query="${safeQuery}"
+               data-pos="0">
+            <div class="search-ai-icon">✨</div>
+            <div class="search-result-info">
+              <div class="search-result-title">Search "${escapeHtml(query)}" with AI</div>
+              <div class="search-result-meta">Generate content from web sources</div>
+            </div>
+          </div>
+        `;
+        resultsContainer.classList.add('has-results');
+        // Set up for Enter key to trigger AI search
+        searchResults = [{ id: '__ai_search__', query: query }];
+        selectedIndex = 0;
+        return;
+      }
+
+      resultsContainer.innerHTML = searchResults.map((work, index) => `
+        <div class="search-result-item ${index === selectedIndex ? 'selected' : ''}"
+             data-result-type="local"
+             data-pos="${index}"
+             data-work-id="${escapeAttr(work.id || '')}">
+          <img class="search-result-image" src="${work.primary_image_url || ''}" alt="${escapeHtml(work.title_display || '')}"
+               onerror="this.src=PLACEHOLDER_SVG">
+          <div class="search-result-info">
+            <div class="search-result-title">${highlightMatch(work.title_display || '', query)}</div>
+            <div class="search-result-meta">${escapeHtml(getCreator(work) || 'Unknown')} · ${work.date_created_year || ''}</div>
+          </div>
+          <span class="search-result-type ${getTypeCategory(work)}">${getTypeCategory(work)}</span>
+        </div>
+      `).join('');
+
+      resultsContainer.classList.add('has-results');
+      selectedIndex = 0;
+      updateSelection();
+    }
+
+    const searchResultsEl = document.getElementById('searchResults');
+    if (searchResultsEl) {
+      searchResultsEl.addEventListener('click', handleSearchResultClick);
+      searchResultsEl.addEventListener('mouseover', handleSearchResultHover);
+    }
+
+    function handleSearchResultHover(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const pos = parseInt(item.dataset.pos, 10);
+      if (!Number.isNaN(pos)) {
+        selectedIndex = pos;
+        updateSelection();
+      }
+    }
+
+    function handleSearchResultClick(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const action = item.dataset.action;
+      if (action === 'ai-search') {
+        searchWithAI(item.dataset.query || '');
+        return;
+      }
+
+      const pos = parseInt(item.dataset.pos, 10);
+      if (Number.isNaN(pos)) return;
+      selectedIndex = pos;
+      updateSelection();
+      const work = searchResults[pos];
+      if (!work) return;
+      if (work.id === '__ai_search__') {
+        searchWithAI(work.query || '');
+        return;
+      }
+      goToWork(work.id);
+    }
+
+    function handleSearchKeydown(event) {
+      if (event.key === 'Escape') { closeSearchModal(); return; }
+      if (searchResults.length === 0) return;
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        selectedIndex = Math.min(selectedIndex + 1, searchResults.length - 1);
+        updateSelection();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        selectedIndex = Math.max(selectedIndex - 1, 0);
+        updateSelection();
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+          goToWork(searchResults[selectedIndex].id);
+        }
+      }
+    }
+
+    function updateSelection() {
+      const items = document.querySelectorAll('.search-result-item');
+      if (items.length === 0) return;
+      if (selectedIndex >= items.length) {
+        selectedIndex = items.length - 1;
+      }
+      items.forEach((item, index) => {
+        item.classList.toggle('selected', index === selectedIndex);
+      });
+      const selected = items[selectedIndex];
+      if (selected) selected.scrollIntoView({ block: 'nearest' });
+    }
+
+    function goToWork(id) {
+      // Check if this is an AI search result
+      if (id === '__ai_search__' && searchResults[0]?.query) {
+        searchWithAI(searchResults[0].query);
+        return;
+      }
+      window.location.href = `work-detail.html?id=${id}`;
+    }
+
+    function searchWithAI(query) {
+      // Navigate to work-detail with search query for AI generation
+      const encodedQuery = encodeURIComponent(query);
+      window.location.href = `work-detail.html?search=${encodedQuery}`;
+    }
+
+    // ----------------------------------------
+    // DELEGATED UI HANDLERS (nav, filters, modals, kebabs)
+    // ----------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      // View toggles + export/import
+      const viewToggleBar = document.querySelector('.view-toggle-icons');
+      if (viewToggleBar) {
+        viewToggleBar.addEventListener('click', (event) => {
+          const btn = event.target.closest('[data-action]');
+          if (!btn) return;
+          const action = btn.dataset.action;
+          if (action === 'show-export') {
+            document.getElementById('exportModal')?.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          } else if (action === 'trigger-import') {
+            if (typeof triggerImport === 'function') triggerImport();
+          } else if (action === 'switch-view') {
+            const view = btn.dataset.view;
+            if (view) switchView(view);
+          }
+        });
+      }
+
+      // Tabs (works/people)
+      const tabs = document.querySelector('.vault-tabs');
+      if (tabs) {
+        tabs.addEventListener('click', (event) => {
+          const btn = event.target.closest('[data-action="switch-tab"]');
+          if (!btn) return;
+          const tab = btn.dataset.tab;
+          if (tab) switchVaultTab(tab);
+        });
+      }
+
+      // Stage filters
+      const stageFilters = document.getElementById('stageFilters');
+      if (stageFilters) {
+        stageFilters.addEventListener('click', (event) => {
+          const btn = event.target.closest('[data-action="filter-stage"]');
+          if (!btn) return;
+          filterByStage(btn.dataset.stage || 'all');
+        });
+      }
+
+      // Works filters + sort
+      const worksFilters = document.getElementById('worksFilters');
+      if (worksFilters) {
+        worksFilters.addEventListener('click', (event) => {
+          const btn = event.target.closest('[data-action="filter-works"]');
+          if (!btn) return;
+          filterWorks(btn.dataset.filter || 'all');
+        });
+        const workSortSelect = worksFilters.querySelector('[data-action="sort-works"]');
+        if (workSortSelect) {
+          workSortSelect.addEventListener('change', (e) => sortWorks(e.target.value));
+        }
+      }
+
+      // People filters + sort
+      const peopleFilters = document.getElementById('peopleFilters');
+      if (peopleFilters) {
+        peopleFilters.addEventListener('click', (event) => {
+          const btn = event.target.closest('[data-action="filter-people"]');
+          if (!btn) return;
+          filterPeople(btn.dataset.filter || 'all');
+        });
+        const sortSelect = peopleFilters.querySelector('[data-action="sort-people"]');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', (e) => sortPeople(e.target.value));
+        }
+      }
+
+      // Nav search
+      const navSearch = document.querySelector('.nav-item.nav-search');
+      if (navSearch) {
+        navSearch.addEventListener('click', () => openSearchModal());
+      }
+
+      // Search modal close/background
+      const searchModal = document.getElementById('searchModal');
+      if (searchModal) {
+        searchModal.addEventListener('click', (event) => {
+          if (event.target === searchModal) closeSearchModal();
+        });
+        const closeBtn = searchModal.querySelector('.search-close');
+        if (closeBtn) closeBtn.addEventListener('click', closeSearchModal);
+        const searchInputEl = document.getElementById('searchInput');
+        if (searchInputEl) {
+          searchInputEl.addEventListener('input', () => handleSearch(searchInputEl.value));
+          searchInputEl.addEventListener('keydown', handleSearchKeydown);
+        }
+      }
+
+      // Export modal controls
+      const exportModal = document.getElementById('exportModal');
+      if (exportModal) {
+        exportModal.addEventListener('click', (event) => {
+          if (event.target === exportModal) closeExportModal();
+          const btn = event.target.closest('[data-action]');
+          if (!btn) return;
+          const action = btn.dataset.action;
+          if (action === 'export-json') {
+            if (typeof downloadVaultAsJSON === 'function') downloadVaultAsJSON();
+            closeExportModal();
+          } else if (action === 'export-md') {
+            if (typeof downloadVaultAsMarkdown === 'function') downloadVaultAsMarkdown();
+            closeExportModal();
+          } else if (action === 'export-csv') {
+            if (typeof downloadVaultAsCSV === 'function') downloadVaultAsCSV();
+            closeExportModal();
+          } else if (action === 'close-export') {
+            closeExportModal();
+          }
+        });
+      }
+
+      // Kebab menu + report + remove visited (delegated)
+      document.body.addEventListener('click', (event) => {
+        const kebabTrigger = event.target.closest('[data-action="toggle-kebab"]');
+        if (kebabTrigger) {
+          event.stopPropagation();
+          toggleKebabMenu(kebabTrigger, event);
+          return;
+        }
+
+        const reportBtn = event.target.closest('[data-action="report-content"]');
+        if (reportBtn) {
+          const workId = reportBtn.dataset.workId;
+          const sourceParam = reportBtn.dataset.sourceParam || '';
+          reportWrongContent(workId, sourceParam);
+          return;
+        }
+
+        const removeVisitedBtn = event.target.closest('[data-action="remove-visited"]');
+        if (removeVisitedBtn) {
+          const placeId = removeVisitedBtn.dataset.placeId;
+          removeVisitedPlace(placeId);
+          return;
+        }
+      });
+
+      // Close export modal helper
+      function closeExportModal() {
+        exportModal?.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+    // escapeHtml and highlightMatch now loaded from js/utils/dom-utils.js
+
+    // Keyboard shortcut (Cmd/Ctrl + K)
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        openSearchModal();
+      }
+    });
+
+    // ----------------------------------------
+    // VAULT TABS: WORKS vs PEOPLE
+    // ----------------------------------------
+    let currentVaultTab = 'works';
+    let currentPersonFilter = 'all';
+
+    function switchVaultTab(tab) {
+      currentVaultTab = tab;
+
+      // Update tab buttons
+      document.querySelectorAll('.vault-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+
+      // Show/hide sections
+      const worksSection = document.getElementById('worksSection');
+      const peopleSection = document.getElementById('peopleSection');
+      const worksFilters = document.getElementById('worksFilters');
+      const peopleFilters = document.getElementById('peopleFilters');
+      const emptyState = document.getElementById('emptyState');
+
+      if (tab === 'works') {
+        worksSection.style.display = 'block';
+        peopleSection.style.display = 'none';
+        worksFilters.style.display = 'flex';
+        peopleFilters.style.display = 'none';
+        renderWorks(currentFilter);
+      } else {
+        worksSection.style.display = 'none';
+        peopleSection.style.display = 'block';
+        worksFilters.style.display = 'none';
+        peopleFilters.style.display = 'flex';
+        emptyState.style.display = 'none';
+        renderPeople(currentPersonFilter);
+      }
+    }
+
+    // ----------------------------------------
+    // EXTRACT PEOPLE FROM WORKS (Enhanced with creatorImages.js)
+    // ----------------------------------------
+    function extractPeople() {
+      const peopleMap = new Map();
+
+      ALL_WORKS.forEach(work => {
+        if (work.work_type === 'location') return;
+
+        // Get people from work (canonical: person_roles, fallback: people.cast)
+        const workPeople = work.person_roles || work.people?.cast || [];
+
+        // Also add primary creator (director/artist)
+        const creatorName = getCreator(work);
+        if (creatorName) {
+          if (!peopleMap.has(creatorName)) {
+            const profile = typeof getCreatorProfile === 'function' ? getCreatorProfile(creatorName) : null;
+            const legacyImage = typeof getCreatorImage === 'function' ? getCreatorImage(creatorName) : null;
+            const workType = getTypeCategory(work);
+            // DB image_url (ETL-enriched) is source of truth; legacy hardcoded is fallback
+            const creatorRole = workPeople.find(pr => (pr.person?.name_display || pr.name) === creatorName);
+            const apiImage = creatorRole?.person?.image_url || null;
+
+            peopleMap.set(creatorName, {
+              name: creatorName,
+              role: workType === 'artwork' ? 'Artist' : 'Director',
+              roleCategory: profile?.roleCategory || (workType === 'artwork' ? 'artist' : 'director'),
+              image: apiImage || legacyImage || null,
+              works: [],
+              workCount: 0,
+              themes: new Set(),
+              years: [],
+              bio: profile?.bio || null,
+              bioFull: profile?.bioFull || null,
+              careerPhase: profile?.careerPhase || null,
+              nationality: profile?.nationality || null
+            });
+          }
+          const personEntry = peopleMap.get(creatorName);
+          // API person image_url (DB, ETL-enriched) always wins over legacy hardcoded
+          const creatorPR = workPeople.find(pr => (pr.person?.name_display || pr.name) === creatorName);
+          if (creatorPR?.person?.image_url) {
+            personEntry.image = creatorPR.person.image_url;
+          }
+          personEntry.works.push(work);
+          personEntry.workCount++;
+          const workYear = work.date_created_year;
+          if (workYear) personEntry.years.push(workYear);
+          const themes = getTagsByType(work, 'theme');
+          if (themes.length > 0) {
+            themes.slice(0, 3).forEach(t => personEntry.themes.add(t));
+          }
+        }
+
+        // Add cast members and other contributors
+        // person_roles format: {person: {name_display, image_url, bio_short, ...}, role_type, role_display}
+        workPeople.forEach(pr => {
+          const personName = pr.person?.name_display || pr.name;
+          if (!personName) return;
+
+          // Determine role category from role_type (canonical) or role (legacy)
+          let roleCategory = 'other';
+          const roleLower = (pr.role_type || pr.role || '').toLowerCase();
+          if (roleLower.includes('director') || roleLower.includes('filmmaker')) {
+            roleCategory = 'director';
+          } else if (roleLower.includes('artist') || roleLower.includes('painter')) {
+            roleCategory = 'artist';
+          } else if (roleLower.includes('composer') || roleLower.includes('music') || roleLower.includes('score')) {
+            roleCategory = 'composer';
+          } else if (roleLower.includes('actor') || roleLower.includes('actress') || roleLower.includes('voice') || roleLower.includes('cast') || roleLower.includes('lead')) {
+            roleCategory = 'actor';
+          } else if (roleLower.includes('choreograph')) {
+            roleCategory = 'director';
+          } else if (roleLower.includes('producer')) {
+            roleCategory = 'director';
+          } else if (roleLower.includes('writer') || roleLower.includes('novelist') || roleLower.includes('manga')) {
+            roleCategory = 'artist';
+          }
+
+          const personImageUrl = pr.person?.image_url || pr.image || null;
+          const personBio = pr.person?.bio_short || pr.bio || null;
+
+          // Get profile from creatorImages.js for enhanced data
+          const profile = typeof getCreatorProfile === 'function' ? getCreatorProfile(personName) : null;
+          const profileImage = typeof getCreatorImage === 'function' ? getCreatorImage(personName) : null;
+
+          if (!peopleMap.has(personName)) {
+            peopleMap.set(personName, {
+              name: personName,
+              role: (pr.role_type || pr.role || 'other').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+              roleCategory: profile?.roleCategory || roleCategory,
+              image: profileImage || personImageUrl || null,
+              works: [],
+              workCount: 0,
+              themes: new Set(),
+              years: [],
+              bio: profile?.bio || personBio || null,
+              bioFull: profile?.bioFull || null,
+              careerPhase: profile?.careerPhase || null,
+              nationality: pr.person?.nationality || profile?.nationality || null
+            });
+          }
+          const personEntry = peopleMap.get(personName);
+          // Update image from profile if available
+          if (profileImage && !personEntry.image) {
+            personEntry.image = profileImage;
+          }
+          // Update image from API person data if profile doesn't have one
+          if (personImageUrl && !personEntry.image) {
+            personEntry.image = personImageUrl;
+          }
+          // Update bio from profile or person
+          if (profile?.bio && !personEntry.bio) {
+            personEntry.bio = profile.bio;
+          }
+          if (personBio && !personEntry.bio) {
+            personEntry.bio = personBio;
+          }
+          // Add work if not already there
+          if (!personEntry.works.find(w => w.id === work.id)) {
+            personEntry.works.push(work);
+            personEntry.workCount++;
+            const workYear = work.date_created_year;
+            if (workYear) personEntry.years.push(workYear);
+            const themes = getTagsByType(work, 'theme');
+            if (themes.length > 0) {
+              themes.slice(0, 2).forEach(t => personEntry.themes.add(t));
+            }
+          }
+        });
+      });
+
+      // Post-process: convert Sets to Arrays, calculate year range
+      const people = Array.from(peopleMap.values()).map(p => ({
+        ...p,
+        themes: Array.from(p.themes).slice(0, 3),
+        yearRange: p.years.length > 0
+          ? { min: Math.min(...p.years), max: Math.max(...p.years) }
+          : null
+      }));
+
+      return people.sort((a, b) => b.workCount - a.workCount);
+    }
+
+    function sortWorks(sortBy) {
+      currentWorkSort = sortBy;
+      renderWorks(currentFilter);
+    }
+
+    // Current sort order
+    let currentPersonSort = 'workCount';
+
+    // ----------------------------------------
+    // FILTER PEOPLE
+    // ----------------------------------------
+    function filterPeople(filter) {
+      currentPersonFilter = filter;
+
+      // Update active chip
+      document.querySelectorAll('#peopleFilters .filter-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.filter === filter);
+      });
+
+      renderPeople(filter);
+    }
+
+    // ----------------------------------------
+    // SORT PEOPLE
+    // ----------------------------------------
+    function sortPeople(sortBy) {
+      currentPersonSort = sortBy;
+      renderPeople(currentPersonFilter);
+    }
+
+    // ----------------------------------------
+    // GET ROLE COLOR CLASS
+    // ----------------------------------------
+    function getRoleColorClass(roleCategory) {
+      const colorMap = {
+        'director': 'role-director',
+        'artist': 'role-artist',
+        'composer': 'role-composer',
+        'actor': 'role-actor'
+      };
+      return colorMap[roleCategory] || 'role-other';
+    }
+
+    // ----------------------------------------
+    // RENDER PEOPLE GRID (Enhanced with bio tooltips and career phases)
+    // ----------------------------------------
+    function renderPeople(filter = 'all') {
+      const grid = document.getElementById('peopleGrid');
+      if (!grid) return;
+
+      let people = extractPeople();
+
+      // Apply filter
+      if (filter !== 'all') {
+        people = people.filter(p => p.roleCategory === filter);
+      }
+
+      // Apply sort
+      if (currentPersonSort === 'name') {
+        people.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (currentPersonSort === 'role') {
+        const roleOrder = { director: 0, artist: 1, composer: 2, actor: 3, other: 4 };
+        people.sort((a, b) => (roleOrder[a.roleCategory] || 4) - (roleOrder[b.roleCategory] || 4));
+      } else {
+        // Default: workCount desc
+        people.sort((a, b) => b.workCount - a.workCount);
+      }
+
+      if (people.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-3xl);">
+            <p class="text-muted" style="font-size: 1.125rem;">No people found</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = people.map((person, index) => {
+        const personSlug = person.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const roleClass = getRoleColorClass(person.roleCategory);
+        const isFeatured = person.workCount >= 3; // Featured if 3+ works
+        const yearDisplay = person.yearRange
+          ? (person.yearRange.min === person.yearRange.max
+              ? person.yearRange.min
+              : `${person.yearRange.min} - ${person.yearRange.max}`)
+          : '';
+
+        // Career phase badge styling
+        const careerPhaseClass = person.careerPhase
+          ? `career-phase-${person.careerPhase.toLowerCase()}`
+          : '';
+
+        // Escape bio for HTML attribute
+        const escapedBio = person.bio ? person.bio.replace(/"/g, '&quot;').replace(/'/g, '&#39;') : '';
+
+        return `
+        <a href="person-detail.html?id=${encodeURIComponent(personSlug)}"
+           class="person-card ${isFeatured ? 'person-card-featured' : ''} hover-lift"
+           style="animation-delay: ${index * 40}ms;"
+           ${person.bio ? `data-bio="${escapedBio}"` : ''}>
+
+          <!-- Avatar with Role Ring -->
+          <div class="person-avatar-wrapper ${roleClass}">
+            <div class="person-avatar-container">
+              <img
+                src="${person.image || getInitialPlaceholder(person.name)}"
+                alt="${person.name}"
+                class="person-avatar"
+                loading="lazy"
+                onerror="this.src=getInitialPlaceholder('${person.name.replace(/'/g, "\\'")}')"
+              >
+              <!-- Loading shimmer overlay -->
+              <div class="person-avatar-shimmer"></div>
+            </div>
+            <!-- Work Count Badge -->
+            <span class="person-count-badge">${person.workCount}</span>
+          </div>
+
+          <!-- Person Info -->
+          <div class="person-info">
+            <h3 class="person-name">${person.name}</h3>
+            <div class="person-badges">
+              <span class="person-role-badge ${roleClass}">${person.role}</span>
+              ${person.careerPhase ? `
+                <span class="person-career-phase ${careerPhaseClass}">${person.careerPhase}</span>
+              ` : ''}
+            </div>
+            ${yearDisplay ? `<p class="person-years">${yearDisplay}</p>` : ''}
+            ${person.nationality ? `<p class="person-nationality">${person.nationality}</p>` : ''}
+          </div>
+
+          <!-- Bio Tooltip (shown on hover) -->
+          ${person.bio ? `
+            <div class="person-bio-tooltip">
+              <p>${person.bio}</p>
+              ${person.works.length > 0 ? `
+                <span class="person-encounters-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                  </svg>
+                  ${person.workCount} work${person.workCount > 1 ? 's' : ''} in your vault
+                </span>
+              ` : ''}
+            </div>
+          ` : ''}
+
+          <!-- Theme Tags (if featured) -->
+          ${isFeatured && person.themes.length > 0 ? `
+            <div class="person-themes">
+              ${person.themes.slice(0, 2).map(theme => `
+                <span class="person-theme-tag">${theme}</span>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          <!-- Works Preview -->
+          <div class="person-works-preview">
+            ${person.works.slice(0, isFeatured ? 5 : 4).map(work => `
+              <div class="person-work-thumb" title="${work.title_display || ''} (${work.date_created_year || ''})">
+                <img src="${work.primary_image_url || ''}" alt="${work.title_display || ''}" loading="lazy" onerror="this.src=getTitlePlaceholder('${(work.title_display || '').replace(/'/g, "\\'")}')">
+              </div>
+            `).join('')}
+            ${person.works.length > (isFeatured ? 5 : 4) ? `
+              <span class="person-more-count">+${person.works.length - (isFeatured ? 5 : 4)}</span>
+            ` : ''}
+          </div>
+
+          <!-- My Encounters Link -->
+          <div class="person-encounters-link">
+            <span class="encounters-text">View my journey</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+      `;
+      }).join('');
+    }
+  </script>
+
+  <!-- Additional Styles -->
+  <style>
+    /* Search Modal Styles */
+    .search-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 47, 26, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 15vh;
+    }
+
+    .search-modal.active {
+      display: flex;
+    }
+
+    .search-container {
+      width: 90%;
+      max-width: 600px;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-lg) var(--space-xl);
+      padding-left: 56px;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-light);
+      outline: none;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .search-input:focus {
+      border-color: var(--spirit-glow);
+      box-shadow: 0 0 20px rgba(168, 212, 230, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-lg);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-close {
+      position: absolute;
+      right: var(--space-md);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+      transition: all var(--duration-fast);
+    }
+
+    .search-close:hover {
+      color: var(--text-light);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-results {
+      margin-top: var(--space-md);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .search-results.has-results {
+      display: block;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover,
+    .search-result-item.selected {
+      background: rgba(168, 212, 230, 0.1);
+    }
+
+    .search-result-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .search-result-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-result-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-result-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .search-result-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: rgba(168, 212, 230, 0.2);
+      color: var(--spirit-glow);
+    }
+
+    .search-result-type.movie {
+      background: rgba(212, 168, 71, 0.2);
+      color: var(--accent-gold);
+    }
+
+    .search-no-results {
+      padding: var(--space-md);
+      text-align: center;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .search-ai-option {
+      background: linear-gradient(135deg, rgba(168, 212, 230, 0.1), rgba(212, 168, 71, 0.1));
+      border: 1px solid rgba(212, 168, 71, 0.3);
+    }
+
+    .search-ai-option:hover,
+    .search-ai-option.selected {
+      background: linear-gradient(135deg, rgba(168, 212, 230, 0.2), rgba(212, 168, 71, 0.2));
+      border-color: var(--accent-gold);
+    }
+
+    .search-ai-icon {
+      font-size: 1.5rem;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(212, 168, 71, 0.2);
+      border-radius: 8px;
+    }
+
+    .search-hint {
+      margin-top: var(--space-md);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .search-hint kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    .search-highlight {
+      background: rgba(212, 168, 71, 0.3);
+      color: var(--accent-gold);
+      border-radius: 2px;
+    }
+
+    .nav-search {
+      background: rgba(168, 212, 230, 0.1);
+      border: 1px dashed var(--card-border);
+    }
+
+    .nav-search:hover {
+      background: rgba(168, 212, 230, 0.2);
+      border-style: solid;
+    }
+
+    /* Filter Chip Styles */
+    .filter-chip {
+      cursor: pointer;
+      border: none;
+      opacity: 0.6;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .filter-chip:hover {
+      opacity: 0.9;
+    }
+
+    .filter-chip.active {
+      opacity: 1;
+      transform: scale(1.05);
+      box-shadow: 0 2px 12px rgba(168, 212, 230, 0.3);
+    }
+
+    .filter-chip:focus {
+      outline: 2px solid var(--spirit-glow);
+      outline-offset: 2px;
+    }
+
+    .filter-chip:focus-visible {
+      box-shadow: 0 0 0 3px rgba(168, 212, 230, 0.4);
+    }
+
+    /* View Toggle Styles */
+    .view-toggle {
+      cursor: pointer;
+      border: none;
+      opacity: 0.6;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .view-toggle:hover {
+      opacity: 0.9;
+    }
+
+    .view-toggle.active {
+      opacity: 1;
+      transform: scale(1.05);
+      box-shadow: 0 2px 12px rgba(168, 212, 230, 0.3);
+    }
+
+    /* View Toggle Icons */
+    .view-toggle-icons {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .view-icon-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-xs);
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-icon-btn:hover {
+      background: var(--card-bg);
+      border-color: var(--spirit-glow);
+      color: var(--text-light);
+      transform: translateY(-2px);
+    }
+
+    .view-icon-btn.active {
+      background: var(--spirit-glow);
+      border-color: var(--spirit-glow);
+      color: var(--forest-deep);
+    }
+
+    .card-image-container {
+      aspect-ratio: 3/4;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-slow) var(--ease-smooth);
+    }
+
+    .card:hover .card-image {
+      transform: scale(1.05);
+    }
+
+    /* Export Modal Styles */
+    .export-format-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-md);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      width: 100%;
+      text-align: left;
+    }
+
+    .export-format-btn:hover {
+      border-color: var(--spirit-glow);
+      background: rgba(168, 212, 230, 0.05);
+      transform: translateX(8px);
+    }
+
+    .export-format-btn svg {
+      color: var(--spirit-glow);
+      flex-shrink: 0;
+    }
+
+    .export-format-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .export-format-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Notification Toast */
+    .vault-notification {
+      position: fixed;
+      bottom: var(--space-xl);
+      right: var(--space-xl);
+      background: var(--card-bg);
+      border: 2px solid var(--spirit-glow);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      color: var(--text-light);
+      font-size: 0.95rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all var(--duration-normal) var(--ease-smooth);
+      max-width: 400px;
+    }
+
+    .vault-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vault-notification-success {
+      border-color: var(--spirit-glow);
+      background: linear-gradient(135deg, rgba(168, 212, 230, 0.1), rgba(168, 212, 230, 0.05));
+    }
+
+    .vault-notification-error {
+      border-color: #ff6b6b;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+    }
+
+    /* Vault Tab Styles */
+    .vault-tabs {
+      margin-bottom: var(--space-md);
+    }
+
+    .vault-tab {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      background: transparent;
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .vault-tab:hover {
+      border-color: var(--spirit-glow);
+      color: var(--text-light);
+      background: rgba(168, 212, 230, 0.05);
+    }
+
+    .vault-tab.active {
+      background: var(--spirit-glow);
+      border-color: var(--spirit-glow);
+      color: var(--forest-deep);
+    }
+
+    .vault-tab.active svg {
+      stroke: var(--forest-deep);
+    }
+
+    .vault-tab svg {
+      transition: stroke var(--duration-normal);
+    }
+
+    /* ========================================
+       ENHANCED CREATOR CARD STYLES
+       ======================================== */
+
+    /* Role-specific color definitions */
+    :root {
+      --role-director: #d4a847;  /* Gold - Directors */
+      --role-artist: #a855f7;    /* Purple - Artists */
+      --role-composer: #22d3ee;  /* Cyan - Composers */
+      --role-actor: #f472b6;     /* Pink - Actors */
+      --role-other: var(--spirit-glow);
+    }
+
+    /* Role filter chip colors */
+    .chip-director {
+      background: rgba(212, 168, 71, 0.15) !important;
+      border-color: rgba(212, 168, 71, 0.4) !important;
+      color: var(--role-director) !important;
+    }
+    .chip-artist {
+      background: rgba(168, 85, 247, 0.15) !important;
+      border-color: rgba(168, 85, 247, 0.4) !important;
+      color: var(--role-artist) !important;
+    }
+    .chip-composer {
+      background: rgba(34, 211, 238, 0.15) !important;
+      border-color: rgba(34, 211, 238, 0.4) !important;
+      color: var(--role-composer) !important;
+    }
+    .chip-actor {
+      background: rgba(244, 114, 182, 0.15) !important;
+      border-color: rgba(244, 114, 182, 0.4) !important;
+      color: var(--role-actor) !important;
+    }
+
+    /* Sort dropdown */
+    .sort-select {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-xs) var(--space-md);
+      color: var(--text-light);
+      font-size: 0.85rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .sort-select:hover, .sort-select:focus {
+      border-color: var(--spirit-glow);
+    }
+    .sort-select option {
+      background: var(--forest-deep);
+      color: var(--text-light);
+    }
+
+    /* Person Card Base */
+    .person-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+      transition: all var(--duration-normal) var(--ease-smooth);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .person-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .person-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .person-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Featured Person Card (3+ works) */
+    .person-card-featured {
+      grid-column: span 1;
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(45, 74, 62, 0.8) 100%);
+      border-width: 2px;
+    }
+
+    /* Role-specific card top border */
+    .person-card .role-director::before,
+    .person-card:has(.role-director)::before { background: var(--role-director); }
+    .person-card:has(.role-artist)::before { background: var(--role-artist); }
+    .person-card:has(.role-composer)::before { background: var(--role-composer); }
+    .person-card:has(.role-actor)::before { background: var(--role-actor); }
+
+    /* Avatar Wrapper with Role Ring */
+    .person-avatar-wrapper {
+      position: relative;
+      padding: 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--spirit-glow), var(--spirit-glow));
+    }
+    .person-avatar-wrapper.role-director {
+      background: linear-gradient(135deg, var(--role-director), #b8860b);
+    }
+    .person-avatar-wrapper.role-artist {
+      background: linear-gradient(135deg, var(--role-artist), #7c3aed);
+    }
+    .person-avatar-wrapper.role-composer {
+      background: linear-gradient(135deg, var(--role-composer), #06b6d4);
+    }
+    .person-avatar-wrapper.role-actor {
+      background: linear-gradient(135deg, var(--role-actor), #ec4899);
+    }
+
+    .person-avatar-container {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--forest-deep);
+    }
+
+    .person-card-featured .person-avatar-container {
+      width: 100px;
+      height: 100px;
+    }
+
+    .person-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .person-card:hover .person-avatar {
+      transform: scale(1.05);
+    }
+
+    /* Work Count Badge */
+    .person-count-badge {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--forest-deep);
+      border: 2px solid var(--spirit-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .role-director .person-count-badge { border-color: var(--role-director); color: var(--role-director); }
+    .role-artist .person-count-badge { border-color: var(--role-artist); color: var(--role-artist); }
+    .role-composer .person-count-badge { border-color: var(--role-composer); color: var(--role-composer); }
+    .role-actor .person-count-badge { border-color: var(--role-actor); color: var(--role-actor); }
+
+    /* Person Info */
+    .person-info {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .person-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+
+    .person-card-featured .person-name {
+      font-size: 1.1rem;
+    }
+
+    /* Role Badge */
+    .person-role-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(168, 212, 230, 0.15);
+      color: var(--spirit-glow);
+      border: 1px solid rgba(168, 212, 230, 0.3);
+    }
+
+    .person-role-badge.role-director {
+      background: rgba(212, 168, 71, 0.15);
+      color: var(--role-director);
+      border-color: rgba(212, 168, 71, 0.3);
+    }
+    .person-role-badge.role-artist {
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--role-artist);
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+    .person-role-badge.role-composer {
+      background: rgba(34, 211, 238, 0.15);
+      color: var(--role-composer);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+    .person-role-badge.role-actor {
+      background: rgba(244, 114, 182, 0.15);
+      color: var(--role-actor);
+      border-color: rgba(244, 114, 182, 0.3);
+    }
+
+    /* Years Active */
+    .person-years {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Theme Tags */
+    .person-themes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      margin-top: var(--space-xs);
+    }
+
+    .person-theme-tag {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Works Preview */
+    .person-works-preview {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+      margin-top: auto;
+      padding-top: var(--space-sm);
+    }
+
+    .person-work-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .person-card-featured .person-work-thumb {
+      width: 48px;
+      height: 48px;
+    }
+
+    .person-card:hover .person-work-thumb {
+      border-color: rgba(168, 212, 230, 0.5);
+    }
+
+    .person-work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .person-more-count {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    /* ========================================
+       PERSON BADGES & CAREER PHASE
+       ======================================== */
+    .person-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .person-career-phase {
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid transparent;
+    }
+
+    .person-career-phase.career-phase-early {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    .person-career-phase.career-phase-peak {
+      background: rgba(212, 168, 71, 0.15);
+      color: var(--accent-gold);
+      border-color: rgba(212, 168, 71, 0.3);
+    }
+
+    .person-career-phase.career-phase-late {
+      background: rgba(168, 212, 230, 0.15);
+      color: var(--spirit-glow);
+      border-color: rgba(168, 212, 230, 0.3);
+    }
+
+    .person-career-phase.career-phase-retired {
+      background: rgba(155, 142, 196, 0.15);
+      color: var(--spirit-purple);
+      border-color: rgba(155, 142, 196, 0.3);
+    }
+
+    .person-career-phase.career-phase-transitional {
+      background: rgba(251, 146, 60, 0.15);
+      color: #fb923c;
+      border-color: rgba(251, 146, 60, 0.3);
+    }
+
+    .person-nationality {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin: 0;
+      opacity: 0.8;
+    }
+
+    /* ========================================
+       BIO TOOLTIP
+       ======================================== */
+    .person-bio-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      width: calc(100% + 40px);
+      max-width: 280px;
+      padding: var(--space-md);
+      background: var(--forest-deep);
+      border: 1px solid var(--spirit-glow);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .person-bio-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: var(--spirit-glow);
+    }
+
+    .person-bio-tooltip p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-light);
+    }
+
+    .person-encounters-hint {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: var(--space-sm);
+      font-size: 0.75rem;
+      color: var(--spirit-glow);
+    }
+
+    .person-card:hover .person-bio-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ========================================
+       MY ENCOUNTERS LINK
+       ======================================== */
+    .person-encounters-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--card-border);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: all 0.25s ease;
+    }
+
+    .person-card:hover .person-encounters-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .person-encounters-link .encounters-text {
+      font-size: 0.75rem;
+      color: var(--spirit-glow);
+      font-weight: 500;
+    }
+
+    .person-encounters-link svg {
+      color: var(--spirit-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .person-card:hover .person-encounters-link svg {
+      transform: translateX(2px);
+    }
+
+    /* ========================================
+       IMAGE LOADING STATES
+       ======================================== */
+    .person-avatar-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(168, 212, 230, 0.15) 50%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 50%;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .person-avatar-container {
+      position: relative;
+    }
+
+    /* Hide shimmer once image loads */
+    .person-avatar[src]:not([src=""]) + .person-avatar-shimmer {
+      opacity: 0;
+    }
+
+    .person-avatar {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Image loading fade-in */
+    .person-avatar[src]:not([src=""]) {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+
+    /* People Grid */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-lg);
+      padding: var(--space-xl);
+    }
+
+    /* Mobile adjustments for people */
+    @media (max-width: 768px) {
+      .people-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+        padding: var(--space-md);
+      }
+
+      .person-avatar-container {
+        width: 70px;
+        height: 70px;
+      }
+
+      .person-name {
+        font-size: 0.9rem;
+      }
+
+      .person-work-thumb {
+        width: 36px;
+        height: 36px;
+      }
+
+      .person-themes {
+        display: none;
+      }
+
+      .sort-dropdown {
+        display: none;
+      }
+
+      /* Hide bio tooltip on mobile - use tap instead */
+      .person-bio-tooltip {
+        display: none;
+      }
+
+      /* Always show encounters link on mobile */
+      .person-encounters-link {
+        opacity: 0.7;
+        transform: none;
+      }
+
+      /* Smaller career phase badge on mobile */
+      .person-career-phase {
+        font-size: 0.55rem;
+        padding: 1px 4px;
+      }
+
+      .person-nationality {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .people-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Show full card on single column */
+      .person-encounters-link {
+        opacity: 1;
+      }
+    }
+
+    /* ========================================
+       VAULT CARD STATE BADGES
+       ======================================== */
+    .badge-new {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: linear-gradient(135deg, #e63946, #c1121f);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 3;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .badge-places {
+      position: absolute;
+      bottom: var(--space-sm);
+      right: var(--space-sm);
+      background: rgba(168, 212, 230, 0.9);
+      color: var(--forest-deep);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-places svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Score badge when new badge is present */
+    .has-new-badge .score-mini {
+      top: calc(var(--space-sm) + 22px);
+    }
+
+    /* ========================================
+       MOBILE BREAKPOINTS FOR VAULT
+       ======================================== */
+    @media (max-width: 1200px) {
+      .vault-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      .card-list-view {
+        /* Keep 3 columns for list view too */
+      }
+    }
+
+    @media (max-width: 900px) {
+      .vault-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-lg) !important;
+      }
+      .card-list-view {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .card-list-view .artwork-frame-container {
+        width: 100% !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .vault-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-md) !important;
+        padding: var(--space-md) !important;
+      }
+
+      .vault-header {
+        padding: var(--space-md) !important;
+      }
+
+      .vault-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .view-toggle-icons {
+        position: static !important;
+        margin-top: var(--space-md);
+        justify-content: center !important;
+      }
+
+      .vault-tabs {
+        flex-wrap: wrap;
+      }
+
+      .chips-container {
+        flex-wrap: wrap;
+        gap: var(--space-xs) !important;
+      }
+
+      .chip {
+        font-size: 0.75rem;
+        padding: var(--space-xs) var(--space-sm);
+      }
+
+      .card-body {
+        padding: var(--space-sm);
+      }
+
+      .card-title {
+        font-size: 0.9rem;
+      }
+
+      .card-meta {
+        font-size: 0.75rem;
+      }
+
+      /* Hide wooden strips on mobile */
+      .wooden-strips {
+        display: none;
+      }
+
+      /* People grid mobile */
+      .people-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .vault-header h1 {
+        font-size: 1.25rem;
+      }
+
+      .badge-new {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .badge-places {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+      }
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,2393 @@
+/**
+ * ============================================
+ * PAGES.CSS - Page-specific layouts
+ * Style: Impressionist + Ghibli Forest + Patagonia Clarity
+ * ============================================
+ */
+
+/* ----------------------------------------
+   HERO PAGE (index.html)
+   ---------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.hero-title {
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-md);
+  background: linear-gradient(
+    135deg,
+    var(--text-light) 0%,
+    var(--spirit-glow) 50%,
+    var(--accent-gold) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+/* Portal Door - Entry to Art World */
+.portal-container {
+  width: 200px;
+  height: 280px;
+  margin: 0 auto var(--space-xl);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(
+    180deg,
+    rgba(168, 212, 230, 0.2) 0%,
+    rgba(45, 74, 62, 0.4) 100%
+  );
+  border: 2px solid var(--spirit-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.portal-container:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 60px rgba(168, 212, 230, 0.5),
+    inset 0 0 40px rgba(168, 212, 230, 0.2);
+}
+
+.portal-door {
+  width: 90%;
+  height: 95%;
+  background: linear-gradient(
+    180deg,
+    var(--forest-mid) 0%,
+    var(--forest-deep) 100%
+  );
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--spirit-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------------------
+   WORK DETAIL PAGE (work-detail.html)
+   ---------------------------------------- */
+.work-detail {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.work-hero {
+  position: relative;
+  height: 50vh;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.work-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to top,
+    var(--forest-deep) 0%,
+    transparent 100%
+  );
+}
+
+.work-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.work-meta {
+  margin-bottom: var(--space-xl);
+}
+
+.work-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: var(--space-sm);
+}
+
+.work-creator {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+/* Three-Layer Content System */
+.layers-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* ----------------------------------------
+   EXPLORE MAP PAGE (explore.html)
+   ---------------------------------------- */
+.explore-page {
+  padding-top: 60px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-wrapper {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Custom Leaflet styling to match theme */
+.leaflet-popup-content-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.leaflet-popup-content {
+  margin: var(--space-md);
+  color: var(--text-light);
+}
+
+.leaflet-popup-tip {
+  background: var(--card-bg);
+}
+
+/* Coordinate Input Panel */
+.coord-input-panel {
+  position: fixed;
+  top: 80px;
+  right: var(--space-lg);
+  z-index: 1001;
+
+  background: rgba(26, 47, 26, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  width: 280px;
+  pointer-events: auto;
+}
+
+.coord-input-panel * {
+  pointer-events: auto;
+}
+
+.coord-input-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--spirit-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+}
+
+.coord-input-group {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.coord-input {
+  flex: 1;
+  background: var(--forest-deep);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+.coord-input:focus {
+  outline: none;
+  border-color: var(--spirit-glow);
+}
+
+.coord-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Place Cards Sidebar */
+.places-sidebar {
+  position: fixed;
+  left: var(--space-lg);
+  top: 80px;
+  bottom: 100px;
+  width: 320px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow-y: auto;
+  padding-right: var(--space-sm);
+}
+
+/* ----------------------------------------
+   DNA CANVAS PAGE (dna.html)
+   ---------------------------------------- */
+.dna-page {
+  padding-top: 60px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--forest-deep);
+}
+
+.dna-canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#dnaCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* DNA Empty State */
+.dna-empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 400px;
+  padding: var(--space-2xl);
+  z-index: 10;
+}
+
+.empty-constellation {
+  width: 200px;
+  height: 150px;
+  margin: 0 auto var(--space-xl);
+  position: relative;
+}
+
+.constellation-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--spirit-glow);
+  border-radius: 50%;
+  animation: constellation-pulse 2s ease-in-out infinite;
+}
+
+.constellation-dot:nth-child(1) { animation-delay: 0s; }
+.constellation-dot:nth-child(2) { animation-delay: 0.3s; }
+.constellation-dot:nth-child(3) { animation-delay: 0.6s; }
+.constellation-dot:nth-child(4) { animation-delay: 0.9s; }
+.constellation-dot:nth-child(5) { animation-delay: 1.2s; }
+
+.constellation-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-lines line {
+  stroke: var(--spirit-glow);
+  stroke-width: 1;
+  opacity: 0.3;
+}
+
+@keyframes constellation-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.empty-message {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+.empty-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-ghost:hover {
+  border-color: var(--spirit-glow);
+  color: var(--text-light);
+}
+
+/* DNA Control Panel */
+.dna-controls {
+  position: fixed;
+  top: 80px;
+  right: var(--space-lg);
+  z-index: 1000;
+
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  width: 260px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.dna-legend {
+  margin-top: var(--space-lg);
+}
+
+.dna-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.dna-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dna-legend-dot.work { background: var(--accent-gold); }
+.dna-legend-dot.creator { background: var(--spirit-purple); }
+.dna-legend-dot.tag { background: var(--spirit-glow); }
+.dna-legend-dot.character { background: var(--spirit-pink); }
+
+/* Node Info Panel - Slide-in Animation (DNA-008) */
+.node-info {
+  position: fixed;
+  bottom: 100px;
+  right: var(--space-lg);
+  z-index: 1000;
+
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  width: 320px;
+  max-width: calc(100vw - 2 * var(--space-lg));
+  text-align: left;
+
+  /* Slide-in animation */
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.node-info.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Node Info Panel - Enhanced Content Sections (DNA-002) */
+.node-info-header {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.node-info-header img {
+  width: 70px;
+  height: 70px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--forest-deep);
+}
+
+.node-info-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.node-info-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+}
+
+.node-info-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.node-info-type {
+  font-size: 0.7rem;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.node-info-career-badge {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(168, 212, 230, 0.15);
+  color: var(--spirit-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.node-info-career-badge.peak { background: rgba(212, 168, 71, 0.2); color: var(--accent-gold); }
+.node-info-career-badge.late { background: rgba(155, 142, 196, 0.2); color: var(--spirit-purple); }
+.node-info-career-badge.early { background: rgba(168, 230, 196, 0.2); color: #a8e6c4; }
+.node-info-career-badge.retired { background: rgba(184, 176, 164, 0.2); color: var(--text-muted); }
+
+.node-info-bio {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
+
+.node-info-metadata {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.node-info-section {
+  margin-top: var(--space-md);
+}
+
+.node-info-section-title {
+  font-size: 0.7rem;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.node-info-influences-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.node-info-influence-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-smooth);
+}
+
+.node-info-influence-item:hover {
+  background: rgba(168, 212, 230, 0.15);
+}
+
+.node-info-influence-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--spirit-purple);
+  flex-shrink: 0;
+}
+
+.node-info-connections {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.node-info-connection-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.node-info-connection-badge {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: rgba(30, 30, 30, 1);
+}
+
+.node-info-connection-relation {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.node-info-connection-name {
+  color: var(--text-light);
+  flex: 1;
+}
+
+.node-info-action {
+  margin-top: var(--space-md);
+}
+
+/* ----------------------------------------
+   VAULT PAGE (vault.html)
+   ---------------------------------------- */
+.vault-page {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.vault-header {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: transparent;
+}
+
+/* Vault page background when grid view is active - unified background */
+.vault-page.grid-view-active {
+  background: 
+    /* Yellow starlight */
+    radial-gradient(circle at 15% 20%, rgba(255, 220, 100, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(255, 200, 80, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 50% 60%, rgba(255, 230, 120, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 25% 80%, rgba(255, 210, 90, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 75% 15%, rgba(255, 240, 110, 0.18) 0%, transparent 45%),
+    /* Base green */
+    var(--forest-deep);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+/* Remove any default background from vault-header when grid is active */
+.vault-page.grid-view-active .vault-header {
+  background: transparent !important;
+}
+
+/* Vault Grid Wrapper - default (no background for list view) */
+.vault-grid-wrapper {
+  position: relative;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+/* Gallery Background - transparent when grid view is active (uses page background) */
+.vault-grid-wrapper.grid-view-active {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+}
+
+/* Vault header - transparent when grid view is active (uses page background) */
+.vault-header.grid-view-active {
+  background: transparent;
+  position: relative;
+  padding-bottom: var(--space-xl);
+  padding-top: calc(var(--space-2xl) + 30px);
+}
+
+/* Leo Constellation Container */
+.leo-constellation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Base star style for Leo constellation */
+.leo-star {
+  position: absolute;
+  font-size: 50px;
+  line-height: 1;
+  color: rgba(255, 255, 250, 0.9);
+  text-align: center;
+  /* Star glow effect */
+  text-shadow: 
+    0 0 10px rgba(255, 255, 250, 0.8),
+    0 0 20px rgba(255, 255, 240, 0.6),
+    0 0 40px rgba(250, 250, 230, 0.4),
+    0 0 60px rgba(240, 240, 220, 0.2);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 250, 0.5));
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Only show constellation in grid view */
+.vault-header:not(.grid-view-active) .leo-constellation {
+  display: none;
+}
+
+/* Leo Constellation Star Positions - Only 3 main stars */
+/* Algieba (γ Leo) - top of the sickle, lion's head - MEDIUM SIZE */
+.star-algieba {
+  top: -10px; /* Moved up 80px from 70px */
+  right: calc(50% - 200px); /* Moved 400px to the left (from 600px to 200px) */
+  font-size: 55px; /* Medium size */
+  width: 55px;
+  height: 55px;
+}
+
+/* Regulus (α Leo) - brightest star, heart of the lion - LARGEST SIZE */
+.star-regulus {
+  top: 65px; /* Moved up 80px from 145px */
+  right: calc(50% - 240px); /* Moved 400px to the left (from 640px to 240px) */
+  font-size: 70px; /* Largest size - brightest star */
+  width: 70px;
+  height: 70px;
+  color: rgba(255, 255, 250, 1);
+}
+
+/* Denebola (β Leo) - tail of the lion - SMALLER SIZE */
+.star-denebola {
+  top: 100px; /* Moved up 80px from 180px */
+  right: calc(50% - 275px); /* Moved 400px to the left (from 675px to 275px) */
+  font-size: 50px; /* Smaller than Regulus but larger than others */
+  width: 50px;
+  height: 50px;
+}
+
+
+/* Hide wooden strips for all views */
+.vault-grid-wrapper .wooden-strips {
+  display: none;
+}
+
+/* Wooden Strips - only visible in grid view */
+.wooden-strips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  display: block;
+}
+
+.wooden-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(
+    to bottom,
+    #8b6f47 0%,
+    #a0826d 20%,
+    #8b6f47 40%,
+    #6b5237 60%,
+    #8b6f47 80%,
+    #a0826d 100%
+  );
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(139, 111, 71, 0.5);
+  border-bottom: 1px solid rgba(107, 82, 55, 0.5);
+}
+
+.wooden-strip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(160, 130, 109, 0.3) 50%,
+    transparent 100%
+  );
+}
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+  padding: var(--space-2xl) 0;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure moon is above grid but below header */
+.vault-grid-wrapper.grid-view-active .vault-grid {
+  z-index: 2;
+}
+
+/* Grid view specific styles - only when grid view is active */
+.vault-grid-wrapper .vault-grid .card-grid-view {
+  background: transparent;
+  border: none;
+}
+
+.vault-grid-wrapper .vault-grid .card-grid-view .card-body {
+  padding: var(--space-sm) 0;
+  text-align: center;
+}
+
+.vault-grid-wrapper .vault-grid .card-grid-view .card-title {
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.vault-grid-wrapper .vault-grid .card-grid-view .card-meta {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+/* ----------------------------------------
+   SCAN & INPUT PAGES
+   ---------------------------------------- */
+.scan-page,
+.input-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+}
+
+.scan-container,
+.input-container {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.scan-preview {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--forest-deep);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--card-border);
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.input-field {
+  background: var(--forest-deep);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--spirit-glow);
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   ---------------------------------------- */
+
+/* Tablets (992px) */
+@media (max-width: 992px) {
+  .vault-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .creators-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lineage-section {
+    flex-direction: column;
+  }
+
+  .hero-layout {
+    gap: var(--space-lg);
+  }
+
+  .hero-poster {
+    width: 200px;
+  }
+}
+
+/* Medium devices (768px) */
+@media (max-width: 768px) {
+  .floating-nav {
+    bottom: var(--space-md);
+    padding: var(--space-xs);
+    gap: var(--space-xs);
+  }
+
+  .nav-item {
+    padding: var(--space-sm);
+  }
+
+  .nav-item span {
+    display: none;
+  }
+
+  .places-sidebar {
+    display: none;
+  }
+
+  .coord-input-panel {
+    right: var(--space-sm);
+    left: var(--space-sm);
+    width: auto;
+    top: auto;
+    bottom: 80px;
+  }
+
+  .portal-container {
+    width: 150px;
+    height: 210px;
+  }
+
+  .vault-header {
+    padding: var(--space-md);
+  }
+
+  .vault-tabs {
+    flex-wrap: wrap;
+  }
+
+  .chips-container {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .dna-controls {
+    width: 200px;
+    padding: var(--space-md);
+  }
+
+  .node-info {
+    width: 280px;
+    right: var(--space-sm);
+    bottom: 80px;
+    /* Override slide-in for smaller screens */
+    transform: translateX(120%);
+  }
+
+  .node-info.visible {
+    transform: translateX(0);
+  }
+}
+
+/* Small phones (576px) */
+@media (max-width: 576px) {
+  .floating-nav {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    justify-content: space-around;
+    padding: var(--space-sm);
+    background: rgba(26, 47, 26, 0.98);
+  }
+
+  .nav-item {
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-xs);
+  }
+
+  .nav-item svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.9rem;
+    padding: 0 var(--space-sm);
+  }
+
+  .portal-container {
+    width: 120px;
+    height: 170px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: 0 var(--space-lg);
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .vault-grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-sm);
+  }
+
+  .creators-grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-sm);
+  }
+
+  .view-toggle-icons {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .vault-tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-xs);
+  }
+
+  .vault-tab {
+    justify-content: center;
+  }
+
+  .search-modal .search-container {
+    width: 95%;
+    margin: 0 var(--space-sm);
+  }
+
+  .search-input {
+    font-size: 1rem;
+    padding: var(--space-md);
+    padding-left: 48px;
+  }
+
+  .coord-input-panel {
+    bottom: 70px;
+    padding: var(--space-sm);
+  }
+
+  .dna-controls {
+    width: 100%;
+    position: fixed;
+    top: auto;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  .node-info {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 70px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 50vh;
+    overflow-y: auto;
+    /* Slide up from bottom on mobile */
+    transform: translateY(120%);
+  }
+
+  .node-info.visible {
+    transform: translateY(0);
+  }
+
+  .scene-sidebar {
+    width: 100%;
+    bottom: 70px;
+  }
+}
+
+/* ----------------------------------------
+   FLOATING ACTION BUTTON (FAB) - Generate with AI
+   ---------------------------------------- */
+/* USE CASE: User clicks FAB to generate AI content for new works
+   INTENTION: Provide clear, accessible action to fill in missing sections
+   VISION: Enables "template first + AI generate" flow for search-added works
+   TRADE-OFF: Fixed position may overlap content on small screens */
+
+/* FAB Container - holds button + expandable menu */
+.fab-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: none; /* Hidden by default, shown when content needs generation */
+}
+
+.fab-container.fab-visible {
+  display: block;
+}
+
+.fab-generate {
+  background: linear-gradient(135deg, var(--accent-gold), var(--spirit-glow));
+  color: var(--forest-deep);
+  border: none;
+  border-radius: 28px;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.fab-generate:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.fab-generate:active {
+  transform: translateY(-1px);
+}
+
+.fab-generate.fab-generating {
+  background: var(--forest-mid);
+  color: var(--text-light);
+  pointer-events: none;
+  cursor: wait;
+}
+
+.fab-generate.fab-generating .fab-icon {
+  animation: fab-spin 1s linear infinite;
+}
+
+@keyframes fab-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fab-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.fab-text {
+  white-space: nowrap;
+}
+
+/* FAB Expandable Menu - Depth options */
+.fab-menu {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fab-menu.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.fab-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--forest-mid);
+  border: 1px solid var(--spirit-glow);
+  border-radius: 12px;
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.fab-option:hover {
+  background: var(--forest-deep);
+  border-color: var(--accent-gold);
+  transform: translateX(-4px);
+}
+
+.fab-option-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.fab-option-text {
+  flex: 1;
+}
+
+/* ----------------------------------------
+   ENRICHMENT SELECTOR BOTTOM SHEET
+   USE CASE: Section selection UI for AI enrichment
+   INTENTION: Glassmorphism bottom sheet with mobile-first design
+   VISION: Granular control over AI generation
+   ---------------------------------------- */
+
+/* Backdrop overlay */
+.enrichment-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.enrichment-backdrop.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Bottom sheet container */
+.enrichment-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1101;
+  max-height: 85vh;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+}
+
+.enrichment-sheet.visible {
+  transform: translateY(0);
+}
+
+.enrichment-sheet-inner {
+  background: rgba(45, 74, 62, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 212, 230, 0.2);
+  border-bottom: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: var(--space-md) var(--space-lg) var(--space-xl);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* Drag handle for mobile */
+.enrichment-drag-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(168, 212, 230, 0.3);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-md);
+}
+
+/* Header */
+.enrichment-header {
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.enrichment-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.enrichment-title-icon {
+  font-size: 1.5rem;
+}
+
+/* Quick Actions */
+.enrichment-quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.enrichment-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: rgba(168, 212, 230, 0.1);
+  border: 1px solid rgba(168, 212, 230, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.enrichment-preset:hover {
+  background: rgba(168, 212, 230, 0.2);
+  border-color: var(--spirit-glow);
+  transform: translateY(-2px);
+}
+
+.enrichment-preset:active {
+  transform: translateY(0);
+}
+
+.enrichment-preset-missing {
+  border-color: rgba(212, 168, 71, 0.3);
+  background: rgba(212, 168, 71, 0.1);
+}
+
+.enrichment-preset-missing:hover {
+  background: rgba(212, 168, 71, 0.2);
+  border-color: var(--accent-gold);
+}
+
+.enrichment-preset-deep {
+  border-color: rgba(155, 142, 196, 0.3);
+  background: rgba(155, 142, 196, 0.1);
+}
+
+.enrichment-preset-deep:hover {
+  background: rgba(155, 142, 196, 0.2);
+  border-color: var(--spirit-purple);
+}
+
+.preset-icon {
+  font-size: 1.5rem;
+}
+
+.preset-text {
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Section checkboxes */
+.enrichment-sections {
+  margin-bottom: var(--space-lg);
+}
+
+.enrichment-sections-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.enrichment-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: var(--space-sm);
+}
+
+.enrichment-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.enrichment-checkbox-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Custom checkbox */
+.enrichment-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(168, 212, 230, 0.4);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.enrichment-checkbox:checked + .checkbox-custom {
+  background: var(--spirit-glow);
+  border-color: var(--spirit-glow);
+}
+
+.enrichment-checkbox:checked + .checkbox-custom::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: solid var(--forest-deep);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+.enrichment-checkbox:focus-visible + .checkbox-custom {
+  box-shadow: 0 0 0 2px var(--accent-gold);
+}
+
+.checkbox-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.checkbox-label-main {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.checkbox-label-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Layer badge for sections with local data (e.g., "12 from Anitabi") */
+.checkbox-layer-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-weight: 500;
+  margin-left: var(--space-xs);
+}
+
+.checkbox-layer-info {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Item with local data - subtle highlight */
+.enrichment-checkbox-item.has-local-data {
+  border-left: 3px solid var(--accent-gold);
+  padding-left: calc(var(--space-md) - 3px);
+}
+
+/* AI addition sub-checkbox (indented under places) */
+.enrichment-ai-addition {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  padding-left: calc(var(--space-md) + 28px);
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-left: 3px solid transparent;
+}
+
+.enrichment-ai-addition:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.enrichment-ai-addition-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-custom-small {
+  width: 16px;
+  height: 16px;
+  border-width: 1.5px;
+}
+
+.ai-addition-text {
+  color: var(--text-muted);
+}
+
+.enrichment-ai-addition-checkbox:checked ~ .checkbox-custom-small {
+  background: var(--spirit-glow);
+  border-color: var(--spirit-glow);
+}
+
+.enrichment-ai-addition-checkbox:checked ~ .checkbox-custom-small::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: solid var(--forest-deep);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  left: 4px;
+  top: 1px;
+}
+
+/* Mode toggle */
+.enrichment-mode {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+}
+
+.enrichment-mode-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.enrichment-mode-options {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.enrichment-mode-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+}
+
+.enrichment-mode-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mode-radio-custom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(168, 212, 230, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.enrichment-mode-option input[type="radio"]:checked + .mode-radio-custom {
+  border-color: var(--spirit-glow);
+}
+
+.enrichment-mode-option input[type="radio"]:checked + .mode-radio-custom::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--spirit-glow);
+  border-radius: 50%;
+}
+
+.enrichment-mode-option input[type="radio"]:focus-visible + .mode-radio-custom {
+  box-shadow: 0 0 0 2px var(--accent-gold);
+}
+
+.mode-text {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* Footer actions */
+.enrichment-footer {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+}
+
+.enrichment-btn {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.enrichment-btn-cancel {
+  background: transparent;
+  border: 1px solid rgba(168, 212, 230, 0.3);
+  color: var(--text-muted);
+}
+
+.enrichment-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-light);
+}
+
+.enrichment-btn-generate {
+  background: linear-gradient(135deg, var(--accent-gold), var(--spirit-glow));
+  border: none;
+  color: var(--forest-deep);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.enrichment-btn-generate:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 168, 71, 0.3);
+}
+
+.enrichment-btn-generate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-count {
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .enrichment-sheet-inner {
+    padding: var(--space-md);
+  }
+
+  .enrichment-quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .enrichment-footer {
+    flex-direction: column;
+  }
+
+  .enrichment-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .enrichment-mode {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+}
+
+/* Section placeholder for ungeneratedContent */
+.section-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  min-height: 120px;
+}
+
+.section-placeholder .placeholder-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  opacity: 0.5;
+}
+
+.section-placeholder .placeholder-text {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.section-placeholder .placeholder-hint {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  margin-top: var(--space-xs);
+}
+
+/* Glance placeholder (inline text) */
+.glance-placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.work-glance.has-placeholder {
+  min-height: 1.6em;
+}
+
+/* Mobile adjustments for FAB */
+@media (max-width: 768px) {
+  .fab-generate {
+    bottom: 80px; /* Above mobile nav */
+    right: 16px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   Confidence Star Badges
+   Four-star system per ARTOPATH_SPEC.md section 1.4
+
+   USE CASE: Display trust level for claims throughout the UI
+   INTENTION: Visual indicator of source reliability (Certain/Likely/Possible/Rumor)
+   VISION: Transparent provenance aligns with "trust but verify" philosophy
+
+   ACCESSIBILITY:
+   - Always include aria-label on the badge element describing the confidence level
+   - Example: aria-label="Confidence: Likely (3 of 4 stars)"
+   - Tooltip provides additional context on hover/focus
+   ========================================================================== */
+
+.confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  position: relative;
+  cursor: default;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Individual star styling */
+.confidence-badge__star {
+  display: inline-block;
+  line-height: 1;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+/* Filled star - uses accent-gold */
+.confidence-badge__star--filled {
+  color: var(--accent-gold);
+  text-shadow: 0 0 4px rgba(212, 168, 71, 0.4);
+}
+
+/* Empty star - muted version of accent-gold */
+.confidence-badge__star--empty {
+  color: rgba(212, 168, 71, 0.3);
+}
+
+/* Hover effect - subtle scale on filled stars */
+.confidence-badge:hover .confidence-badge__star--filled {
+  transform: scale(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   Size Variants
+   -------------------------------------------------------------------------- */
+
+/* Small - for inline text (12px stars) */
+.confidence-badge--sm {
+  font-size: 12px;
+  gap: 0px;
+}
+
+.confidence-badge--sm .confidence-badge__star {
+  font-size: 12px;
+}
+
+/* Medium - for section headers (16px stars) */
+.confidence-badge--md {
+  font-size: 16px;
+  gap: 1px;
+}
+
+.confidence-badge--md .confidence-badge__star {
+  font-size: 16px;
+}
+
+/* Large - for prominent displays (20px stars) */
+.confidence-badge--lg {
+  font-size: 20px;
+  gap: 2px;
+}
+
+.confidence-badge--lg .confidence-badge__star {
+  font-size: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Tooltip (CSS-only using data-tooltip attribute)
+   -------------------------------------------------------------------------- */
+
+.confidence-badge[data-tooltip] {
+  cursor: help;
+}
+
+.confidence-badge[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+
+  /* Styling */
+  background: var(--forest-deep);
+  color: var(--text-light);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  white-space: nowrap;
+  box-shadow: var(--shadow-soft);
+
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-smooth);
+  z-index: 100;
+}
+
+/* Tooltip arrow */
+.confidence-badge[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Arrow shape */
+  border: 5px solid transparent;
+  border-top-color: var(--forest-deep);
+
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+  z-index: 101;
+}
+
+/* Show tooltip on hover and focus */
+.confidence-badge[data-tooltip]:hover::after,
+.confidence-badge[data-tooltip]:focus::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.confidence-badge[data-tooltip]:hover::before,
+.confidence-badge[data-tooltip]:focus::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Allow focus for keyboard users */
+.confidence-badge[data-tooltip] {
+  outline: none;
+}
+
+.confidence-badge[data-tooltip]:focus-visible {
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Confidence Level Modifiers (optional semantic classes)
+   -------------------------------------------------------------------------- */
+
+/* Certain (4 stars) - slightly brighter glow */
+.confidence-badge--certain .confidence-badge__star--filled {
+  text-shadow: 0 0 6px rgba(212, 168, 71, 0.6);
+}
+
+/* Rumor (1 star) - more subdued */
+.confidence-badge--rumor .confidence-badge__star--filled {
+  color: rgba(212, 168, 71, 0.7);
+  text-shadow: none;
+}
+
+/* ==========================================================================
+   Wrong Work Generated Button & Regeneration Panel
+
+   USE CASE: User finds AI identified the wrong work and wants to regenerate
+   INTENTION: Allow users to regenerate specific sections with correct identification
+   VISION: Enables "trust but verify" flow - user has control over AI output
+   TRADE-OFF: Additional UI element (subtle) vs silent failure
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Wrong Work Generated Button
+   -------------------------------------------------------------------------- */
+.wrong-work-container {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.wrong-work-btn {
+  background: transparent;
+  border: 1px solid rgba(212, 168, 71, 0.4);
+  color: var(--accent-gold);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.wrong-work-btn:hover {
+  background: rgba(212, 168, 71, 0.15);
+  border-color: var(--accent-gold);
+}
+
+.wrong-work-btn:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.wrong-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Regeneration Panel Overlay
+   -------------------------------------------------------------------------- */
+.regeneration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1999;
+}
+
+/* --------------------------------------------------------------------------
+   Regeneration Panel
+   -------------------------------------------------------------------------- */
+.regeneration-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--forest-deep);
+  border: 1px solid rgba(168, 212, 230, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 450px;
+  width: 90%;
+  z-index: 2000;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+.regeneration-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.regeneration-header h3 {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.panel-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.panel-close:hover {
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.panel-close:focus-visible {
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: 2px;
+}
+
+.regeneration-hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Regeneration Sections List
+   -------------------------------------------------------------------------- */
+.regeneration-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.regeneration-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.regeneration-section:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.regeneration-section input[type="checkbox"] {
+  accent-color: var(--accent-gold);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.section-name {
+  flex: 1;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.regen-btn {
+  background: rgba(168, 212, 230, 0.15);
+  border: 1px solid rgba(168, 212, 230, 0.3);
+  color: var(--spirit-glow);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.regen-btn:hover {
+  background: rgba(168, 212, 230, 0.25);
+  border-color: var(--spirit-glow);
+}
+
+.regen-btn:focus-visible {
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Regeneration Actions
+   -------------------------------------------------------------------------- */
+.regeneration-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background: var(--accent-gold);
+  border: none;
+  color: var(--forest-deep);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Regenerating State
+   -------------------------------------------------------------------------- */
+.regenerating {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.regenerating::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(168, 212, 230, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* --------------------------------------------------------------------------
+   AI-Generated Badge for Vault Cards
+   USE CASE: Visual indicator on vault cards for AI-sourced works
+   INTENTION: Help users identify which works might have incorrect AI content
+   -------------------------------------------------------------------------- */
+.badge-ai-generated {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(155, 142, 196, 0.9);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-ai-generated svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Kebab Menu for Vault Cards
+   USE CASE: Actions menu on vault cards (report issue, remove, etc.)
+   INTENTION: Subtle access to card actions without cluttering the UI
+   -------------------------------------------------------------------------- */
+.card-kebab-menu {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 10;
+}
+
+/* When there's an AI badge, position kebab below it */
+.card-kebab-menu.has-ai-badge {
+  top: calc(var(--space-sm) + 22px);
+}
+
+.kebab-trigger {
+  background: rgba(26, 47, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+/* Show kebab on card hover */
+.card:hover .kebab-trigger,
+.card-grid-view:hover .kebab-trigger,
+.card-list-view:hover .kebab-trigger {
+  opacity: 1;
+}
+
+.kebab-trigger:hover {
+  background: rgba(45, 74, 62, 0.95);
+  border-color: var(--spirit-glow);
+  color: var(--text-light);
+}
+
+.kebab-trigger:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: 2px;
+}
+
+/* Kebab dropdown menu */
+.kebab-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: var(--forest-deep);
+  border: 1px solid rgba(168, 212, 230, 0.2);
+  border-radius: 6px;
+  min-width: 150px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.kebab-dropdown.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.kebab-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.kebab-option:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.kebab-option:last-child {
+  border-radius: 0 0 5px 5px;
+}
+
+.kebab-option:only-child {
+  border-radius: 5px;
+}
+
+.kebab-option:hover {
+  background: rgba(168, 212, 230, 0.1);
+}
+
+.kebab-option:focus-visible {
+  outline: 2px solid var(--spirit-glow);
+  outline-offset: -2px;
+}
+
+.kebab-option svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Report issue option - subtle warning color */
+.kebab-option.kebab-option-report {
+  color: var(--accent-gold);
+}
+
+.kebab-option.kebab-option-report:hover {
+  background: rgba(212, 168, 71, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+  .regeneration-panel {
+    width: 95%;
+    max-width: none;
+    padding: 1rem;
+  }
+
+  .regeneration-sections {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .regeneration-section {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .regeneration-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

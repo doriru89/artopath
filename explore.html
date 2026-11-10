@@ -1,0 +1,2808 @@
+<!--
+  FILE: explore.html
+  PURPOSE: Map View (Personal Geography)
+  CONTEXT: Visualizes works, people, and places on a map. Uses Mapbox GL JS.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Map - Artopath</title>
+
+  <!-- ========================================
+       CSS IMPORTS
+       Style: Impressionist + Ghibli + Patagonia
+       ======================================== -->
+  <link rel="stylesheet" href="css/base.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/components.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/pages.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/animations.css?v=e0ffeb0">
+
+  <!-- Mapbox GL JS CSS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
+
+  <!-- Custom Mapbox Overrides -->
+  <style>
+    /* Ensure Mapbox controls don't block our panels */
+    .mapboxgl-ctrl-top-left,
+    .mapboxgl-ctrl-top-right,
+    .mapboxgl-ctrl-bottom-left,
+    .mapboxgl-ctrl-bottom-right {
+      z-index: 500 !important;
+    }
+
+    .mapboxgl-canvas-container {
+      z-index: 400 !important;
+    }
+
+    .mapboxgl-ctrl {
+      z-index: 500 !important;
+    }
+
+    /* Dark theme for Mapbox popups */
+    .mapboxgl-popup-content {
+      background: rgba(45, 74, 62, 0.95);
+      border: 1px solid rgba(168, 212, 230, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      color: #f5f0e8;
+      padding: 0;
+    }
+
+    .mapboxgl-popup-tip {
+      border-top-color: rgba(45, 74, 62, 0.95);
+    }
+
+    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+      border-top-color: rgba(45, 74, 62, 0.95);
+    }
+
+    .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+      border-bottom-color: rgba(45, 74, 62, 0.95);
+    }
+
+    .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+      border-right-color: rgba(45, 74, 62, 0.95);
+    }
+
+    .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+      border-left-color: rgba(45, 74, 62, 0.95);
+    }
+
+    .mapboxgl-popup-close-button {
+      color: #a8d4e6;
+      font-size: 18px;
+      padding: 4px 8px;
+    }
+
+    .mapboxgl-popup-close-button:hover {
+      background: rgba(168, 212, 230, 0.2);
+    }
+
+    #map {
+      background: #1a2f1a;
+    }
+
+    /* Custom marker pulse animation */
+    .marker-pulse {
+      animation: markerPulse 2s ease-out infinite;
+    }
+
+    @keyframes markerPulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+
+    /* Search Modal Styles */
+    .search-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 47, 26, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 15vh;
+    }
+
+    .search-modal.active {
+      display: flex;
+    }
+
+    .search-container {
+      width: 90%;
+      max-width: 600px;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-lg) var(--space-xl);
+      padding-left: 56px;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-light);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--spirit-glow);
+      box-shadow: 0 0 20px rgba(168, 212, 230, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-lg);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-close {
+      position: absolute;
+      right: var(--space-md);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .search-close:hover {
+      color: var(--text-light);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-results {
+      margin-top: var(--space-md);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .search-results.has-results {
+      display: block;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover,
+    .search-result-item.selected {
+      background: rgba(168, 212, 230, 0.1);
+    }
+
+    .search-result-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+
+    .search-result-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-result-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-result-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .search-result-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: rgba(168, 212, 230, 0.2);
+      color: var(--spirit-glow);
+    }
+
+    .search-result-type.movie {
+      background: rgba(212, 168, 71, 0.2);
+      color: var(--accent-gold);
+    }
+
+    .search-no-results {
+      padding: var(--space-xl);
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .search-hint {
+      margin-top: var(--space-md);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .search-hint kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .search-highlight {
+      background: rgba(212, 168, 71, 0.3);
+      color: var(--accent-gold);
+      border-radius: 2px;
+    }
+
+    .nav-search {
+      background: rgba(168, 212, 230, 0.1);
+      border: 1px dashed var(--card-border);
+    }
+
+    .nav-search:hover {
+      background: rgba(168, 212, 230, 0.2);
+      border-style: solid;
+    }
+
+    /* Work Dropdown Filter */
+    .work-filter-select {
+      width: 100%;
+      padding: 10px 32px 10px 12px;
+      background-color: #2d4a3e;
+      border: 1px solid rgba(168, 212, 230, 0.3);
+      border-radius: 8px;
+      color: #f5f0e8;
+      font-size: 0.875rem;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a8d4e6' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .work-filter-select:hover {
+      border-color: #a8d4e6;
+    }
+
+    .work-filter-select:focus {
+      outline: none;
+      border-color: #d4a847;
+    }
+
+    .work-filter-select option {
+      background-color: #2d4a3e;
+      color: #f5f0e8;
+      padding: 8px;
+    }
+
+    /* Collection mode toggle */
+    .collection-mode-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1;
+    }
+    .collection-mode-btn.active {
+      background: rgba(168, 212, 230, 0.2);
+      color: var(--text-primary, #f5f0e8);
+      font-weight: 600;
+    }
+    .collection-mode-btn:hover:not(.active) {
+      background: rgba(168, 212, 230, 0.1);
+    }
+
+    /* Fix coord-input-panel overflow */
+    .coord-input-panel {
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+    }
+
+    /* Location preview placeholder */
+    .location-preview {
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(135deg, #1a2f1a 0%, #2d4a3e 100%);
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .location-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .location-preview-placeholder {
+      color: #4a6a5a;
+      font-size: 2rem;
+    }
+
+    /* Scene Sidebar Styles - LEFT side, replaces places-sidebar */
+    .scene-sidebar {
+      position: fixed;
+      left: 0;
+      top: 80px;
+      bottom: 80px;
+      width: 340px;
+      background: rgba(26, 47, 26, 0.98);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid var(--card-border);
+      z-index: 1002;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scene-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .scene-sidebar-header {
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .scene-sidebar-poster {
+      width: 60px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .scene-sidebar-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .scene-sidebar-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0 0 var(--space-xs);
+    }
+
+    .scene-sidebar-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .scene-sidebar-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-xs);
+    }
+
+    .scene-sidebar-close:hover {
+      color: var(--text-light);
+    }
+
+    .scene-sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-md);
+    }
+
+    .scene-sidebar-section-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-gold);
+      margin: var(--space-md) 0 var(--space-sm);
+    }
+
+    .scene-place-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scene-place-card:hover {
+      border-color: var(--spirit-glow);
+      transform: translateX(-4px);
+    }
+
+    .scene-place-card.active {
+      border-color: var(--accent-gold);
+      background: rgba(212, 168, 71, 0.1);
+    }
+
+    .scene-place-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-bottom: var(--space-xs);
+    }
+
+    .scene-place-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .scene-place-connection {
+      font-size: 0.8rem;
+      color: var(--spirit-glow);
+      line-height: 1.4;
+    }
+
+    .scene-place-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(102, 204, 51, 0.2);
+      color: #66cc33;
+      margin-top: var(--space-xs);
+    }
+
+    /* Location source badges (per LocationSourceRegistry) */
+    .location-source-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .scene-sidebar {
+        width: 100%;
+        bottom: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#map" class="skip-link">Skip to map</a>
+
+  <!-- ========================================
+       EXPLORE MAP PAGE
+       - Mapbox GL JS interactive map (WebGL)
+       - Coordinate input panel
+       - Place cards for Ghibli locations
+       ======================================== -->
+  <main class="explore-page" role="main">
+    <!-- Map Container -->
+    <div class="map-wrapper">
+      <div id="map" role="application" aria-label="Interactive map showing artwork and movie locations"></div>
+    </div>
+
+    <!-- ========================================
+         COORDINATE INPUT PANEL
+         - Enter lat/lng to pinpoint location
+         ======================================== -->
+    <div class="coord-input-panel animate-fade-in" id="coordPanel"
+      style="z-index: 9999 !important; pointer-events: auto !important; position: fixed !important; width: 240px; overflow: hidden;">
+      <!-- E4: Work Dropdown Filter -->
+      <div class="coord-input-title">Filter by Work</div>
+      <select id="workFilter" class="work-filter-select"
+        style="pointer-events: auto !important; position: relative; z-index: 10000;">
+        <option value="">All Locations</option>
+        <!-- Options populated by JS -->
+      </select>
+
+      <!-- Collection Mode Toggle -->
+      <div style="margin-top: var(--space-md);">
+        <div class="coord-input-title">Collection</div>
+        <div id="collectionToggle" style="display: flex; gap: 4px; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 3px; flex-wrap: wrap;">
+          <button class="collection-mode-btn" data-mode="vault">Vault</button>
+          <button class="collection-mode-btn" data-mode="loved">Loved</button>
+          <button class="collection-mode-btn active" data-mode="all">All</button>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div style="margin-top: var(--space-lg);">
+        <div class="coord-input-title">Legend</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--accent-gold);"></div>
+            <span style="font-size: 0.875rem; color: var(--text-muted);">Movies</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #e88d8d;"></div>
+            <span style="font-size: 0.875rem; color: var(--text-muted);">Anime</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--spirit-glow);"></div>
+            <span style="font-size: 0.875rem; color: var(--text-muted);">Arts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+         PLACES SIDEBAR (Desktop) - Shows all locations
+         ======================================== -->
+    <div class="places-sidebar" id="placesSidebar">
+      <!-- Place cards populated by JS -->
+    </div>
+
+    <!-- ========================================
+         SCENE SIDEBAR (E1) - Shows places for selected work
+         ======================================== -->
+    <aside class="scene-sidebar" id="sceneSidebar" role="complementary" aria-label="Location details">
+      <div class="scene-sidebar-header">
+        <img id="scenePoster" class="scene-sidebar-poster" src="" alt="Work poster">
+        <div class="scene-sidebar-info">
+          <h2 id="sceneTitle" class="scene-sidebar-title"></h2>
+          <p id="sceneMeta" class="scene-sidebar-meta"></p>
+          <p id="scenePlaceCount" style="font-size: 0.75rem; color: var(--accent-gold); margin-top: var(--space-xs);">
+          </p>
+        </div>
+        <button class="scene-sidebar-close" data-action="close-scene-sidebar" aria-label="Close sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="scene-sidebar-content" id="sceneContent" role="list" aria-label="Location list">
+        <!-- Scene places populated by JS -->
+      </div>
+    </aside>
+  </main>
+
+  <!-- ========================================
+       FLOATING NAVIGATION
+       ======================================== -->
+  <nav class="floating-nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9,22 9,12 15,12 15,22" />
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="vault.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path
+          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+      </svg>
+      <span>Vault</span>
+    </a>
+    <a href="explore.html" class="nav-item active" aria-current="page">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="10" r="3" />
+        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+      </svg>
+      <span>Explore</span>
+    </a>
+    <a href="dna.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+      </svg>
+      <span>DNA</span>
+    </a>
+    <button class="nav-item nav-search" title="Search (Cmd+K)" aria-label="Search locations">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <span>Search</span>
+    </button>
+  </nav>
+
+  <!-- ========================================
+       SEARCH MODAL
+       ======================================== -->
+  <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-labelledby="exploreSearchTitle">
+    <div class="search-container">
+      <h2 id="exploreSearchTitle" class="sr-only">Search locations</h2>
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search artworks and movies..."
+          autocomplete="off" aria-label="Search locations">
+        <button class="search-close" aria-label="Close search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults" role="listbox" aria-live="polite"></div>
+      <div class="search-hint"><kbd>↑</kbd> <kbd>↓</kbd> to navigate · <kbd>Enter</kbd> to select · <kbd>Esc</kbd> to
+        close</div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <!-- Mapbox GL JS -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+
+  <!-- JAVASCRIPT (canonical order per M3) -->
+  <!-- 1. Utils (no dependencies) -->
+  <script src="js/utils/dom-utils.js?v=83b0b9f"></script>
+  <script src="js/utils/storage-utils.js?v=83b0b9f"></script>
+  <!-- 2. Core data -->
+  <!-- Seed scripts removed: DB is source of truth (Session 10) -->
+  <!-- 3. API layer -->
+  <script src="js/api/api-utils.js?v=4ba0d42"></script>
+  <!-- 4. Enrichment -->
+  <script src="js/enrichment/location-image-urls.js?v=83b0b9f"></script>
+  <script src="js/enrichment/artwork-geo.js?v=83b0b9f"></script>
+  <script src="js/enrichment/movie-geo.js?v=83b0b9f"></script>
+  <!-- 5. Features -->
+  <script src="js/features/identity-engine.js?v=83b0b9f"></script>
+
+  <script>
+    // ----------------------------------------
+    // CANONICAL LOCATION BUILDERS (ALL_WORKS + GEO FALLBACKS)
+    // ----------------------------------------
+    function slugifyWorkIdCandidate(value) {
+      if (!value) return '';
+      return String(value)
+        .toLowerCase()
+        .replace(/["'’]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function getWorkIdCandidates(work) {
+      const candidates = new Set();
+      if (!work) return [];
+      if (work.id) candidates.add(String(work.id));
+      if (work.slug) candidates.add(String(work.slug));
+      if (work.public_id) candidates.add(String(work.public_id));
+      if (work.title_slug) candidates.add(String(work.title_slug));
+      const slugFromTitle = slugifyWorkIdCandidate(work.title_display || work.title || '');
+      if (slugFromTitle) candidates.add(slugFromTitle);
+      return Array.from(candidates).filter(Boolean);
+    }
+
+    function normalizePlaceToLocation(work, place, index, sourceTag) {
+      if (!work || !place) return null;
+      const latRaw = place.latitude ?? place.lat ?? place.geo?.lat ?? place.coordinates?.lat;
+      const lngRaw = place.longitude ?? place.lng ?? place.geo?.lng ?? place.coordinates?.lng;
+      if (latRaw === undefined || lngRaw === undefined) return null;
+      const lat = parseFloat(latRaw);
+      const lng = parseFloat(lngRaw);
+      if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
+
+      const locationName = place.name_display || place.placeName || place.name || place.title || place.locationName || 'Unknown Location';
+      // Check both source and source_type (API uses source_type field)
+      const locationSource = sourceTag === 'canonical'
+        ? (place.source_type || place.source || work.source || (work.fromAPI ? 'api' : 'vault'))
+        : sourceTag;
+      const dbPlaceId = place.dbPlaceId || place.placeId || place.place_id || place.id || null;
+      const fallbackId = `${work.id || slugifyWorkIdCandidate(work.title_display || work.title || 'work')}-${sourceTag}-${index}`;
+      const locationId = dbPlaceId ? String(dbPlaceId) : fallbackId;
+      const visitableValue = place.visitable !== undefined
+        ? place.visitable
+        : (place.is_visitable !== undefined
+          ? place.is_visitable
+          : (place.geo?.visitable !== undefined ? place.geo.visitable : undefined));
+
+      return {
+        id: locationId,
+        dbPlaceId,
+        workId: work.id,
+        title: locationName,
+        type: work.work_type || work.type || 'artwork',
+        lat,
+        lng,
+        locationName,
+        city: place.city || place.location || place.geo?.location || place.geo?.city || '',
+        country: place.country || '',
+        visitable: visitableValue ?? false,
+        locationType: place.location_type || place.place_type || place.type || place.geo?.locationType || null,
+        image: place.image || place.image_url || place.thumbnail || place.cover_image || place.geo?.images?.[0]?.url || work.primary_image_url || work.image || '',
+        glance: place.glance || place.connection || place.note || place.description || '',
+        connection: place.connection || place.note || place.description || place.glance || '',
+        workTitle: work.title_display || work.title || '',
+        workImage: work.primary_image_url || work.image || '',
+        workYear: work.date_created_year || work.year || '',
+        workCreator: getCreator(work) || '',
+        source: locationSource,
+        confidence: place.confidence || place.confidence_level || place.confidenceLevel || 'corroborated'
+      };
+    }
+
+    function extractCanonicalPlaces(work) {
+      if (!work || !Array.isArray(work.places)) return [];
+      const normalized = [];
+      work.places.forEach((place, idx) => {
+        const loc = normalizePlaceToLocation(work, place, idx, 'canonical');
+        if (loc) {
+          normalized.push(loc);
+        }
+      });
+      return normalized;
+    }
+
+    function getGeoSeedLocations(work) {
+      if (!work) return [];
+      const locations = [];
+      const seen = new Set();
+      const candidates = getWorkIdCandidates(work);
+      const workType = (work.work_type || work.type || '').toLowerCase();
+      const isScreenWork = ['movie', 'film', 'animation', 'anime', 'tv', 'series'].some(type => workType.includes(type));
+
+      candidates.forEach(candidateId => {
+        if (!candidateId) return;
+
+        if (typeof getGeoEnrichmentsForWork === 'function') {
+          const enrichments = getGeoEnrichmentsForWork(candidateId) || [];
+          enrichments.forEach((enrichment, idx) => {
+            const key = `${candidateId}:art:${enrichment.placeSlug || enrichment.placeName || idx}`;
+            if (seen.has(key)) return;
+            const fallbackPlace = {
+              id: enrichment.placeSlug ? `${candidateId}:${enrichment.placeSlug}` : null,
+              name_display: enrichment.placeName,
+              city: enrichment.location,
+              country: enrichment.country,
+              latitude: enrichment.lat,
+              longitude: enrichment.lng,
+              connection: enrichment.connection,
+              visitable: enrichment.visitable,
+              location_type: enrichment.locationType,
+              image: enrichment.geo?.images?.[0]?.url
+            };
+            const loc = normalizePlaceToLocation(work, fallbackPlace, locations.length, 'geo_enrichment');
+            if (loc) {
+              locations.push(loc);
+              seen.add(key);
+            }
+          });
+        }
+
+        if (isScreenWork && typeof getGeoEnrichmentsForMovie === 'function') {
+          const movieEnrichments = getGeoEnrichmentsForMovie(candidateId) || [];
+          movieEnrichments.forEach((enrichment, idx) => {
+            const key = `${candidateId}:movie:${enrichment.placeSlug || enrichment.placeName || idx}`;
+            if (seen.has(key)) return;
+            const fallbackPlace = {
+              id: enrichment.placeSlug ? `${candidateId}:${enrichment.placeSlug}` : null,
+              name_display: enrichment.placeName,
+              city: enrichment.location,
+              country: enrichment.country,
+              latitude: enrichment.lat,
+              longitude: enrichment.lng,
+              connection: enrichment.connection,
+              visitable: enrichment.visitable,
+              location_type: enrichment.locationType,
+              image: enrichment.image || enrichment.geo?.images?.[0]?.url
+            };
+            const loc = normalizePlaceToLocation(work, fallbackPlace, locations.length, 'geo_seed');
+            if (loc) {
+              locations.push(loc);
+              seen.add(key);
+            }
+          });
+        }
+      });
+
+      return locations;
+    }
+
+    function getWorkStage(work) {
+      if (!work) return 'discovery';
+      if (work.loved === true) return 'loved';
+      const hasEnrichment = work.glance || work.story || work.deep_dive ||
+        (work.ai && (work.ai.glance || work.ai.story));
+      if (hasEnrichment) return 'vault';
+      return 'discovery';
+    }
+
+    function isLovedWork(work, collectionMode) {
+      if (!work || work.work_type === 'location') return false;
+
+      if (collectionMode === 'all') return true;
+
+      const stage = getWorkStage(work);
+      return stage === collectionMode;
+    }
+
+    function buildLovedLocationData(works, collectionMode) {
+      if (!Array.isArray(works)) {
+        return { locations: [], worksWithPlaces: [] };
+      }
+
+      const lovedWorks = works.filter(w => isLovedWork(w, collectionMode));
+      const workMap = new Map();
+      lovedWorks.forEach(work => {
+        if (work?.id) workMap.set(String(work.id), work);
+      });
+
+      const allLocations = [];
+      const workPlaceCounts = new Map();
+
+      lovedWorks.forEach(work => {
+        const canonicalPlaces = extractCanonicalPlaces(work);
+        let normalizedPlaces = canonicalPlaces;
+
+        if (normalizedPlaces.length === 0) {
+          normalizedPlaces = getGeoSeedLocations(work);
+        }
+
+        const workStage = getWorkStage(work);
+        normalizedPlaces.forEach(loc => {
+          loc.loved = workStage === 'loved';
+          loc.stage = workStage;
+          allLocations.push(loc);
+        });
+
+        if (normalizedPlaces.length > 0) {
+          workPlaceCounts.set(String(work.id), normalizedPlaces.length);
+        }
+      });
+
+      if (typeof window.getLocalStorageGeneratedPlaces === 'function' && workMap.size > 0) {
+        try {
+          const generatedPlaces = window.getLocalStorageGeneratedPlaces(collectionMode);
+          generatedPlaces.forEach((place, idx) => {
+            const work = workMap.get(String(place.workId));
+            if (!work) return;
+            const loc = normalizePlaceToLocation(work, place, idx, place.source || 'ai_generated');
+            if (loc) {
+              loc.loved = work.loved === true;
+              allLocations.push(loc);
+              const key = String(work.id);
+              workPlaceCounts.set(key, (workPlaceCounts.get(key) || 0) + 1);
+            }
+          });
+        } catch (error) {
+          console.warn('[Explore] Failed to merge generated places:', error);
+        }
+      }
+
+      const worksWithPlaces = lovedWorks
+        .map(work => {
+          const placeCount = workPlaceCounts.get(String(work.id)) || 0;
+          if (placeCount === 0) return null;
+          return {
+            id: work.id,
+            title: work.title || work.title_display || '',
+            title_display: work.title_display || work.title || '',
+            primary_image_url: work.primary_image_url || work.image || '',
+            image: work.primary_image_url || work.image || '',
+            date_created_year: work.date_created_year || work.year || '',
+            work_type: work.work_type || work.type || 'artwork',
+            placeCount,
+            creator: getCreator(work) || '',
+            source: work.source || (work.fromAPI ? 'api' : 'vault'),
+            work
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.placeCount - a.placeCount);
+
+      return { locations: allLocations, worksWithPlaces };
+    }
+
+    let worksWithPlaces = [];
+    let workParam = null;
+    let workParamApplied = false;
+    let currentWorkFilter = '';
+    let currentCollectionMode = 'all'; // 'loved' = My Collection, 'all' = All Discovered
+
+    function updateExploreDataFromWorks(works) {
+      const { locations: nextLocations, worksWithPlaces: nextWorksWithPlaces } = buildLovedLocationData(works, currentCollectionMode);
+      locations = nextLocations;
+      worksWithPlaces = nextWorksWithPlaces;
+      if (typeof populateWorkDropdown === 'function') {
+        populateWorkDropdown();
+      }
+      if (typeof updatePlacesSidebar === 'function') {
+        updatePlacesSidebar(currentWorkFilter);
+      }
+      refreshMapSource();
+      if (!workParamApplied && typeof handleWorkURLParam === 'function') {
+        handleWorkURLParam();
+      }
+    }
+
+    window.addEventListener('allWorksUpdated', (event) => {
+      const nextWorks = event.detail?.works || window.ALL_WORKS || [];
+      updateExploreDataFromWorks(nextWorks);
+    });
+
+    // ----------------------------------------
+    // VISITED PLACES STORAGE
+    // Uses localStorage to persist visited places
+    // ----------------------------------------
+    const VISITED_PLACES_KEY = 'artopath_visited_places';
+
+    function getVisitedPlaces() {
+      const stored = localStorage.getItem(VISITED_PLACES_KEY);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveVisitedPlace(place) {
+      const visited = getVisitedPlaces();
+      // Check if already visited
+      if (!visited.find(v => v.id === place.id)) {
+        visited.push({
+          id: place.id,
+          title: place.title,
+          locationName: place.locationName,
+          city: place.city,
+          lat: place.lat,
+          lng: place.lng,
+          image: place.image,
+          type: place.type,
+          visitedAt: new Date().toISOString()
+        });
+        localStorage.setItem(VISITED_PLACES_KEY, JSON.stringify(visited));
+        return true;
+      }
+      return false;
+    }
+
+    function removeVisitedPlace(placeId) {
+      const visited = getVisitedPlaces();
+      const filtered = visited.filter(v => v.id !== placeId);
+      localStorage.setItem(VISITED_PLACES_KEY, JSON.stringify(filtered));
+    }
+
+    function isPlaceVisited(placeId) {
+      const visited = getVisitedPlaces();
+      return visited.some(v => v.id === placeId);
+    }
+
+    // ----------------------------------------
+    // MAPBOX GL JS INITIALIZATION
+    // USE CASE: User opens Explore page to view locations on map
+    // INTENTION: Provide WebGL-accelerated map with native clustering
+    // VISION: Scale to 10,000+ anime pilgrimage locations smoothly
+    // TRADE-OFF: Mapbox token required, but free tier is generous
+    // ----------------------------------------
+
+
+    // Initialize map with world view (default)
+    // CRITICAL: Mapbox uses [lng, lat] order, not [lat, lng]
+    // USE CASE: User opens Explore to see global distribution of cultural locations
+    // INTENTION: Start zoomed out to show all locations worldwide
+    // VISION: "Second Art Brain" spans global cultural geography
+    let mapReady = false;
+
+    window._artoMap = null;
+    // Token comes from the backend (/api/public-config/) so it never lives in git.
+    let map = null;
+    function initMap(token) {
+      mapboxgl.accessToken = token;
+      map = window._artoMap = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
+        center: [0, 20],  // [lng, lat] - Centered for world view
+        zoom: 2,  // Initial zoom (will auto-fit to locations after load)
+        attributionControl: true
+      });
+      map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+      attachMapLoadHandlers();
+    }
+    fetch(`${window.API_BASE}/public-config/`)
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(cfg => {
+        if (!cfg.mapbox_token) throw new Error('no mapbox_token configured');
+        initMap(cfg.mapbox_token);
+      })
+      .catch(err => {
+        console.error('[Artopath] Map unavailable:', err);
+        const el = document.getElementById('map');
+        if (el) el.insertAdjacentHTML('beforeend', '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#ccc">Map unavailable — could not load configuration.</div>');
+      });
+
+    // ----------------------------------------
+    // MARKER COLOR HELPERS
+    // Color coding by work type:
+    //   - movie/film: gold (#d4a847)
+    //   - animation/anime: coral (#e88d8d) - for anime pilgrimage sites
+    //   - artwork: spirit glow (#a8d4e6)
+    // ----------------------------------------
+    function getMarkerColor(type) {
+      if (type === 'movie' || type === 'film') {
+        return '#d4a847';  // Gold for movies
+      } else if (type === 'animation' || type === 'anime') {
+        return '#e88d8d';  // Coral/pink for anime (pilgrimage sites)
+      } else {
+        return '#a8d4e6';  // Spirit glow for artworks
+      }
+    }
+
+    // Create custom HTML marker element for Mapbox
+    function createMarkerElement(type, dimmed = false) {
+      const baseColor = getMarkerColor(type);
+      const color = dimmed ? '#666666' : baseColor;
+      const pulseOpacity = dimmed ? '0' : '0.5';
+      const borderOpacity = dimmed ? '0.5' : '0.9';
+
+      const el = document.createElement('div');
+      el.className = 'mapbox-custom-marker';
+      el.style.cssText = 'position: relative; cursor: pointer; width: 24px; height: 24px; z-index: 1; pointer-events: auto;';
+      el.innerHTML = `
+        <div class="marker-pulse" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 24px;
+          height: 24px;
+          background: ${color};
+          border-radius: 50%;
+          opacity: ${pulseOpacity};
+        "></div>
+        <div style="
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 20px;
+          height: 20px;
+          background: ${color};
+          border-radius: 50%;
+          border: 2px solid rgba(255,255,255,${borderOpacity});
+          box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+          ${dimmed ? 'filter: grayscale(100%); opacity: 0.5;' : ''}
+        "></div>
+      `;
+      return el;
+    }
+
+    // ----------------------------------------
+    // CONSTANTS (API_BASE already defined in api-utils.js)
+    // ----------------------------------------
+    const PLACEHOLDER_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect fill='%232d4a3e' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23a8d4e6' font-size='40' font-family='sans-serif'%3E?%3C/text%3E%3C/svg%3E";
+
+    // ----------------------------------------
+    // POPULATE MAP WITH LOCATIONS
+    // Per ARTOPATH_SPEC.md §5.4: Only show locations for loved works
+    // - ONLY vault works with loved: true
+    // - Seed data is a discovery catalog, NOT automatically shown
+    // ----------------------------------------
+    let locations = [];
+    const markers = {};
+
+    function getLocationById(locationId) {
+      const targetId = String(locationId);
+      return locations.find(loc => String(loc.id) === targetId);
+    }
+
+    // Debug: Log location count
+    if (window.DEBUG_MODE) {
+      console.log('[Artopath] Loaded', locations.length, 'locations from loved works');
+    }
+
+    // ----------------------------------------
+    // CONFIDENCE LEVEL DISPLAY
+    // Per ARTOPATH_SPEC: Four-star confidence system
+    // ----------------------------------------
+    function getConfidenceStars(confidence) {
+      const levels = {
+        'verified': { stars: '★★★★', tooltip: 'Verified from official source', color: '#d4a847' },
+        'corroborated': { stars: '★★★☆', tooltip: 'Strong evidence, multiple sources', color: '#a8d4e6' },
+        'ai_enriched': { stars: '★★★☆', tooltip: 'AI found/validated external data', color: '#a8d4e6' },
+        'unverified': { stars: '★★☆☆', tooltip: 'Single source, unverified', color: '#8a9a8a' },
+        'ai_generated': { stars: '★★☆☆', tooltip: 'AI generated content', color: '#8a9a8a' },
+        'rumor': { stars: '★☆☆☆', tooltip: 'Speculation, needs verification', color: '#f5a97f' },
+        'unknown': { stars: '☆☆☆☆', tooltip: 'Confidence unknown', color: '#8a9a8a' }
+      };
+      const level = levels[confidence?.toLowerCase()] || levels['corroborated'];
+      return `<span title="${level.tooltip}" style="color: ${level.color}; font-size: 0.85em; cursor: help;">${level.stars}</span>`;
+    }
+
+    // Get source display info (name and color per LocationSourceRegistry)
+    // Includes both frontend sources and API source_type values
+    const SOURCE_BADGE_COLORS = {
+      // API source_type values (per ARTOPATH_SPEC trust system)
+      'primary': '#2E7D32',      // Green - official sources
+      'secondary': '#4CAF50',    // Light green - reliable sources
+      'third': '#8BC34A',        // Lime - third-party sources
+      'community': '#FF6B6B',    // Coral - community contributed (Anitabi, etc.)
+      // Frontend/legacy sources
+      'curated': '#2E7D32',      // Green - manually curated
+      'anitabi': '#FF6B6B',      // Coral - anime pilgrimage
+      'imdb': '#F5C518',         // IMDB yellow
+      'imdb_locations': '#F5C518',
+      'set_jetter': '#4CAF50',   // Green
+      'atlas_of_wonders': '#2196F3',  // Blue
+      'movie_locations': '#9C27B0',   // Purple
+      'ai_generated': '#757575',  // Gray - AI generated
+      'ai': '#757575',
+      'local': '#2E7D32',
+      'vault': '#757575',
+      'api': '#2E7D32',
+      'etl': '#2E7D32',
+      'pilgrimage_api': '#FF6B6B'
+    };
+
+    const SOURCE_LABELS = {
+      // API source_type values
+      'primary': 'Official',
+      'secondary': 'Verified',
+      'third': 'Third Party',
+      'community': 'Community',
+      // Frontend/legacy sources
+      'api': 'Database',
+      'vault': 'AI Enriched',
+      'local': 'Curated',
+      'curated': 'Curated',
+      'anitabi': 'Anitabi',
+      'pilgrimage_api': 'Anitabi',
+      'imdb': 'IMDB',
+      'imdb_locations': 'IMDB',
+      'set_jetter': 'Set-Jetter',
+      'atlas_of_wonders': 'Atlas',
+      'movie_locations': 'Movie-Locs',
+      'ai_generated': 'AI Generated',
+      'ai': 'AI Generated',
+      'etl': 'Imported'
+    };
+
+    function getSourceLabel(source) {
+      return SOURCE_LABELS[source?.toLowerCase()] || source || 'Unknown';
+    }
+
+    function getSourceBadgeColor(source) {
+      return SOURCE_BADGE_COLORS[source?.toLowerCase()] || '#757575';
+    }
+
+    function getSourceBadgeHtml(source) {
+      if (!source) return '';
+      const label = getSourceLabel(source);
+      const color = getSourceBadgeColor(source);
+      return `<span class="location-source-badge" style="background: ${color}">${label}</span>`;
+    }
+
+    // ----------------------------------------
+    // POPUP CONTENT BUILDER
+    // USE CASE: User clicks marker to see location details
+    // INTENTION: Consistent popup content across all markers
+    // ----------------------------------------
+    // LEGO normalization: convert movieId → workId at consumption boundary
+    function normalizeGeoEntry(entry) {
+      if (!entry) return entry;
+      return {
+        ...entry,
+        workId: entry.workId || entry.movieId || entry.id
+      };
+    }
+
+    function buildPopupContent(loc) {
+      // Check for geo enrichment to get enhanced data
+      let enrichment = typeof getGeoEnrichment === 'function'
+        ? getGeoEnrichment(loc.workId || loc.id, loc.locationName || loc.title)
+        : null;
+
+      // If not found, try movie geo enrichments
+      if (!enrichment && typeof MOVIE_GEO_ENRICHMENTS !== 'undefined') {
+        const movieKeys = Object.keys(MOVIE_GEO_ENRICHMENTS);
+        for (const key of movieKeys) {
+          const entry = normalizeGeoEntry(MOVIE_GEO_ENRICHMENTS[key]);
+          if (entry.workId === loc.workId &&
+            (entry.placeName === loc.title || entry.location === loc.city)) {
+            enrichment = entry;
+            break;
+          }
+        }
+      }
+
+      // Build Google Maps URL
+      const googleMapsUrl = enrichment?.geo?.googleMapsUrl || `https://maps.google.com/?q=${loc.lat},${loc.lng}`;
+
+      // Check if place is already visited
+      const visited = isPlaceVisited(loc.id);
+      const visitedBtnText = visited ? '✓ Visited' : 'Mark as Visited';
+      const visitedBtnStyle = visited
+        ? 'background: #4a7c59; color: #f5f0e8; cursor: default;'
+        : 'background: transparent; border: 1px solid #a8d4e6; color: #a8d4e6; cursor: pointer;';
+
+      // Work link (add source=api for API works)
+      const workLinkId = loc.workId || loc.id;
+
+      // Use location image if available
+      const locationImage = typeof getLocationImage === 'function' ? getLocationImage(loc.title) : null;
+      const previewImage = locationImage || loc.workImage || loc.image;
+
+      return `
+        <div style="text-align: center; min-width: 240px; max-width: 280px;">
+          <div class="location-preview">
+            <img src="${previewImage}" alt="${loc.workTitle || loc.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="location-preview-placeholder" style="display:none;">🎬</span>
+          </div>
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(45, 74, 62, 0.5);
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 10px;
+          ">
+            <div style="
+              width: 32px;
+              height: 32px;
+              background: rgba(212, 168, 71, 0.2);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              font-size: 1rem;
+            ">📍</div>
+            <div style="text-align: left; flex: 1; min-width: 0;">
+              <h3 style="margin: 0 0 2px; font-size: 0.95rem; font-weight: 600; line-height: 1.2;">${loc.title}</h3>
+              ${loc.workTitle && loc.workTitle !== loc.title ? `<p style="margin: 0; font-size: 0.7rem; color: #d4a847;">from ${loc.workTitle}</p>` : ''}
+              <p style="margin: 2px 0 0; font-size: 0.7rem; color: #b8b0a4;">${loc.city || loc.locationName || ''}</p>
+            </div>
+          </div>
+          <p style="margin: 0 0 10px; font-size: 0.8rem; line-height: 1.4; color: #a8d4e6; text-align: left; padding: 0 4px;">
+            ${loc.connection || loc.glance || ''}
+          </p>
+          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+            <a href="${googleMapsUrl}" target="_blank" rel="noopener" style="
+              flex: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 4px;
+              background: rgba(168, 212, 230, 0.2);
+              color: #a8d4e6;
+              padding: 8px;
+              border-radius: 6px;
+              text-decoration: none;
+              font-size: 0.75rem;
+            ">📍 Maps</a>
+            <a href="work-detail.html?id=${workLinkId}${loc.source === 'api' ? '&source=api' : ''}" style="
+              flex: 2;
+              display: block;
+              background: #d4a847;
+              color: #1a2f1a;
+              padding: 8px 12px;
+              border-radius: 6px;
+              text-decoration: none;
+              font-size: 0.8rem;
+              font-weight: 600;
+            ">View ${loc.workTitle || 'Details'}</a>
+          </div>
+          <button
+            id="visitBtn_${loc.id}"
+            data-action="mark-visited" data-place-id="${loc.id}"
+            ${visited ? 'disabled' : ''}
+            style="
+              ${visitedBtnStyle}
+              padding: 6px 12px;
+              border-radius: 6px;
+              font-size: 0.75rem;
+              font-weight: 500;
+              width: 100%;
+              margin-top: 4px;
+            "
+          >${visitedBtnText}</button>
+        </div>
+      `;
+    }
+
+    // ----------------------------------------
+    // GEOJSON CONVERSION WITH DEDUPLICATION
+    // USE CASE: Multiple works share same physical location (e.g., Dogo Onsen)
+    // INTENTION: Merge locations by coordinates into single markers showing all works
+    // VISION: Clean map without overlapping markers, rich multi-work popups
+    // TRADE-OFF: UI-only deduplication, backend maintains separate relations
+    // ----------------------------------------
+
+    /**
+     * Build a GeoJSON FeatureCollection with coordinate-based deduplication.
+     * Locations at the same (lat, lng) are merged into a single feature with
+     * a works[] array containing all associated works.
+     *
+     * @param {Array} locs - Array of location objects
+     * @returns {Object} GeoJSON FeatureCollection
+     */
+    function buildDeduplicatedGeoJSON(locs) {
+      // Use Map for O(1) coordinate lookup
+      const coordMap = new Map();
+
+      // Proximity merge: find existing entry within ~100m
+      // ~0.0009 degrees ≈ 100m at equator (conservative — tighter at higher latitudes)
+      const PROXIMITY_THRESHOLD = 0.0009;
+      function findNearbyKey(lng, lat) {
+        for (const [key, val] of coordMap) {
+          if (Math.abs(val.lng - lng) < PROXIMITY_THRESHOLD && Math.abs(val.lat - lat) < PROXIMITY_THRESHOLD) {
+            return key;
+          }
+        }
+        return null;
+      }
+
+      locs.forEach(loc => {
+        if (!loc.lat || !loc.lng) return;
+
+        // Create coordinate key with reasonable precision (6 decimal places ~ 0.1m)
+        const coordKey = `${loc.lng.toFixed(6)},${loc.lat.toFixed(6)}`;
+
+        // Check exact match first, then proximity match
+        const matchKey = coordMap.has(coordKey) ? coordKey : findNearbyKey(loc.lng, loc.lat);
+
+        if (matchKey) {
+          // Add work to existing location
+          const existing = coordMap.get(matchKey);
+          existing.works.push({
+            id: loc.id,
+            workId: loc.workId,
+            workTitle: loc.workTitle || loc.title,
+            workImage: loc.workImage || loc.image,
+            workYear: loc.workYear,
+            workCreator: loc.workCreator,
+            type: loc.type,
+            connection: loc.connection || loc.glance,
+            source: loc.source,
+            loved: loc.loved,
+            stage: loc.stage || 'discovery'
+          });
+          // Merge types for marker coloring (prefer movie if mixed)
+          if (loc.type === 'movie' || loc.type === 'film') {
+            existing.dominantType = 'movie';
+          }
+        } else {
+          // Create new location entry
+          coordMap.set(coordKey, {
+            name: loc.locationName || loc.title,
+            city: loc.city,
+            lat: loc.lat,
+            lng: loc.lng,
+            visitable: loc.visitable,
+            locationType: loc.locationType,
+            dominantType: loc.type,
+            works: [{
+              id: loc.id,
+              workId: loc.workId,
+              workTitle: loc.workTitle || loc.title,
+              workImage: loc.workImage || loc.image,
+              workYear: loc.workYear,
+              workCreator: loc.workCreator,
+              type: loc.type,
+              connection: loc.connection || loc.glance,
+              source: loc.source,
+              loved: loc.loved,
+              stage: loc.stage || 'discovery'
+            }]
+          });
+        }
+      });
+
+      // Convert to GeoJSON FeatureCollection
+      const features = [];
+      coordMap.forEach((loc, coordKey) => {
+        features.push({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [loc.lng, loc.lat]  // GeoJSON uses [lng, lat]
+          },
+          properties: {
+            name: loc.name,
+            city: loc.city,
+            visitable: loc.visitable,
+            locationType: loc.locationType,
+            dominantType: loc.dominantType,
+            workCount: loc.works.length,
+            works: loc.works,
+            allLoved: loc.works.every(w => w.loved),
+            bestStage: loc.works.some(w => w.stage === 'loved') ? 'loved'
+              : loc.works.some(w => w.stage === 'vault') ? 'vault' : 'discovery'
+          }
+        });
+      });
+
+      console.log(`[Explore] Deduplicated ${locs.length} locations into ${features.length} unique coordinates`);
+
+      return {
+        type: 'FeatureCollection',
+        features: features
+      };
+    }
+
+    // ----------------------------------------
+    // MAPBOX CLUSTERING AND MARKER MANAGEMENT
+    // USE CASE: Handle 10,000+ anime pilgrimage locations efficiently
+    // INTENTION: Native WebGL clustering with smooth zoom transitions
+    // VISION: Scales to full Anitabi dataset without performance issues
+    // TRADE-OFF: More complex layer setup vs HTML markers
+    // ----------------------------------------
+    let currentPopup = null;  // Track current open popup
+
+    // Generate cluster marker colors based on dominant type
+    function getClusterColor(dominantType) {
+      if (dominantType === 'movie' || dominantType === 'film') {
+        return '#d4a847';  // Gold for movies
+      } else if (dominantType === 'animation' || dominantType === 'anime') {
+        return '#e88d8d';  // Coral/pink for anime
+      } else {
+        return '#a8d4e6';  // Spirit glow for artworks
+      }
+    }
+
+    // ----------------------------------------
+    // POPUP CONTENT FOR DEDUPLICATED LOCATIONS
+    // Shows all works associated with a single coordinate
+    // ----------------------------------------
+    function buildDeduplicatedPopupContent(properties) {
+      // Normalize works array at consumption boundary
+      const works = (properties.works || []).map(w => normalizeGeoEntry(w));
+      const firstWork = works[0] || {};
+
+      // Use location image if available
+      const locationImage = typeof getLocationImage === 'function' ? getLocationImage(properties.name) : null;
+      const previewImage = locationImage || firstWork.workImage || PLACEHOLDER_SVG;
+
+      // Build Google Maps URL
+      const coords = properties.coordinates || [0, 0];
+      const googleMapsUrl = `https://maps.google.com/?q=${coords[1]},${coords[0]}`;
+
+      // Build works list HTML
+      let worksListHtml = '';
+      if (works.length > 1) {
+        worksListHtml = `
+          <div style="margin: 10px 0; border-top: 1px solid rgba(168, 212, 230, 0.2); padding-top: 10px;">
+            <div style="font-size: 0.7rem; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 6px;">
+              ${works.length} Works at this Location
+            </div>
+            <div style="max-height: 120px; overflow-y: auto;">
+              ${works.map(w => `
+                <a href="work-detail.html?id=${w.workId || w.id}${w.source === 'api' ? '&source=api' : ''}"
+                   style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(168, 212, 230, 0.1); text-decoration: none; color: inherit;">
+                  <span style="font-size: 0.9rem;">${w.type === 'movie' ? '🎬' : '🎨'}</span>
+                  <span style="flex: 1; font-size: 0.8rem; color: var(--text-light);">${w.workTitle || 'Unknown Work'}</span>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">${w.workYear || ''}</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Single work connection description
+      const connectionText = works.length === 1
+        ? (firstWork.connection || '')
+        : (works.map(w => w.connection).filter(Boolean).join(' / ').substring(0, 100) + (works.some(w => w.connection?.length > 100) ? '...' : ''));
+
+      return `
+        <div style="text-align: center; min-width: 240px; max-width: 300px;">
+          <div class="location-preview">
+            <img src="${previewImage}" alt="${properties.name}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="location-preview-placeholder" style="display:none;">📍</span>
+          </div>
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(45, 74, 62, 0.5);
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 10px;
+          ">
+            <div style="
+              width: 32px;
+              height: 32px;
+              background: rgba(212, 168, 71, 0.2);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              font-size: 1rem;
+            ">📍</div>
+            <div style="text-align: left; flex: 1; min-width: 0;">
+              <h3 style="margin: 0 0 2px; font-size: 0.95rem; font-weight: 600; line-height: 1.2;">${properties.name}</h3>
+              ${works.length === 1 && firstWork.workTitle ? `<p style="margin: 0; font-size: 0.7rem; color: #d4a847;">from ${firstWork.workTitle}</p>` : ''}
+              ${works.length > 1 ? `<p style="margin: 0; font-size: 0.7rem; color: #d4a847;">${works.length} works</p>` : ''}
+              <p style="margin: 2px 0 0; font-size: 0.7rem; color: #b8b0a4;">${properties.city || ''}</p>
+            </div>
+          </div>
+          ${connectionText ? `<p style="margin: 0 0 10px; font-size: 0.8rem; line-height: 1.4; color: #a8d4e6; text-align: left; padding: 0 4px;">${connectionText}</p>` : ''}
+          ${worksListHtml}
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <a href="${googleMapsUrl}" target="_blank" rel="noopener" style="
+              flex: 0 0 auto;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 4px;
+              background: rgba(168, 212, 230, 0.15);
+              color: #a8d4e6;
+              padding: 8px 12px;
+              border-radius: 6px;
+              text-decoration: none;
+              font-size: 0.75rem;
+              font-weight: 500;
+              white-space: nowrap;
+            ">📍 Maps</a>
+            ${works.length === 1 ? `
+              <a href="work-detail.html?id=${firstWork.workId || firstWork.id}${firstWork.source === 'api' ? '&source=api' : ''}" style="
+                flex: 1;
+                display: block;
+                background: #d4a847;
+                color: #1a2f1a;
+                padding: 8px 12px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              ">View ${(firstWork.workTitle || 'Details').length > 25 ? (firstWork.workTitle || 'Details').substring(0, 25) + '…' : (firstWork.workTitle || 'Details')}</a>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // ----------------------------------------
+    // INITIALIZE MAP WITH CLUSTERING ON LOAD
+    // Mapbox requires waiting for map.on('load') before adding sources/layers
+    // ----------------------------------------
+    function attachMapLoadHandlers() {
+    map.on('load', () => {
+      console.log('[Artopath] Map loaded, initializing clustering');
+
+      // Add dark overlay to tone down satellite imagery
+      // This makes the dots pop more against the background
+      map.addSource('dark-overlay', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[-180, -90], [180, -90], [180, 90], [-180, 90], [-180, -90]]]
+          }
+        }
+      });
+      map.addLayer({
+        id: 'dark-overlay',
+        type: 'fill',
+        source: 'dark-overlay',
+        paint: {
+          'fill-color': '#000000',
+          'fill-opacity': 0.35  // 35% dark overlay - adjust if needed
+        }
+      });
+
+      // Build deduplicated GeoJSON
+      const geoJSON = buildDeduplicatedGeoJSON(locations);
+
+      // Add source with clustering enabled
+      map.addSource('locations', {
+        type: 'geojson',
+        data: geoJSON,
+        cluster: true,
+        clusterMaxZoom: 14,   // Max zoom to cluster points
+        clusterRadius: 50,    // Radius of each cluster in pixels
+        clusterMinPoints: 6   // Only cluster when 6+ points overlap (avoid tiny "2" clusters)
+      });
+
+      // Layer for cluster circles
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'locations',
+        filter: ['has', 'point_count'],
+        paint: {
+          // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+          'circle-color': [
+            'step',
+            ['get', 'point_count'],
+            '#a8d4e6',  // Spirit glow for small clusters
+            10,
+            '#d4a847',  // Gold for medium clusters
+            30,
+            '#e88d8d'   // Coral for large clusters
+          ],
+          'circle-radius': [
+            'step',
+            ['get', 'point_count'],
+            15,   // 15px for clusters < 10
+            10,
+            20,   // 20px for clusters 10-30
+            30,
+            25    // 25px for clusters > 30
+          ],
+          'circle-stroke-width': 2,
+          'circle-stroke-color': 'rgba(255, 255, 255, 0.5)'
+        }
+      });
+
+      // Layer for cluster count labels
+      map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'locations',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        },
+        paint: {
+          'text-color': '#1a2f1a'
+        }
+      });
+
+      // Layer for unclustered points (individual locations)
+      map.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'locations',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': [
+            'match',
+            ['get', 'dominantType'],
+            'movie', '#d4a847',
+            'film', '#d4a847',
+            'animation', '#e88d8d',
+            'anime', '#e88d8d',
+            '#a8d4e6'  // Default (artwork)
+          ],
+          'circle-radius': [
+            'match', ['get', 'bestStage'],
+            'loved', 10,
+            'vault', 8,
+            6
+          ],
+          'circle-stroke-width': [
+            'match', ['get', 'bestStage'],
+            'loved', 2.5,
+            'vault', 2,
+            1
+          ],
+          'circle-stroke-color': [
+            'match', ['get', 'bestStage'],
+            'loved', 'rgba(255, 255, 255, 0.9)',
+            'vault', 'rgba(255, 255, 255, 0.7)',
+            'rgba(255, 255, 255, 0.4)'
+          ],
+          'circle-opacity': [
+            'match', ['get', 'bestStage'],
+            'loved', 1.0,
+            'vault', 0.8,
+            0.45
+          ]
+        }
+      });
+
+      // Click on a cluster to zoom in
+      map.on('click', 'clusters', (e) => {
+        const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+        if (!features.length) return;
+
+        const clusterId = features[0].properties.cluster_id;
+        map.getSource('locations').getClusterExpansionZoom(clusterId, (err, zoom) => {
+          if (err) return;
+          map.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: zoom
+          });
+        });
+      });
+
+      // Click on unclustered point to show popup and zoom in
+      map.on('click', 'unclustered-point', (e) => {
+        const features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-point'] });
+        if (!features.length) return;
+
+        const feature = features[0];
+        const coordinates = feature.geometry.coordinates.slice();
+        const properties = {
+          ...feature.properties,
+          coordinates: coordinates,
+          works: JSON.parse(feature.properties.works || '[]')
+        };
+
+        // Ensure popup appears at clicked point
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Close existing popup
+        if (currentPopup) {
+          currentPopup.remove();
+        }
+
+        // Zoom to city level (12) so user can see country/city context
+        // Only zoom if currently zoomed out (avoids jarring zoom when already close)
+        const currentZoom = map.getZoom();
+        const targetZoom = 12;
+        if (currentZoom < targetZoom) {
+          map.flyTo({
+            center: coordinates,
+            zoom: targetZoom,
+            duration: 1000  // Smooth 1-second animation
+          });
+        }
+
+        // Create new popup
+        currentPopup = new mapboxgl.Popup({ offset: 15, className: 'artopath-popup' })
+          .setLngLat(coordinates)
+          .setHTML(buildDeduplicatedPopupContent(properties))
+          .addTo(map);
+      });
+
+      // Change cursor on hover
+      map.on('mouseenter', 'clusters', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'clusters', () => {
+        map.getCanvas().style.cursor = '';
+      });
+      map.on('mouseenter', 'unclustered-point', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'unclustered-point', () => {
+        map.getCanvas().style.cursor = '';
+      });
+
+      mapReady = true;
+
+      // Auto-fit map to show all locations (if any exist)
+      // This zooms to where user's dots are concentrated
+      if (geoJSON.features && geoJSON.features.length > 0) {
+        const bounds = new mapboxgl.LngLatBounds();
+        geoJSON.features.forEach(feature => {
+          bounds.extend(feature.geometry.coordinates);
+        });
+        map.fitBounds(bounds, {
+          padding: 50,      // 50px padding from edges
+          maxZoom: 10,      // Don't zoom in too close
+          duration: 1500    // Smooth 1.5s animation
+        });
+      }
+
+      // Handle URL parameters after layers are added
+      handleURLParams();
+      refreshMapSource();
+    });
+    }
+
+    // ----------------------------------------
+    // POPULATE PLACES SIDEBAR
+    // (Now handled by updatePlacesSidebar function below)
+    // ----------------------------------------
+
+    // ----------------------------------------
+    // COORDINATE INPUT FUNCTIONS (Mapbox GL JS)
+    // USE CASE: User enters coordinates to navigate map
+    // INTENTION: Allow direct coordinate navigation
+    // ----------------------------------------
+    function goToCoordinates() {
+      const lat = parseFloat(document.getElementById('latInput').value);
+      const lng = parseFloat(document.getElementById('lngInput').value);
+
+      if (!isNaN(lat) && !isNaN(lng)) {
+        // CRITICAL: Mapbox uses [lng, lat] order
+        map.flyTo({ center: [lng, lat], zoom: 12 });
+
+        // Add temporary marker
+        const tempEl = document.createElement('div');
+        tempEl.innerHTML = `<div style="
+          width: 20px;
+          height: 20px;
+          background: #d4854a;
+          border-radius: 50%;
+          border: 3px solid white;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        "></div>`;
+
+        const tempMarker = new mapboxgl.Marker(tempEl)
+          .setLngLat([lng, lat])
+          .addTo(map);
+
+        // Create popup for temp marker
+        const tempPopup = new mapboxgl.Popup({ offset: 25 })
+          .setLngLat([lng, lat])
+          .setHTML(`<div style="text-align: center; padding: 8px;">
+            <strong>Custom Location</strong><br>
+            <span style="font-size: 0.875rem; color: #b8b0a4;">
+              ${lat.toFixed(4)}, ${lng.toFixed(4)}
+            </span>
+          </div>`)
+          .addTo(map);
+
+        // Remove after 10 seconds
+        setTimeout(() => {
+          tempMarker.remove();
+          tempPopup.remove();
+        }, 10000);
+      }
+    }
+
+    function goToLocation(lat, lng, name) {
+      document.getElementById('latInput').value = lat;
+      document.getElementById('lngInput').value = lng;
+      // CRITICAL: Mapbox uses [lng, lat] order
+      map.flyTo({ center: [lng, lat], zoom: 12 });
+
+      // Find and open marker popup if exists
+      const loc = locations.find(l => l.lat === lat && l.lng === lng);
+      if (loc) {
+        openMarkerPopup(loc);
+      }
+    }
+
+    // Helper function to open popup for a marker
+    function openMarkerPopup(loc) {
+      // Close existing popup
+      if (currentPopup) {
+        currentPopup.remove();
+      }
+
+      // Create new popup
+      currentPopup = new mapboxgl.Popup({ offset: 25, className: 'artopath-popup' })
+        .setLngLat([loc.lng, loc.lat])
+        .setHTML(buildPopupContent(loc))
+        .addTo(map);
+    }
+
+    // ----------------------------------------
+    // URL PARAMETER HANDLING (Mapbox GL JS)
+    // Moved to handleURLParams() function called after map loads
+    // ----------------------------------------
+    const urlParams = new URLSearchParams(window.location.search);
+    const highlightId = urlParams.get('highlight');
+    const urlLat = parseFloat(urlParams.get('lat'));
+    const urlLng = parseFloat(urlParams.get('lng'));
+    const urlZoom = parseInt(urlParams.get('zoom')) || 15;
+    workParam = urlParams.get('work');
+
+    function handleURLParams() {
+      // Work filter: sets dropdown + filters map markers (fires alongside coordinates)
+      if (workParam) {
+        handleWorkURLParam();
+      }
+      // Direct coordinates (from "View on Map" per-place buttons in work-detail.html)
+      if (!isNaN(urlLat) && !isNaN(urlLng)) {
+        console.log('[Explore] Navigating to coordinates from URL:', urlLat, urlLng, 'zoom:', urlZoom);
+        // CRITICAL: Mapbox uses [lng, lat] order
+        map.flyTo({ center: [urlLng, urlLat], zoom: urlZoom });
+      }
+      // Fallback: highlight a specific location by ID
+      else if (highlightId) {
+        const loc = locations.find(l => l.id === highlightId);
+        if (loc) {
+          setTimeout(() => {
+            // CRITICAL: Mapbox uses [lng, lat] order
+            map.flyTo({ center: [loc.lng, loc.lat], zoom: 12 });
+            openMarkerPopup(loc);
+          }, 500);
+        }
+      }
+    }
+
+    // ----------------------------------------
+    // HELPER: Update GeoJSON source with filtered data
+    // USE CASE: User filters by work, map should show only that work's locations
+    // INTENTION: Update clustering source data to reflect filter
+    // ----------------------------------------
+    function updateMapWithFilter(workId) {
+      const source = map && map.getSource('locations');
+      if (!source) return;
+
+      // Filter locations if workId is provided
+      const filteredLocations = workId
+        ? locations.filter(loc => loc.workId === workId)
+        : locations;
+
+      // Rebuild GeoJSON with filtered locations
+      const geoJSON = buildDeduplicatedGeoJSON(filteredLocations);
+      source.setData(geoJSON);
+
+      console.log(`[Explore] Updated map with ${filteredLocations.length} locations (filter: ${workId || 'none'})`);
+    }
+
+    function refreshMapSource() {
+      if (!mapReady) return;
+      updateMapWithFilter(currentWorkFilter);
+    }
+
+    // ----------------------------------------
+    // HELPER: Open popup for a specific location
+    // USE CASE: Navigate to location from URL params or sidebar click
+    // ----------------------------------------
+    function openMarkerPopup(loc) {
+      if (!loc) return;
+
+      // Close existing popup
+      if (currentPopup) {
+        currentPopup.remove();
+      }
+
+      // Build properties for the popup (similar to GeoJSON feature properties)
+      const properties = {
+        name: loc.locationName || loc.title,
+        city: loc.city,
+        visitable: loc.visitable,
+        locationType: loc.locationType,
+        coordinates: [loc.lng, loc.lat],
+        works: [{
+          id: loc.id,
+          workId: loc.workId,
+          workTitle: loc.workTitle || loc.title,
+          workImage: loc.workImage || loc.image,
+          workYear: loc.workYear,
+          workCreator: loc.workCreator,
+          type: loc.type,
+          connection: loc.connection || loc.glance,
+          source: loc.source
+        }]
+      };
+
+      // Create new popup using the deduplicated popup content builder
+      currentPopup = new mapboxgl.Popup({ offset: 15, className: 'artopath-popup' })
+        .setLngLat([loc.lng, loc.lat])
+        .setHTML(buildDeduplicatedPopupContent(properties))
+        .addTo(map);
+    }
+
+    // Legacy function name for backward compatibility
+    function updateMarkerDimming(workId) {
+      updateMapWithFilter(workId);
+    }
+
+    // ----------------------------------------
+    // KEYBOARD SHORTCUTS
+    // ----------------------------------------
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.target.id === 'latInput' || e.target.id === 'lngInput')) {
+        goToCoordinates();
+      }
+    });
+
+    // ----------------------------------------
+    // MARK AS VISITED
+    // Saves place via API (falls back to localStorage)
+    // ----------------------------------------
+    async function markAsVisited(locId) {
+      const loc = locations.find(l => l.id === locId);
+      if (!loc) return;
+
+      // Update UI immediately for better UX
+      const btn = document.getElementById(`visitBtn_${locId}`);
+      if (btn) {
+        btn.textContent = 'Saving...';
+        btn.disabled = true;
+      }
+
+      // Try API first if we have a database place ID
+      let apiSuccess = false;
+      if (loc.dbPlaceId && typeof markPlaceVisitAPI === 'function') {
+        const result = await markPlaceVisitAPI(loc.dbPlaceId, 'visited');
+        apiSuccess = result.success;
+        if (apiSuccess) {
+          console.log('[Explore] Visit saved via API');
+        }
+      }
+
+      // Also save to localStorage as fallback/sync
+      const saved = saveVisitedPlace(loc);
+
+      if (apiSuccess || saved) {
+        // Update button in popup
+        if (btn) {
+          btn.textContent = '✓ Visited';
+          btn.style.background = '#4a7c59';
+          btn.style.color = '#f5f0e8';
+          btn.style.border = 'none';
+          btn.style.cursor = 'default';
+        }
+        // Show confirmation toast
+        const source = apiSuccess ? '(synced)' : '(local)';
+        showToast(`Added "${loc.title}" to Places Visited! ${source}`);
+      } else {
+        // Restore button if failed
+        if (btn) {
+          btn.textContent = 'Mark as Visited';
+          btn.disabled = false;
+        }
+        showToast('Failed to save visit. Try again.');
+      }
+    }
+
+    // ----------------------------------------
+    // TOAST NOTIFICATION
+    // ----------------------------------------
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(45, 74, 62, 0.95);
+        color: #f5f0e8;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: 1px solid rgba(168, 212, 230, 0.3);
+        font-size: 0.875rem;
+        z-index: 10000;
+        animation: fadeInUp 0.3s ease;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    // ----------------------------------------
+    // GLOBAL SEARCH FUNCTIONS
+    // ----------------------------------------
+
+    function getInitialPlaceholder(name) {
+      const initial = name.charAt(0).toUpperCase();
+      return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Crect fill='%232d4a3e' width='70' height='70' rx='35'/%3E%3Ctext x='35' y='45' text-anchor='middle' fill='%23a8d4e6' font-size='28' font-family='system-ui'%3E${initial}%3C/text%3E%3C/svg%3E`;
+    }
+
+    let ALL_WORKS = [];
+    let allWorksReady = null;
+
+    async function ensureAllWorksReady() {
+      if (!allWorksReady) {
+        allWorksReady = (async () => {
+          if (typeof initializeWithAPIWorks === 'function') {
+            try {
+              const works = await initializeWithAPIWorks();
+              ALL_WORKS = works || [];
+              window.ALL_WORKS = ALL_WORKS;
+              return ALL_WORKS;
+            } catch (e) {
+              console.warn('[Explore] initializeWithAPIWorks failed, using seeds:', e);
+            }
+          }
+          const seeds = [
+            ...(typeof WORKS !== 'undefined' ? WORKS : []),
+            ...(typeof MOVIES !== 'undefined' ? MOVIES : [])
+          ];
+          ALL_WORKS = seeds;
+          window.ALL_WORKS = seeds;
+          return seeds;
+        })();
+      }
+      return allWorksReady;
+    }
+    let selectedIndex = -1;
+    let searchResults = [];
+
+    function openSearchModal() {
+      document.getElementById('searchModal').classList.add('active');
+      document.getElementById('searchInput').focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.remove('active');
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchResults').innerHTML = '';
+      document.getElementById('searchResults').classList.remove('has-results');
+      selectedIndex = -1; searchResults = [];
+      document.body.style.overflow = '';
+    }
+
+    function handleModalClick(event) {
+      if (event.target === document.getElementById('searchModal')) closeSearchModal();
+    }
+
+    // Debounce helper for API calls
+    let searchDebounceTimer = null;
+
+    function escapeAttr(value) {
+      return String(value ?? '').replace(/"/g, '&quot;');
+    }
+
+    async function handleSearch(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      if (!query.trim()) {
+        resultsContainer.innerHTML = ''; resultsContainer.classList.remove('has-results');
+        searchResults = []; selectedIndex = -1; return;
+      }
+
+      // Ensure dataset is ready
+      await ensureAllWorksReady();
+
+      // First search local data
+      const queryLower = query.toLowerCase();
+      let localResults = ALL_WORKS.filter(w => w.work_type !== 'location').filter(work => {
+        return (work.title_display || '').toLowerCase().includes(queryLower) ||
+          (getCreator(work) || '').toLowerCase().includes(queryLower) ||
+          (work.title_original || '').toLowerCase().includes(queryLower);
+      }).slice(0, 8);
+
+      // If local results found, display immediately
+      if (localResults.length > 0) {
+        searchResults = localResults;
+        renderSearchResults(query);
+        return;
+      }
+
+      // No local results - show loading and search API
+      resultsContainer.innerHTML = `<div class="search-no-results">Searching database...</div>`;
+      resultsContainer.classList.add('has-results');
+
+      // Debounce API call
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(async () => {
+        try {
+          // Search vault works with locations (has_images=true filters to user-added works)
+          const response = await fetch(`${API_BASE}/core/works/?q=${encodeURIComponent(query)}&has_locations=true&has_images=true&limit=20`);
+          if (!response.ok) throw new Error('API error');
+          const data = await response.json();
+
+          // Convert API works to POC format
+          searchResults = data.works.map(w => ({
+            id: w.id,
+            title: w.title,
+            titleOriginal: w.title_original,
+            creator: getCreator(w) || 'Unknown',
+            year: w.year || '',
+            type: w.work_type || 'animation',
+            image: w.image || PLACEHOLDER_SVG,
+            places: w.places || [],
+            source: 'api'  // Mark as API result
+          })).filter(w => w.places && w.places.length > 0);
+
+          if (searchResults.length === 0) {
+            resultsContainer.innerHTML = `<div class="search-no-results">No works found for "${escapeHtml(query)}"</div>`;
+          } else {
+            renderSearchResults(query);
+          }
+        } catch (error) {
+          console.log('[Search] API unavailable:', error);
+          resultsContainer.innerHTML = `<div class="search-no-results">No works found for "${escapeHtml(query)}"</div>`;
+        }
+      }, 300);
+    }
+
+    function renderSearchResults(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      resultsContainer.innerHTML = searchResults.map((work, index) => `
+        <div class="search-result-item ${index === selectedIndex ? 'selected' : ''}"
+             data-result-type="local"
+             data-pos="${index}"
+             data-work-id="${escapeAttr(work.id || '')}"
+             data-source="${escapeAttr(work.source || 'local')}">
+          <img class="search-result-image" src="${work.primary_image_url || ''}" alt="${escapeHtml(work.title_display || '')}"
+               onerror="this.src=PLACEHOLDER_SVG">
+          <div class="search-result-info">
+            <div class="search-result-title">${highlightMatch(work.title_display || '', query)}${work.source === 'api' ? ' <span style="color:#a8d4e6;font-size:10px">DB</span>' : ''}</div>
+            <div class="search-result-meta">${escapeHtml(getCreator(work) || '')} · ${work.date_created_year || ''} · ${work.places?.length || 0} locations</div>
+          </div>
+          <span class="search-result-type ${getTypeCategory(work)}">${getTypeCategory(work)}</span>
+        </div>
+      `).join('');
+      resultsContainer.classList.add('has-results');
+      selectedIndex = 0; updateSelection();
+    }
+
+    function handleSearchKeydown(event) {
+      if (event.key === 'Escape') { closeSearchModal(); return; }
+      if (searchResults.length === 0) return;
+      if (event.key === 'ArrowDown') { event.preventDefault(); selectedIndex = Math.min(selectedIndex + 1, searchResults.length - 1); updateSelection(); }
+      else if (event.key === 'ArrowUp') { event.preventDefault(); selectedIndex = Math.max(selectedIndex - 1, 0); updateSelection(); }
+      else if (event.key === 'Enter') {
+        event.preventDefault();
+        if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+          const work = searchResults[selectedIndex];
+          goToWork(work.id, work.source || 'local');
+        }
+      }
+    }
+
+    function updateSelection() {
+      const items = document.querySelectorAll('.search-result-item');
+      if (items.length === 0) return;
+      if (selectedIndex >= items.length) {
+        selectedIndex = items.length - 1;
+      }
+      items.forEach((item, index) => item.classList.toggle('selected', index === selectedIndex));
+      if (items[selectedIndex]) items[selectedIndex].scrollIntoView({ block: 'nearest' });
+    }
+
+    const searchResultsEl = document.getElementById('searchResults');
+    if (searchResultsEl) {
+      searchResultsEl.addEventListener('click', handleSearchResultClick);
+      searchResultsEl.addEventListener('mouseover', handleSearchResultHover);
+    }
+
+    function handleSearchResultHover(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const pos = parseInt(item.dataset.pos, 10);
+      if (!Number.isNaN(pos)) {
+        selectedIndex = pos;
+        updateSelection();
+      }
+    }
+
+    function handleSearchResultClick(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const pos = parseInt(item.dataset.pos, 10);
+      if (Number.isNaN(pos)) return;
+      selectedIndex = pos;
+      updateSelection();
+      const work = searchResults[pos];
+      if (work) {
+        goToWork(work.id, work.source || 'local');
+      }
+    }
+
+    function goToWork(id, source = 'local') {
+      // If from API, add source param so work-detail knows to fetch from API
+      const url = source === 'api' ? `work-detail.html?id=${id}&source=api` : `work-detail.html?id=${id}`;
+      window.location.href = url;
+    }
+
+    // escapeHtml and highlightMatch now loaded from js/utils/dom-utils.js
+
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') { event.preventDefault(); openSearchModal(); }
+    });
+
+    // Delegated UI handlers
+    document.addEventListener('DOMContentLoaded', () => {
+      // Nav search opens modal
+      const navSearch = document.querySelector('.nav-item.nav-search');
+      if (navSearch) {
+        navSearch.addEventListener('click', () => openSearchModal());
+      }
+
+      // Search modal close/overlay
+      const searchModal = document.getElementById('searchModal');
+      if (searchModal) {
+        searchModal.addEventListener('click', (event) => {
+          if (event.target === searchModal) closeSearchModal();
+        });
+        const closeBtn = searchModal.querySelector('.search-close');
+        if (closeBtn) closeBtn.addEventListener('click', closeSearchModal);
+        const searchInputEl = document.getElementById('searchInput');
+        if (searchInputEl) {
+          searchInputEl.addEventListener('input', () => handleSearch(searchInputEl.value));
+          searchInputEl.addEventListener('keydown', handleSearchKeydown);
+        }
+      }
+
+      const placesSidebar = document.getElementById('placesSidebar');
+      if (placesSidebar) {
+        placesSidebar.addEventListener('click', (event) => {
+          const card = event.target.closest('[data-location-id]');
+          if (!card) return;
+          const loc = getLocationById(card.dataset.locationId);
+          if (!loc) return;
+          map.flyTo({ center: [loc.lng, loc.lat], zoom: 11 });
+          openMarkerPopup(loc);
+          highlightSceneCard(loc.id);
+        });
+      }
+
+      const sceneContent = document.getElementById('sceneContent');
+      if (sceneContent) {
+        sceneContent.addEventListener('click', (event) => {
+          const card = event.target.closest('[data-location-id]');
+          if (!card) return;
+          const loc = getLocationById(card.dataset.locationId);
+          if (!loc) return;
+          map.flyTo({ center: [loc.lng, loc.lat], zoom: 12 });
+          openMarkerPopup(loc);
+          highlightSceneCard(loc.id);
+        });
+      }
+
+      // Scene sidebar actions
+      const sceneSidebar = document.getElementById('sceneSidebar');
+      if (sceneSidebar) {
+        sceneSidebar.addEventListener('click', (event) => {
+          const closeBtn = event.target.closest('[data-action="close-scene-sidebar"]');
+          if (closeBtn) {
+            closeSceneSidebar();
+            return;
+          }
+          const markBtn = event.target.closest('[data-action="mark-visited"]');
+          if (markBtn) {
+            const placeId = markBtn.dataset.placeId;
+            if (placeId) markAsVisited(placeId);
+          }
+        });
+      }
+    });
+
+    // ----------------------------------------
+    // E4: WORK DROPDOWN FILTER
+    // Populate dropdown and filter map by selected work
+    // ----------------------------------------
+    const workFilterSelect = document.getElementById('workFilter');
+
+    console.log('[Artopath] Initializing work filter with', worksWithPlaces.length, 'works');
+
+    // Populate dropdown with initial works (will be updated after lazy-loading API works)
+    function populateWorkDropdown() {
+      const currentValue = workFilterSelect.value;
+      while (workFilterSelect.options.length > 1) {
+        workFilterSelect.remove(1);
+      }
+      worksWithPlaces.forEach(work => {
+        const option = document.createElement('option');
+        option.value = work.id;
+        option.textContent = `${work.title || work.title_display || ''} (${work.placeCount})`;
+        workFilterSelect.appendChild(option);
+      });
+      if (currentValue && workFilterSelect.querySelector(`option[value="${currentValue}"]`)) {
+        workFilterSelect.value = currentValue;
+      }
+    }
+
+    // Initial population
+    populateWorkDropdown();
+
+    // Add event listener as backup (in case onchange doesn't work)
+    workFilterSelect.addEventListener('change', function (e) {
+      console.log('[Artopath] Filter changed to:', e.target.value);
+      filterByWork(e.target.value);
+    });
+
+    // Collection mode toggle handler
+    const collectionToggle = document.getElementById('collectionToggle');
+    if (collectionToggle) {
+      collectionToggle.addEventListener('click', function(e) {
+        const btn = e.target.closest('.collection-mode-btn');
+        if (!btn) return;
+        const mode = btn.dataset.mode;
+        if (mode === currentCollectionMode) return;
+
+        currentCollectionMode = mode;
+
+        // Update button active states
+        collectionToggle.querySelectorAll('.collection-mode-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Rebuild map data with new mode
+        const works = window.ALL_WORKS || [];
+        updateExploreDataFromWorks(works);
+
+        console.log('[Explore] Collection mode changed to:', mode);
+      });
+    }
+
+    // Apply work filter from URL if present (after dropdown is populated)
+    if (workParam && workFilterSelect.querySelector(`option[value="${workParam}"]`)) {
+      console.log('[Explore] Setting dropdown from URL param:', workParam);
+      workFilterSelect.value = workParam;
+    }
+
+    // Current filter state
+    let allPlaceMarkers = {}; // Store references to all place markers
+
+    function filterByWork(workId) {
+      currentWorkFilter = workId;
+
+      // Dim/highlight markers based on filter using Mapbox approach
+      updateMarkerDimming(workId);
+
+      // Update sidebar to show filtered places
+      updatePlacesSidebar(workId);
+
+      // If a work is selected, zoom to fit all its markers and open scene sidebar
+      if (workId) {
+        const workLocations = locations.filter(loc => loc.workId === workId);
+        if (workLocations.length > 0) {
+          // CRITICAL: Mapbox uses [lng, lat] order for bounds
+          const bounds = new mapboxgl.LngLatBounds();
+          workLocations.forEach(loc => {
+            bounds.extend([loc.lng, loc.lat]);
+          });
+          map.fitBounds(bounds, { padding: 80, maxZoom: 6, duration: 1000 });
+
+          const workSummary = worksWithPlaces.find(w => w.id === workId);
+          if (workSummary) {
+            const fullWork = (window.ALL_WORKS || []).find(w => String(w.id) === String(workId)) || workSummary;
+            openSceneSidebar(fullWork, workLocations);
+          }
+        }
+      } else {
+        // Close scene sidebar when "All" selected
+        closeSceneSidebar();
+      }
+    }
+
+    function updatePlacesSidebar(workId) {
+      const sidebar = document.getElementById('placesSidebar');
+      sidebar.innerHTML = '';
+
+      // Filter: only show locations tied to a work (have workId)
+      // Also filter by selected work if one is chosen
+      const filteredLocations = locations.filter(loc => {
+        // Must have a workId (tied to a movie/artwork)
+        if (!loc.workId) return false;
+        // If a work is selected, only show that work's locations
+        if (workId && loc.workId !== workId) return false;
+        return true;
+      });
+
+      filteredLocations.forEach(loc => {
+        const card = document.createElement('div');
+        card.className = 'place-card hover-lift';
+        card.dataset.locationId = String(loc.id);
+        card.innerHTML = `
+          <div class="place-card-icon">
+            ${loc.type === 'movie' ? '🎬' : '📍'}
+          </div>
+          <div class="place-card-content">
+            <div class="place-card-title">${loc.title}</div>
+            <div class="place-card-description">${loc.workTitle || loc.locationName}</div>
+          </div>
+        `;
+        sidebar.appendChild(card);
+      });
+    }
+
+    // ----------------------------------------
+    // E1: SCENE SIDEBAR
+    // Shows all places for a selected work (anitabi.cn style)
+    // ----------------------------------------
+    let currentSceneWork = null;
+
+    function openSceneSidebar(work, workLocations) {
+      currentSceneWork = work;
+      const sidebar = document.getElementById('sceneSidebar');
+
+      // Update header
+      document.getElementById('scenePoster').src = work.primary_image_url || work.image || '';
+      document.getElementById('sceneTitle').textContent = work.title_display || work.title || '';
+      document.getElementById('sceneMeta').textContent = `${getCreator(work) || 'Unknown'} · ${work.date_created_year || work.year || ''}`;
+      document.getElementById('scenePlaceCount').textContent = `${workLocations.length} locations`;
+
+      // Populate places
+      const content = document.getElementById('sceneContent');
+      content.innerHTML = `
+        <div class="scene-sidebar-section-title">Pilgrimage Locations</div>
+      `;
+
+      workLocations.forEach(loc => {
+        const card = document.createElement('div');
+        card.className = 'scene-place-card';
+        card.id = `scene-card-${loc.id}`;
+        card.dataset.locationId = String(loc.id);
+        const sourceBadge = getSourceBadgeHtml(loc.source);
+        card.innerHTML = `
+          <div class="scene-place-name">${loc.title}${sourceBadge}</div>
+          <div class="scene-place-location">📍 ${loc.city || 'Unknown location'}</div>
+          ${loc.connection ? `<div class="scene-place-connection">${loc.connection}</div>` : ''}
+          ${loc.visitable ? '<span class="scene-place-badge">✓ Visitable</span>' : ''}
+        `;
+        content.appendChild(card);
+      });
+
+      // Show scene sidebar, hide places sidebar
+      sidebar.classList.add('open');
+      document.getElementById('placesSidebar').style.display = 'none';
+    }
+
+    function closeSceneSidebar() {
+      document.getElementById('sceneSidebar').classList.remove('open');
+      // Show places sidebar again
+      document.getElementById('placesSidebar').style.display = '';
+      currentSceneWork = null;
+      // Reset dropdown if closing manually
+      if (currentWorkFilter) {
+        // Don't reset filter, just close sidebar
+      }
+    }
+
+    function highlightSceneCard(locId) {
+      // Remove active from all cards
+      document.querySelectorAll('.scene-place-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      // Add active to selected card
+      const card = document.getElementById(`scene-card-${locId}`);
+      if (card) {
+        card.classList.add('active');
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // ----------------------------------------
+    // INITIALIZE SIDEBAR ON LOAD
+    // ----------------------------------------
+    updatePlacesSidebar('');
+
+    // ----------------------------------------
+    // PREVENT MAP FROM CAPTURING PANEL CLICKS (Mapbox GL JS)
+    // ----------------------------------------
+    const coordPanel = document.getElementById('coordPanel');
+    if (coordPanel) {
+      // Prevent map click events from firing when clicking on panel
+      coordPanel.addEventListener('click', (e) => e.stopPropagation());
+      coordPanel.addEventListener('dblclick', (e) => e.stopPropagation());
+      coordPanel.addEventListener('mousedown', (e) => e.stopPropagation());
+      coordPanel.addEventListener('wheel', (e) => e.stopPropagation());
+      console.log('[Artopath] Panel click propagation disabled');
+    }
+
+    // ----------------------------------------
+    // HANDLE ?work= URL PARAMETER FOR API WORKS
+    async function handleWorkURLParam() {
+      if (!workParam || workParamApplied) return;
+
+      const optionExists = workFilterSelect.querySelector(`option[value="${workParam}"]`);
+      if (optionExists) {
+        workFilterSelect.value = workParam;
+        filterByWork(workParam);
+        workParamApplied = true;
+        return;
+      }
+
+      console.log(`[Explore] Work ${workParam} missing locally, fetching canonical data`);
+
+      try {
+        const response = await fetch(`${API_BASE}/core/works/${workParam}/`);
+        if (response.status === 429) {
+          showToast('Too many requests — please wait a moment');
+          workParamApplied = true;
+          return;
+        }
+        if (!response.ok) {
+          console.warn(`[Explore] Work ${workParam} not found in API`);
+          showToast(`Work not found: ${workParam}`);
+          workParamApplied = true;
+          return;
+        }
+
+        const apiWork = await response.json();
+        if (!apiWork.places || apiWork.places.length === 0) {
+          showToast('No locations found for this work');
+          workParamApplied = true;
+          return;
+        }
+
+        if (typeof mergeWorks === 'function') {
+          window.ALL_WORKS = mergeWorks(window.ALL_WORKS || [], [apiWork]);
+        } else {
+          window.ALL_WORKS = [...(window.ALL_WORKS || []), apiWork];
+        }
+        updateExploreDataFromWorks(window.ALL_WORKS || []);
+
+        if (worksWithPlaces.some(work => String(work.id) === String(workParam))) {
+          workFilterSelect.value = workParam;
+          filterByWork(workParam);
+        }
+
+        console.log(`[Explore] Canonical work ${apiWork.title_display || apiWork.title || ''} loaded via fallback`);
+      } catch (error) {
+        console.warn(`[Explore] Error fetching work ${workParam}:`, error);
+        showToast(`Failed to load work: ${error.message}`);
+      } finally {
+        workParamApplied = true;
+      }
+    }
+
+    // Run lazy-load and URL param handling on page load
+    async function initExplore() {
+      await handleWorkURLParam();
+    }
+
+    // Fetch location data from pilgrimage API for works missing local places
+    async function fetchAPILocationsForWorks(works) {
+      const apiBase = window.API_BASE || '';
+      if (!apiBase) return;
+
+      const needsFetch = works.filter(w => {
+        if (!w || !w.id) return false;
+        const hasCanonical = Array.isArray(w.places) && w.places.length > 0;
+        if (hasCanonical) return false;
+        // Check geo enrichment JS files
+        const hasGeo = (typeof getGeoEnrichmentsForWork === 'function' && (getGeoEnrichmentsForWork(w.id) || []).length > 0)
+          || (typeof getGeoEnrichmentsForMovie === 'function' && (getGeoEnrichmentsForMovie(w.id) || []).length > 0);
+        return !hasGeo;
+      });
+
+      if (needsFetch.length === 0) return;
+      console.log(`[Explore] Fetching API locations for ${needsFetch.length} works without local places`);
+
+      const batchSize = 5;
+      for (let i = 0; i < needsFetch.length; i += batchSize) {
+        const batch = needsFetch.slice(i, i + batchSize);
+        await Promise.all(batch.map(async (work) => {
+          try {
+            const resp = await fetch(`${apiBase}/pilgrimage/locations/enrich/?work_id=${encodeURIComponent(work.id)}`);
+            if (!resp.ok) return;
+            const data = await resp.json();
+            if (data.places && data.places.length > 0) {
+              work.places = data.places.map(p => ({
+                name_display: p.name || p.name_display || p.title,
+                latitude: p.lat ?? p.latitude,
+                longitude: p.lng ?? p.longitude,
+                connection: p.connection || p.description || '',
+                source: data.source || p.source || 'pilgrimage_api',
+                source_type: data.source || p.source_type || 'pilgrimage_api',
+                confidence: p.confidence || 'corroborated',
+                place_type: p.location_type || p.place_type || 'filming_location',
+                visitable: p.visitable ?? true
+              }));
+              console.log(`[Explore] API: ${work.title_display || work.id} → ${data.places.length} locations (source: ${data.source || 'pilgrimage_api'})`);
+            }
+          } catch (e) {
+            // Silently skip — local data still works
+          }
+        }));
+      }
+    }
+
+    async function bootstrapExploreData() {
+      try {
+        const works = await ensureAllWorksReady();
+        updateExploreDataFromWorks(works || []);
+
+        // Fetch API locations in background, then rebuild map with enriched data
+        fetchAPILocationsForWorks(works || []).then(() => {
+          updateExploreDataFromWorks(works || []);
+        }).catch(e => {
+          console.warn('[Explore] API location fetch failed:', e);
+        });
+      } catch (error) {
+        console.warn('[Explore] Failed to prepare ALL_WORKS:', error);
+        updateExploreDataFromWorks(window.ALL_WORKS || []);
+      }
+    }
+
+    // ----------------------------------------
+    // DEBUG: SEED VAULT WITH ALL WORKS
+    // Run seedVaultWithAllWorks() in console to populate vault
+    // ----------------------------------------
+    function seedVaultWithAllWorks() {
+      const vault = [];
+      const addedIds = new Set();
+
+      // Add all WORKS (artworks)
+      if (typeof WORKS !== 'undefined') {
+        WORKS.forEach(work => {
+          if (!addedIds.has(work.id)) {
+            vault.push({
+              ...work,
+              loved: false,
+              explored: true,
+              addedAt: new Date().toISOString()
+            });
+            addedIds.add(work.id);
+          }
+        });
+      }
+
+      // Add all MOVIES
+      if (typeof MOVIES !== 'undefined') {
+        MOVIES.forEach(movie => {
+          if (!addedIds.has(movie.id)) {
+            vault.push({
+              ...movie,
+              loved: false,
+              explored: true,
+              addedAt: new Date().toISOString()
+            });
+            addedIds.add(movie.id);
+          }
+        });
+      }
+
+      // Persist each work via addWorkToVault (DB-backed)
+      vault.forEach(w => {
+        if (typeof addWorkToVault === 'function') addWorkToVault(w);
+      });
+      console.log(`[Explore] Seeded vault with ${vault.length} works (marked as explored)`);
+      console.log('[Explore] Refresh the page to see all locations on the map');
+      return vault.length;
+    }
+
+    // Expose for console access
+    window.seedVaultWithAllWorks = seedVaultWithAllWorks;
+
+    // ----------------------------------------
+    // AUTO-SEED AND INITIALIZE ON PAGE LOAD
+    // ----------------------------------------
+    (function autoSeedAndInit() {
+      // Auto-seed vault if empty (first-time user experience)
+      // Handles both old array format and new object format
+      const vaultRaw = typeof getVaultData === 'function'
+        ? getVaultData().works || []
+        : [];
+      const existingVault = Array.isArray(vaultRaw) ? vaultRaw : (vaultRaw.works || []);
+      if (existingVault.length === 0) {
+        console.log('[Explore] Empty vault detected, seeding with demo works');
+        seedVaultWithAllWorks();
+      }
+
+      // Run async initialization
+      bootstrapExploreData()
+        .then(initExplore)
+        .catch(error => {
+          console.warn('[Explore] Initialization failed:', error);
+          initExplore();
+        });
+    })();
+  </script>
+</body>
+
+</html>

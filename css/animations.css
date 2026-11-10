@@ -1,0 +1,559 @@
+/**
+ * ============================================
+ * ANIMATIONS.CSS - Transitions, Keyframes
+ * Style: Apple-like smooth motion
+ * ============================================
+ */
+
+/* ----------------------------------------
+   PAGE TRANSITIONS
+   ---------------------------------------- */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duration-slow) var(--ease-smooth),
+              transform var(--duration-slow) var(--ease-smooth);
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+/* ----------------------------------------
+   FADE IN ANIMATIONS
+   ---------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+
+/* ----------------------------------------
+   IMPRESSIONIST EFFECTS
+   ---------------------------------------- */
+@keyframes gentleDrift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2px, -2px);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+  }
+  75% {
+    transform: translate(1px, 2px);
+  }
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes spiritGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(168, 212, 230, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(168, 212, 230, 0.5);
+  }
+}
+
+.animate-drift {
+  animation: gentleDrift 8s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: gentlePulse 4s ease-in-out infinite;
+}
+
+.animate-spirit-glow {
+  animation: spiritGlow 3s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   GRAPH NODE ANIMATIONS (DNA Canvas)
+   ---------------------------------------- */
+@keyframes nodeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes nodeGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(168, 212, 230, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(168, 212, 230, 0.8));
+  }
+}
+
+/* ----------------------------------------
+   BUTTON HOVER EFFECTS
+   ---------------------------------------- */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+/* ----------------------------------------
+   CARD HOVER LIFT
+   ---------------------------------------- */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(168, 212, 230, 0.2);
+}
+
+/* ----------------------------------------
+   MAP PIN BOUNCE
+   ---------------------------------------- */
+@keyframes pinBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.map-pin-active {
+  animation: pinBounce 0.5s var(--ease-bounce);
+}
+
+/* ----------------------------------------
+   LOADING SPINNER
+   ---------------------------------------- */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--forest-light);
+  border-top-color: var(--accent-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* ----------------------------------------
+   HERO PORTAL ANIMATION
+   ---------------------------------------- */
+@keyframes portalGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(168, 212, 230, 0.4),
+      inset 0 0 50px rgba(168, 212, 230, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px rgba(168, 212, 230, 0.6),
+      inset 0 0 80px rgba(168, 212, 230, 0.2);
+  }
+}
+
+.portal-glow {
+  animation: portalGlow 4s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   DNA PAGE ENTRY ANIMATIONS
+   Constellation emergence effect
+   ---------------------------------------- */
+
+/* Page entry wrapper - controls overall fade */
+@keyframes dnaPageEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Background constellation emergence */
+@keyframes dnaBackgroundReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Control panel slides in from right with fade */
+@keyframes dnaControlsEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Node emergence - scale up with glow pulse */
+@keyframes dnaNodeEmerge {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Edge trace-in effect */
+@keyframes dnaEdgeTrace {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 100%;
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Initial glow burst for first nodes */
+@keyframes dnaInitialGlow {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(168, 212, 230, 0));
+  }
+  30% {
+    filter: drop-shadow(0 0 25px rgba(168, 212, 230, 0.8));
+  }
+  100% {
+    filter: drop-shadow(0 0 10px rgba(168, 212, 230, 0.3));
+  }
+}
+
+/* DNA page entry state classes */
+.dna-page {
+  opacity: 0;
+  animation: dnaPageEnter 600ms var(--ease-smooth) forwards;
+  animation-delay: 100ms;
+}
+
+.dna-page .dna-controls {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: dnaControlsEnter 700ms var(--ease-smooth) forwards;
+  animation-delay: 800ms;
+}
+
+/* Canvas container gets subtle scale-in */
+.dna-page .dna-canvas-container {
+  opacity: 0;
+  transform: scale(1.02);
+  animation: dnaBackgroundReveal 1000ms var(--ease-smooth) forwards;
+  animation-delay: 200ms;
+}
+
+/* ========================================
+   SCROLL REVEAL SYSTEM
+   Apple-style progressive content reveal
+   ======================================== */
+
+/* Initial hidden state for revealable sections */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-smooth),
+              transform 0.8s var(--ease-smooth);
+}
+
+.reveal-section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children within a section */
+.reveal-section .reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-smooth),
+              transform 0.5s var(--ease-smooth);
+}
+
+.reveal-section.revealed .reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for children */
+.reveal-section.revealed .reveal-item:nth-child(1) { transition-delay: 0.1s; }
+.reveal-section.revealed .reveal-item:nth-child(2) { transition-delay: 0.2s; }
+.reveal-section.revealed .reveal-item:nth-child(3) { transition-delay: 0.3s; }
+.reveal-section.revealed .reveal-item:nth-child(4) { transition-delay: 0.4s; }
+.reveal-section.revealed .reveal-item:nth-child(5) { transition-delay: 0.5s; }
+.reveal-section.revealed .reveal-item:nth-child(6) { transition-delay: 0.6s; }
+.reveal-section.revealed .reveal-item:nth-child(7) { transition-delay: 0.7s; }
+.reveal-section.revealed .reveal-item:nth-child(8) { transition-delay: 0.8s; }
+
+/* Different reveal styles */
+.reveal-fade-up {
+  transform: translateY(60px);
+}
+
+.reveal-fade-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s var(--ease-smooth),
+              transform 0.6s var(--ease-smooth);
+}
+
+.reveal-fade-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========================================
+   FLOATING PEOPLE BUBBLES
+   ======================================== */
+
+/* Float animation for bubbles */
+@keyframes bubbleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(1deg);
+  }
+}
+
+/* Individual Person Bubble */
+.person-bubble {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+
+  /* Float animation */
+  animation: bubbleFloat 6s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+
+  /* Initial state for scroll reveal */
+  opacity: 0;
+  transform: scale(0.5) translateY(20px);
+  transition: opacity 0.8s var(--ease-smooth),
+              transform 0.8s var(--ease-smooth);
+}
+
+.person-bubble.revealed {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.person-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person-bubble::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(168, 212, 230, 0.3);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.person-bubble:hover {
+  z-index: 10;
+  animation-play-state: paused;
+  transform: scale(1.3) translateY(0) !important;
+}
+
+.person-bubble:hover::after {
+  border-color: var(--spirit-glow);
+  box-shadow: 0 0 25px rgba(168, 212, 230, 0.5);
+}
+
+/* Person name tooltip on hover */
+.person-bubble .bubble-label {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-light);
+  background: rgba(26, 47, 26, 0.95);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.person-bubble:hover .bubble-label {
+  opacity: 1;
+}
+
+/* Stagger float delays */
+.person-bubble:nth-child(1) { --float-delay: 0s; }
+.person-bubble:nth-child(2) { --float-delay: 0.5s; }
+.person-bubble:nth-child(3) { --float-delay: 1s; }
+.person-bubble:nth-child(4) { --float-delay: 1.5s; }
+.person-bubble:nth-child(5) { --float-delay: 2s; }
+.person-bubble:nth-child(6) { --float-delay: 0.3s; }
+.person-bubble:nth-child(7) { --float-delay: 0.8s; }
+.person-bubble:nth-child(8) { --float-delay: 1.3s; }
+
+/* ========================================
+   SCROLL HINT ANIMATION
+   ======================================== */
+@keyframes scrollHintPulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.8; transform: translateX(-50%) translateY(5px); }
+}
+
+@keyframes scrollArrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* ========================================
+   CULTURAL LINEAGE TIMELINE
+   ======================================== */
+
+/* Timeline track line animation */
+@keyframes timelineGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Timeline node entrance */
+@keyframes timelineNodeEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

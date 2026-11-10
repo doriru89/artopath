@@ -1,0 +1,1342 @@
+<!-- 
+  FILE: index.html
+  PURPOSE: Hero/Landing Page & Scan Entry
+  CONTEXT: The entry point for the "Eye-Scan" module. Features the watercolor flow effect.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtØPath - Your Second Art Brain</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS IMPORTS -->
+  <link rel="stylesheet" href="css/base.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/components.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/pages.css?v=e0ffeb0">
+  <link rel="stylesheet" href="css/animations.css?v=e0ffeb0">
+
+  <style>
+    /* Search Modal Styles */
+    .search-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 47, 26, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 15vh;
+    }
+
+    .search-modal.active {
+      display: flex;
+    }
+
+    .search-container {
+      width: 90%;
+      max-width: 600px;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-lg) var(--space-xl);
+      padding-left: 56px;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      color: var(--text-light);
+      outline: none;
+      transition: all var(--duration-normal) var(--ease-smooth);
+    }
+
+    .search-input:focus {
+      border-color: var(--spirit-glow);
+      box-shadow: 0 0 20px rgba(168, 212, 230, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-lg);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-close {
+      position: absolute;
+      right: var(--space-md);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+      transition: all var(--duration-fast);
+    }
+
+    .search-close:hover {
+      color: var(--text-light);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Search Results */
+    .search-results {
+      margin-top: var(--space-md);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .search-results.has-results {
+      display: block;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover,
+    .search-result-item.selected {
+      background: rgba(168, 212, 230, 0.1);
+    }
+
+    .search-result-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      background: var(--card-border);
+    }
+
+    /* Lazy image loading transitions */
+    .search-result-image.lazy-image {
+      transition: opacity 0.2s ease;
+    }
+
+    .search-result-image.lazy-image:not(.loaded) {
+      opacity: 0.6;
+    }
+
+    .search-result-image.lazy-image.loaded {
+      opacity: 1;
+    }
+
+    .search-result-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-result-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-result-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .search-result-type {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: rgba(168, 212, 230, 0.2);
+      color: var(--spirit-glow);
+    }
+
+    .search-result-type.movie {
+      background: rgba(212, 168, 71, 0.2);
+      color: var(--accent-gold);
+    }
+
+    /* No results message */
+    .search-no-results {
+      padding: var(--space-xl);
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* Keyboard hint */
+    .search-hint {
+      margin-top: var(--space-md);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .search-hint kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    /* Highlight matched text */
+    .search-highlight {
+      background: rgba(212, 168, 71, 0.3);
+      color: var(--accent-gold);
+      border-radius: 2px;
+    }
+
+    /* Hero value proposition */
+    .hero-tagline {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--text-light);
+      max-width: 420px;
+      margin: 0 auto var(--space-2xl);
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Camera Modal - Video styling */
+    #cameraVideo {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      background: var(--forest-deep);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Enhanced Scan button */
+    .btn-primary.btn-lg {
+      min-width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#hero" class="skip-link">Skip to main content</a>
+
+  <!-- HERO SECTION -->
+  <main class="hero" id="hero" role="main">
+    <!-- Canvas Background -->
+    <canvas id="heroCanvas" class="hero-canvas" role="img" aria-label="Animated watercolor background"></canvas>
+
+    <!-- Hero Content -->
+    <div class="hero-content animate-fade-in-up">
+      <h1 class="hero-title">ArtØPath</h1>
+      <p class="hero-subtitle">Your Second Art Brain</p>
+
+      <!-- Value proposition micro-copy -->
+      <p class="hero-tagline">Capture, remember, and connect the art you love</p>
+
+      <!-- Portal Door - Entry to Vault -->
+      <a href="vault.html" class="portal-container portal-glow">
+        <div class="portal-door">
+          <span class="portal-text">Start Exploring</span>
+        </div>
+      </a>
+
+      <!-- Action Buttons -->
+      <div class="hero-actions stagger-children">
+        <!-- Scan Button - Opens Camera -->
+        <button class="btn btn-primary btn-lg" aria-label="Scan artwork with camera" data-action="open-camera">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
+          Scan
+        </button>
+
+        <!-- Search Button - Opens Modal -->
+        <button class="btn btn-secondary btn-lg" aria-label="Search artworks and movies" data-action="open-search">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          Search
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- CAMERA MODAL -->
+  <div class="search-modal" id="cameraModal" role="dialog" aria-modal="true" aria-labelledby="cameraModalTitle">
+    <div class="search-container" data-stop-propagation="true">
+      <h2 id="cameraModalTitle" class="sr-only">Camera Scanner</h2>
+      <div style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
+        <video id="cameraVideo" autoplay playsinline aria-label="Camera viewfinder"
+          style="width: 100%; border-radius: var(--radius-lg); background: var(--forest-deep);"></video>
+        <canvas id="cameraCanvas" style="display: none;" aria-hidden="true"></canvas>
+
+        <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-md); justify-content: center;">
+          <button class="btn btn-primary" aria-label="Capture photo" data-action="capture-photo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+            </svg>
+            Capture
+          </button>
+          <button class="btn btn-secondary" aria-label="Close camera" data-action="close-camera">Close</button>
+        </div>
+
+        <div class="search-hint" style="margin-top: var(--space-lg);">
+          Position the artwork in the frame and tap Capture
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH MODAL -->
+  <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-labelledby="searchModalTitle">
+    <div class="search-container" data-stop-propagation="true">
+      <h2 id="searchModalTitle" class="sr-only">Search works</h2>
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search artworks and movies..."
+          autocomplete="off" aria-label="Search artworks and movies">
+        <button class="search-close" aria-label="Close search" data-action="close-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="search-results" id="searchResults" role="listbox" aria-live="polite"></div>
+      <div class="search-loading" id="searchLoading" style="display: none; padding: 16px; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+          <div class="loading-spinner"></div>
+          <span id="searchLoadingText" style="font-size: 0.9rem; color: var(--spirit-glow);">Searching...</span>
+        </div>
+      </div>
+
+      <style>
+        .loading-spinner {
+          width: 20px;
+          height: 20px;
+          border: 2px solid var(--card-border);
+          border-top-color: var(--spirit-glow);
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+
+      <div class="search-hint">
+        <kbd>↑</kbd> <kbd>↓</kbd> to navigate · <kbd>Enter</kbd> to select · <kbd>Esc</kbd> to close
+        <span style="opacity: 0.5; font-size: 0.7rem; margin-left: 8px;">(v3)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING NAVIGATION -->
+  <nav class="floating-nav" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="nav-item active" aria-current="page">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9,22 9,12 15,12 15,22" />
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="vault.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
+        <path
+          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+      </svg>
+      <span>Vault</span>
+    </a>
+    <a href="explore.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
+        <circle cx="12" cy="10" r="3" />
+        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+      </svg>
+      <span>Explore</span>
+    </a>
+    <a href="dna.html" class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+      </svg>
+      <span>DNA</span>
+    </a>
+  </nav>
+
+  <!-- JAVASCRIPT -->
+  <!-- Shared utilities -->
+  <script src="js/utils/dom-utils.js?v=83b0b9f"></script>
+  <script src="js/utils/storage-utils.js?v=83b0b9f"></script>
+  <!-- API utilities (must load first for API_BASE) -->
+  <script src="js/api/api-utils.js?v=4ba0d42"></script>
+  <!-- Seed scripts removed: DB is source of truth (Session 10) -->
+  <!-- POC: Movie cultural lineage data (11 movies) -->
+  <!-- Seeded artworks from Wikidata (82 famous works) -->
+  <!-- artworks-seed.js deprecated - seeded artworks now in Django database -->
+  <script src="js/features/hero-canvas.js?v=83b0b9f"></script>
+  <script src="js/features/identity-engine.js?v=83b0b9f"></script>
+  <script>
+    // ----------------------------------------
+    // POC: PLACEHOLDER SVG DATA URIS
+    // ----------------------------------------
+    const PLACEHOLDER_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect fill='%232d4a3e' width='100' height='100'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23a8d4e6' font-size='40' font-family='sans-serif'%3E?%3C/text%3E%3C/svg%3E";
+
+    function getInitialPlaceholder(name) {
+      const initial = name.charAt(0).toUpperCase();
+      return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Crect fill='%232d4a3e' width='70' height='70' rx='35'/%3E%3Ctext x='35' y='45' text-anchor='middle' fill='%23a8d4e6' font-size='28' font-family='system-ui'%3E${initial}%3C/text%3E%3C/svg%3E`;
+    }
+
+    function getTitleKey(work) {
+      if (!work) return '';
+      const raw = (work.title_display || work.title || work.title_original || '').trim();
+      return raw.toLowerCase();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const mapAction = (selector, handler) => {
+        const el = document.querySelector(selector);
+        if (el) {
+          el.addEventListener('click', (event) => {
+            event.preventDefault();
+            handler(event);
+          });
+        }
+      };
+
+      mapAction('[data-action="open-camera"]', () => openCamera());
+      mapAction('[data-action="open-search"]', () => openSearchModal());
+      mapAction('[data-action="capture-photo"]', () => capturePhoto());
+      mapAction('[data-action="close-camera"]', () => closeCameraModal());
+      mapAction('[data-action="close-search"]', () => closeSearchModal());
+
+      document.querySelectorAll('[data-stop-propagation]').forEach(el => {
+        el.addEventListener('click', (event) => event.stopPropagation());
+      });
+
+      const cameraModal = document.getElementById('cameraModal');
+      if (cameraModal) {
+        cameraModal.addEventListener('click', handleCameraModalClick);
+      }
+      const searchModal = document.getElementById('searchModal');
+      if (searchModal) {
+        searchModal.addEventListener('click', handleModalClick);
+      }
+
+      const searchInputEl = document.getElementById('searchInput');
+      if (searchInputEl) {
+        searchInputEl.addEventListener('input', () => handleSearch(searchInputEl.value));
+        searchInputEl.addEventListener('keydown', handleKeydown);
+      }
+    });
+
+    // ----------------------------------------
+    // ----------------------------------------
+    // CANONICAL DATASET (async)
+    // ----------------------------------------
+    let ALL_WORKS = [];
+    let allWorksReady = null;
+
+    function mergeCanonicalWorks(...datasets) {
+      const merged = [];
+      const seen = new Set();
+      datasets.filter(Boolean).forEach(dataset => {
+        dataset.forEach(work => {
+          if (!work || !work.id) return;
+          if (seen.has(work.id)) {
+            console.warn('[Hero] Duplicate work id skipped:', work.id);
+            return;
+          }
+          seen.add(work.id);
+          merged.push(work);
+        });
+      });
+      return merged;
+    }
+
+    function getSeedDataset() {
+      const seeds = mergeCanonicalWorks(
+        typeof WORKS !== 'undefined' ? WORKS : [],
+        typeof MOVIES !== 'undefined' ? MOVIES : []
+      );
+      ALL_WORKS = seeds;
+      window.ALL_WORKS = seeds;
+      return seeds;
+    }
+
+    async function hydrateAllWorks() {
+      if (typeof initializeWithAPIWorks === 'function') {
+        try {
+          const works = await initializeWithAPIWorks();
+          ALL_WORKS = works || [];
+          window.ALL_WORKS = ALL_WORKS;
+          return ALL_WORKS;
+        } catch (e) {
+          console.warn('[Hero] initializeWithAPIWorks failed, falling back to seeds:', e);
+        }
+      }
+      return getSeedDataset();
+    }
+
+    async function ensureAllWorksReady() {
+      if (!allWorksReady) {
+        const guard = window.StorageUtils?.guardAsyncInitialization;
+        if (typeof guard === 'function') {
+          allWorksReady = guard('Hero dataset bootstrap', hydrateAllWorks, () => getSeedDataset());
+        } else {
+          allWorksReady = (async () => {
+            try {
+              return await hydrateAllWorks();
+            } catch (error) {
+              console.error('[Hero] ensureAllWorksReady failed:', error);
+              return getSeedDataset();
+            }
+          })();
+        }
+      }
+      return allWorksReady;
+    }
+
+    // REMOVED: Auto-vault on search click — vault should only happen on explicit user action
+    // (Love button, Generate AI). This function was causing un-generated works to auto-vault.
+    function addToVaultIfMissing(workDetails) {
+      // No-op: vault only on explicit action
+      return;
+    }
+
+    // ----------------------------------------
+    // SEARCH STATE
+    // ----------------------------------------
+    let selectedIndex = -1;
+    let searchResults = [];
+
+    // ----------------------------------------
+    // CAMERA FUNCTIONALITY
+    // ----------------------------------------
+    let cameraStream = null;
+
+    async function openCamera() {
+      const modal = document.getElementById('cameraModal');
+      const video = document.getElementById('cameraVideo');
+
+      try {
+        // Request camera permission and access
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'environment', // Use rear camera on mobile
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          }
+        });
+
+        video.srcObject = cameraStream;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } catch (error) {
+        console.error('Camera access error:', error);
+
+        // Show user-friendly error message
+        let errorMessage = 'Unable to access camera. ';
+        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+          errorMessage += 'Please grant camera permission in your browser settings.';
+        } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+          errorMessage += 'No camera found on this device.';
+        } else {
+          errorMessage += 'Please try again or use Search instead.';
+        }
+
+        alert(errorMessage);
+      }
+    }
+
+    function closeCameraModal() {
+      const modal = document.getElementById('cameraModal');
+      const video = document.getElementById('cameraVideo');
+
+      // Stop camera stream
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+      }
+
+      video.srcObject = null;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleCameraModalClick(event) {
+      if (event.target === document.getElementById('cameraModal')) {
+        closeCameraModal();
+      }
+    }
+
+    function capturePhoto() {
+      const video = document.getElementById('cameraVideo');
+      const canvas = document.getElementById('cameraCanvas');
+      const context = canvas.getContext('2d');
+
+      // Set canvas dimensions to match video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      // Draw current video frame to canvas
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert to blob and send to camera-scan backend
+      canvas.toBlob(async (blob) => {
+        console.log('Photo captured:', blob);
+        closeCameraModal();
+
+        try {
+          const formData = new FormData();
+          formData.append('image', blob, 'capture.jpg');
+
+          const resp = await fetch(`${API_BASE}/ai/camera-scan/`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            alert(`Scan failed: ${err.error || resp.statusText}`);
+            return;
+          }
+
+          const data = await resp.json();
+          const text = data.extracted_text || '(no text found)';
+
+          if (data.match_count > 0) {
+            // Local match found — go directly to it
+            const matchList = data.matches.map(m => `• ${m.title} (${m.work_type}, ${m.year || '?'})`).join('\n');
+            alert(`Found in vault:\n${matchList}`);
+            window.location.href = `work-detail.html?id=${data.matches[0].id}`;
+          } else if (data.external_candidates && data.external_candidates.length > 0) {
+            // No local match — show external candidates for user to pick
+            showScanCandidates(text, data.external_candidates);
+          } else {
+            alert(`Extracted text:\n${text}\n\nNo matching works found locally or externally.`);
+          }
+        } catch (err) {
+          console.error('Camera scan error:', err);
+          alert('Camera scan failed. Is the Django API running?');
+        }
+      }, 'image/jpeg', 0.9);
+    }
+
+    // ----------------------------------------
+    // SCAN CANDIDATE SELECTION (external API results)
+    // ----------------------------------------
+    function showScanCandidates(extractedText, candidates) {
+      // Reuse the search modal to display candidates for selection
+      const modal = document.getElementById('searchModal');
+      const resultsEl = document.getElementById('searchResults');
+      const inputEl = document.getElementById('searchInput');
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      inputEl.value = extractedText.slice(0, 60);
+      inputEl.disabled = true;
+      inputEl.placeholder = 'Select the correct work below...';
+
+      resultsEl.classList.add('has-results');
+      resultsEl.innerHTML = candidates.map((c, i) => {
+        const title = c.title || c.title_display || 'Unknown';
+        const year = c.year || c.release_year || '';
+        const type = c.work_type || c.media_type || 'work';
+        const img = c.poster_url || c.primary_image_url || c.image_url || '';
+        const creator = c.director || c.creator || c.artist || '';
+        return `
+          <div class="search-result-item" data-pos="${i}" style="cursor:pointer;">
+            ${img ? `<img class="search-result-image" src="${img}" alt="" onerror="this.style.display='none'">` : ''}
+            <div class="search-result-info">
+              <div class="search-result-title">${escapeHtml(title)}</div>
+              <div class="search-result-meta">${escapeHtml(creator)}${creator && year ? ' · ' : ''}${year}</div>
+            </div>
+            <span class="search-result-type ${type}">${type}</span>
+          </div>`;
+      }).join('');
+
+      // Handle click — navigate to work-detail with search query to trigger ingest
+      resultsEl.onclick = (e) => {
+        const item = e.target.closest('.search-result-item');
+        if (!item) return;
+        const idx = parseInt(item.dataset.pos, 10);
+        const chosen = candidates[idx];
+        const title = chosen.title || chosen.title_display || '';
+
+        // Close modal and reset
+        modal.classList.remove('active');
+        inputEl.disabled = false;
+        inputEl.placeholder = 'Search artworks and movies...';
+        document.body.style.overflow = '';
+
+        // Navigate to work-detail with search param — triggers AI ingest flow
+        window.location.href = `work-detail.html?search=${encodeURIComponent(title)}`;
+      };
+    }
+
+    // ----------------------------------------
+    // OPEN/CLOSE SEARCH MODAL
+    // ----------------------------------------
+    function openSearchModal() {
+      document.getElementById('searchModal').classList.add('active');
+      document.getElementById('searchInput').focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.remove('active');
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchResults').innerHTML = '';
+      document.getElementById('searchResults').classList.remove('has-results');
+      selectedIndex = -1;
+      searchResults = [];
+      document.body.style.overflow = '';
+    }
+
+    function handleModalClick(event) {
+      if (event.target === document.getElementById('searchModal')) {
+        closeSearchModal();
+      }
+    }
+
+    // ----------------------------------------
+    // API CONFIGURATION
+    // ----------------------------------------
+    // API_BASE is now provided by js/api/api-utils.js (loaded above)
+    let searchDebounceTimer = null;
+    let externalResults = []; // TMDb/Met Museum results
+
+    // ----------------------------------------
+    // SEARCH LOGIC
+    // ----------------------------------------
+    async function handleSearch(query) {
+      const resultsContainer = document.getElementById('searchResults');
+
+      if (!query.trim()) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('has-results');
+        searchResults = [];
+        externalResults = [];
+        selectedIndex = -1;
+        return;
+      }
+
+      // Ensure canonical dataset is ready
+      try {
+        await ensureAllWorksReady();
+      } catch (e) {
+        console.warn('[Hero] ensureAllWorksReady failed, continuing with available data:', e);
+      }
+
+      // 1. Immediate local search through ALL_WORKS + SEEDED_ARTWORKS
+      const queryLower = query.toLowerCase();
+
+      // Search local POC works
+      const pocResults = ALL_WORKS
+        .filter(w => w.work_type !== 'location')
+        .filter(work => {
+          const titleMatch = (work.title_display || '').toLowerCase().includes(queryLower);
+          const creatorMatch = (getCreator(work) || '').toLowerCase().includes(queryLower);
+          const originalMatch = (work.title_original || '').toLowerCase().includes(queryLower);
+          return titleMatch || creatorMatch || originalMatch;
+        })
+        .map(w => ({ ...w, source: 'local' }));
+
+      // Search localStorage vault (ingested works)
+      let vaultResults = [];
+      try {
+        const vault = typeof getVaultData === 'function'
+          ? getVaultData().works || []
+          : [];
+        vaultResults = vault
+          .filter(work => {
+            const titleMatch = (work.title_display || '').toLowerCase().includes(queryLower);
+            const creatorMatch = (getCreator(work) || '').toLowerCase().includes(queryLower);
+            return titleMatch || creatorMatch;
+          })
+          .map(w => ({ ...w, source: 'vault' }));
+      } catch (e) {
+        console.warn('Error reading vault for search:', e);
+      }
+
+      // Combine results (vault first as they are user-added)
+      const allLocalResults = [...vaultResults, ...pocResults];
+
+      // NOTE: Seeded artworks now in Django database, will come via API search
+      // Local results are just POC static data + Vault
+      const localResults = allLocalResults.slice(0, 8);
+
+      // Use combined local results (already have source set)
+      searchResults = localResults;
+      externalResults = [];
+      renderSearchResults(query);
+
+      // 2. Debounced API search if few local results
+      if (query.length >= 2) {
+        clearTimeout(searchDebounceTimer);
+        document.getElementById('searchLoadingText').textContent = 'Searching TMDb & Met Museum...';
+        document.getElementById('searchLoading').style.display = 'block';
+        searchDebounceTimer = setTimeout(() => fetchExternalResults(query), 500);
+      } else {
+        document.getElementById('searchLoading').style.display = 'none';
+      }
+    }
+
+    async function fetchExternalResults(query) {
+      const loadingEl = document.getElementById('searchLoading');
+      try {
+        console.log('[Search] Fetching external results for:', query);
+        const response = await fetch(`${API_BASE}/search/?q=${encodeURIComponent(query)}&limit=10`);
+        console.log('[Search] Response status:', response.status, response.ok);
+
+        if (!response.ok) {
+          console.log('[Search] Response not ok, skipping');
+          loadingEl.style.display = 'none';
+          return;
+        }
+
+        const data = await response.json();
+        console.log('[Search] API returned:', data);
+
+        // Add reference/curated results from API (works already in database)
+        const apiDatabaseResults = [
+          ...(data.curated || []).map(w => ({ ...w, source: w.source || 'api' })),
+          ...(data.reference || []).map(w => ({ ...w, source: w.source || 'api' }))
+        ];
+        console.log('[Search] API database results:', apiDatabaseResults.length);
+
+        // Add API database results to local results (if not already present)
+      const localTitles = new Set(searchResults.map(getTitleKey).filter(Boolean));
+      apiDatabaseResults.forEach(w => {
+        const titleKey = getTitleKey(w);
+        if (!titleKey || !localTitles.has(titleKey)) {
+          searchResults.push(w);
+          if (titleKey) localTitles.add(titleKey);
+        }
+      });
+
+        // Combine external movies and artworks (these are from TMDb/Met, not in database yet)
+        externalResults = [
+          ...(data.external || []).map(w => ({ ...w, source: 'tmdb' })),
+          ...(data.external_artworks || []).map(w => ({ ...w, source: 'met_museum' }))
+        ];
+        console.log('[Search] External results:', externalResults.length);
+
+        // Filter out results already in local/API
+        externalResults = externalResults.filter(w => {
+          const titleKey = getTitleKey(w);
+          if (!titleKey) return true;
+          if (localTitles.has(titleKey)) return false;
+          localTitles.add(titleKey);
+          return true;
+        });
+        console.log('[Search] After filtering:', externalResults.length);
+
+        loadingEl.style.display = 'none';
+        appendAPIResults(query);
+      } catch (error) {
+        console.log('[Search] API not available, using local data only');
+        // Silently fall back to local results - local results already rendered
+        loadingEl.style.display = 'none';
+      }
+    }
+
+    // Append API results without re-rendering local results (prevents flicker)
+    function appendAPIResults(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      const existingCount = resultsContainer.querySelectorAll('.search-result-item').length;
+
+      // Get all items that should be displayed
+      const allItems = [...searchResults, ...externalResults];
+      const newItems = allItems.slice(existingCount);
+
+      if (newItems.length === 0) return;
+
+      const noResults = resultsContainer.querySelector('.search-no-results');
+      if (noResults) noResults.remove();
+
+      // Add divider before external results (only once)
+      if (externalResults.length > 0 && !document.getElementById('externalDivider')) {
+        const divider = document.createElement('div');
+        divider.id = 'externalDivider';
+        divider.style.cssText = 'padding: 8px 16px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; background: rgba(0,0,0,0.2);';
+        divider.textContent = 'More from TMDb & Met Museum';
+        resultsContainer.appendChild(divider);
+      }
+
+      // Append new items
+      newItems.forEach((work, i) => {
+        const index = existingCount + i;
+        const isExternal = externalResults.includes(work);
+        const sourceIndex = isExternal ? externalResults.indexOf(work) : searchResults.indexOf(work);
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = renderResultItem(work, index, query, isExternal, sourceIndex);
+        resultsContainer.appendChild(wrapper.firstElementChild);
+      });
+
+      // Trigger lazy loading for newly added images
+      observeLazyImages();
+    }
+
+    function escapeAttr(value) {
+      return String(value ?? '').replace(/"/g, '&quot;');
+    }
+
+    function renderSearchResults(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      const allResults = [...searchResults, ...externalResults];
+
+      if (allResults.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="search-no-results">
+            No works found for "${escapeHtml(query)}"
+          </div>
+        `;
+        resultsContainer.classList.add('has-results');
+        return;
+      }
+
+      let html = '';
+
+      // Local results section
+      if (searchResults.length > 0) {
+        html += searchResults.map((work, index) => renderResultItem(work, index, query, false, index)).join('');
+      }
+
+      // External results section (with divider)
+      if (externalResults.length > 0) {
+        if (searchResults.length > 0) {
+          html += `<div style="padding: 8px 16px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; background: rgba(0,0,0,0.2);">
+            More from TMDb & Met Museum
+          </div>`;
+        }
+        html += externalResults.map((work, index) =>
+          renderResultItem(work, searchResults.length + index, query, true, index)
+        ).join('');
+      }
+
+      resultsContainer.innerHTML = html;
+      resultsContainer.classList.add('has-results');
+      selectedIndex = 0;
+      updateSelection();
+
+      // Trigger lazy image loading
+      observeLazyImages();
+    }
+
+    // ----------------------------------------
+    // LAZY IMAGE LOADING
+    // ----------------------------------------
+    let lazyImageObserver = null;
+
+    function initLazyImageObserver() {
+      if (lazyImageObserver) return;
+      lazyImageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            const src = img.dataset.src;
+            if (src && src !== 'undefined' && src !== PLACEHOLDER_SVG) {
+              img.src = src;
+              img.classList.add('loaded');
+            }
+            lazyImageObserver.unobserve(img);
+          }
+        });
+      }, {
+        root: document.getElementById('searchResults'),
+        rootMargin: '50px',
+        threshold: 0.1
+      });
+    }
+
+    function observeLazyImages() {
+      initLazyImageObserver();
+      document.querySelectorAll('.lazy-image:not(.loaded)').forEach(img => {
+        lazyImageObserver.observe(img);
+      });
+    }
+
+    function renderResultItem(work, index, query, isExternal = false, sourceIndex = index) {
+      const image = work.primary_image_url || PLACEHOLDER_SVG;
+      const creator = getCreator(work) || work.creator || '';
+      const year = work.date_created_year || '';
+      const type = getTypeCategory(work) || 'artwork';
+      const sourceIcon = isExternal ? (work.source === 'tmdb' ? '🎬' : '🖼️') : '';
+      const workTypeForIngest = work.work_type || work.type || type;
+      const resultType = isExternal ? 'external' : 'local';
+      const isSelected = index === selectedIndex;
+
+      return `
+        <div class="search-result-item ${isSelected ? 'selected' : ''}"
+             data-result-type="${resultType}"
+             data-pos="${index}"
+             ${isExternal ? `data-external-index="${sourceIndex}"` : `data-index="${sourceIndex}"`}
+             data-work-id="${escapeAttr(work.core_work_id || work.id || '')}"
+             data-source="${escapeAttr(work.source || '')}"
+             data-work-type="${escapeAttr(workTypeForIngest || type)}"
+             data-tmdb-id="${escapeAttr(work.tmdb_id || '')}"
+             data-met-id="${escapeAttr(work.met_id || '')}">
+          <img
+            class="search-result-image lazy-image"
+            src="${PLACEHOLDER_SVG}"
+            data-src="${image}"
+            alt="${escapeHtml(work.title_display || '')}"
+            loading="lazy"
+            onerror="this.src=PLACEHOLDER_SVG"
+          >
+          <div class="search-result-info">
+            <div class="search-result-title">${sourceIcon} ${highlightMatch(work.title_display || '', query, 'span', 'search-highlight')}</div>
+            <div class="search-result-meta">${escapeHtml(creator)}${year ? ' · ' + year : ''}</div>
+          </div>
+          <span class="search-result-type ${type}">${type}${isExternal ? ' +' : ''}</span>
+        </div>
+      `;
+    }
+
+    // Delegated handlers to avoid inline onclick
+    const searchResultsEl = document.getElementById('searchResults');
+    if (searchResultsEl) {
+      searchResultsEl.addEventListener('click', handleResultClick);
+      searchResultsEl.addEventListener('mouseover', handleResultHover);
+    }
+
+    function handleResultHover(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const pos = parseInt(item.dataset.pos, 10);
+      if (!Number.isNaN(pos)) {
+        selectedIndex = pos;
+        updateSelection();
+      }
+    }
+
+    function handleResultClick(event) {
+      const item = event.target.closest('.search-result-item');
+      if (!item) return;
+      const resultType = item.dataset.resultType;
+
+      if (resultType === 'external') {
+        const idx = parseInt(item.dataset.externalIndex, 10);
+        const work = externalResults[idx];
+        if (!work) return;
+        if (work.core_work_id || work.source === 'api' || work.from_db) {
+          const workId = work.core_work_id || work.id;
+          goToAPIWork(workId, work);
+        } else {
+          addExternalWork(work);
+        }
+        return;
+      }
+
+      const idx = parseInt(item.dataset.index, 10);
+      const work = searchResults[idx];
+      if (!work) return;
+
+      if (work.core_work_id || work.source === 'api') {
+        handleAPIWorkClick(idx);
+      } else {
+        goToWork(work.id, work.source || '');
+      }
+    }
+
+    function parseYearFromDate(value) {
+      if (!value) return null;
+      const match = String(value).match(/\d{4}/);
+      if (!match) return null;
+      const parsed = parseInt(match[0], 10);
+      return Number.isNaN(parsed) ? null : parsed;
+    }
+
+    // Add external work to database using Just-In-Time Ingestion
+    // This is the CORRECT flow per product vision:
+    // 1. User clicks external search result
+    // 2. We IMMEDIATELY create Core.Work in database (source of truth)
+    // 3. Navigate to work-detail with the work_id
+    // 4. work-detail loads from database (no URL param fallback!)
+    async function addExternalWork(externalWork) {
+      if (!externalWork) return;
+
+      // Show loading state
+      const loadingEl = document.getElementById('searchLoading');
+      const loadingText = document.getElementById('searchLoadingText');
+      loadingText.textContent = 'Adding to your collection...';
+      loadingEl.style.display = 'block';
+
+      try {
+        await ensureAllWorksReady();
+
+        const candidateIdentity = {
+          tmdb_id: externalWork.tmdb_id || null,
+          met_id: externalWork.met_id || null,
+          wikidata_id: externalWork.wikidata_id || null,
+          title_display: externalWork.title_display || externalWork.title,
+          title: externalWork.title || '',
+          title_normalized: externalWork.title_normalized || externalWork.title,
+          date_created_year: externalWork.date_created_year || externalWork.year || parseYearFromDate(externalWork.release_date),
+          type: externalWork.work_type || externalWork.type
+        };
+
+        if (window.IdentityEngine && typeof IdentityEngine.resolveCandidate === 'function') {
+          const identityDecision = await IdentityEngine.resolveCandidate(candidateIdentity, { context: 'ingest' });
+          if (identityDecision && identityDecision.action === 'existing' && identityDecision.match) {
+            loadingText.textContent = 'Already in your vault. Opening...';
+            if (typeof IdentityEngine.hydrateVaultWithCanonical === 'function') {
+              IdentityEngine.hydrateVaultWithCanonical(identityDecision.match);
+            } else {
+              addToVaultIfMissing(identityDecision.match);
+            }
+            loadingEl.style.display = 'none';
+            if (identityDecision.match.source === 'api' || identityDecision.match.fromAPI) {
+              goToAPIWork(identityDecision.match.id, identityDecision.match);
+            } else {
+              goToWork(identityDecision.match.id, identityDecision.match.source || '');
+            }
+            return;
+          }
+        }
+
+        // Call the new ingest endpoint - this creates Core.Work immediately
+        // TMDb search_multi returns media_type directly; fall back to resolveMediaTypeForIngest for non-TMDb sources
+        const mediaType = externalWork.media_type
+          || (typeof resolveMediaTypeForIngest === 'function'
+            ? resolveMediaTypeForIngest(externalWork.work_type || externalWork.type)
+            : null);
+
+        const rawTmdbId = externalWork.tmdb_id ? parseInt(externalWork.tmdb_id, 10) : null;
+        const safeTmdbId = Number.isNaN(rawTmdbId) ? null : rawTmdbId;
+
+        const body = {
+          tmdb_id: safeTmdbId,
+          met_id: externalWork.met_id || null,
+          media_type: mediaType
+        };
+
+        const response = await fetch(`${API_BASE}/core/works/ingest/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `Ingest failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('[Search] Work ingested:', data.status, data.work_id);
+        console.log('[Search] API response data:', JSON.stringify(data, null, 2));
+
+        // Add to localStorage vault for DNA/vault page quick access
+        // Database is source of truth, localStorage enables offline/fast access
+        console.log('[Search] Checking vault save condition:', { work_id: data.work_id, has_work: !!data.work });
+        if (data.work_id && data.work) {
+          const workForVault = {
+            ...data.work,
+            id: data.work_id,
+            source: data.work.source || 'search',
+            type: data.work.type || data.work.work_type || workType,
+            explored: true,
+            loved: data.work.loved || false
+          };
+          if (window.IdentityEngine && typeof IdentityEngine.hydrateVaultWithCanonical === 'function') {
+            IdentityEngine.hydrateVaultWithCanonical(workForVault);
+          } else {
+            addToVaultIfMissing(workForVault);
+          }
+        }
+
+        // USE CASE: Navigate to newly ingested work from Hero search
+        // INTENTION: Use template mode to show unified layout with placeholders + FAB
+        // VISION: Search-added works display identically to local works (DNA correlations)
+        // Navigate to work-detail with template mode for placeholder-based layout
+        window.location.href = `work-detail.html?id=${data.work_id}&source=api&mode=template`;
+
+      } catch (error) {
+        console.error('[Search] Ingest error:', error);
+        loadingEl.style.display = 'none';
+
+        // Show error to user - do NOT fallback to URL params
+        alert(`Could not add work: ${error.message}\n\nPlease try again.`);
+      }
+    }
+
+    // ----------------------------------------
+    // KEYBOARD NAVIGATION
+    // ----------------------------------------
+    function handleKeydown(event) {
+      if (event.key === 'Escape') {
+        closeSearchModal();
+        return;
+      }
+
+      const totalResults = searchResults.length + externalResults.length;
+      if (totalResults === 0) return;
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        selectedIndex = Math.min(selectedIndex + 1, totalResults - 1);
+        updateSelection();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        selectedIndex = Math.max(selectedIndex - 1, 0);
+        updateSelection();
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        if (selectedIndex >= 0) {
+          // Check if it's a local or external result
+          if (selectedIndex < searchResults.length) {
+            const work = searchResults[selectedIndex];
+            // API-backed works need vault save before navigation
+            if (work.core_work_id || work.source === 'api') {
+              handleAPIWorkClick(selectedIndex);
+            } else {
+              goToWork(work.id);
+            }
+          } else {
+            const externalIndex = selectedIndex - searchResults.length;
+            const work = externalResults[externalIndex];
+            if (work) {
+              addExternalWork(work);
+            }
+          }
+        }
+      }
+    }
+
+    function updateSelection() {
+      const items = document.querySelectorAll('.search-result-item');
+      if (items.length === 0) return;
+      if (selectedIndex >= items.length) {
+        selectedIndex = items.length - 1;
+      }
+      items.forEach((item, index) => {
+        item.classList.toggle('selected', index === selectedIndex);
+      });
+
+      // Scroll selected into view
+      const selected = items[selectedIndex];
+      if (selected) {
+        selected.scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    // ----------------------------------------
+    // NAVIGATION
+    // ----------------------------------------
+    function goToWork(id, source = '') {
+      const sourceParam = source ? `&source=${source}` : '';
+      window.location.href = `work-detail.html?id=${id}${sourceParam}`;
+    }
+
+    // Handle click on API-backed work from search results
+    function handleAPIWorkClick(index) {
+      const work = searchResults[index];
+      if (!work) {
+        console.error('[Search] Work not found at index:', index);
+        return;
+      }
+      const workId = work.core_work_id || work.id;
+      goToAPIWork(workId, work);
+    }
+
+    // Save API work to localStorage vault before navigating
+    // This ensures search-discovered works appear in vault/DNA pages
+    function goToAPIWork(workId, workData) {
+      if (!workId) return;
+      const workForVault = {
+        id: workId,
+        title: workData?.title || workData?.title_display,
+        titleOriginal: workData?.title_original || workData?.titleOriginal,
+        type: workData?.type || workData?.work_type,
+        year: workData?.year || workData?.date_created_year,
+        image: workData?.image || workData?.image_url,
+        creator: workData?.creator || workData?.artist,
+        source: workData?.source || 'search',
+        explored: true,
+        loved: workData?.loved || false
+      };
+
+      if (window.IdentityEngine && typeof IdentityEngine.hydrateVaultWithCanonical === 'function') {
+        IdentityEngine.hydrateVaultWithCanonical(workForVault);
+      } else {
+        addToVaultIfMissing(workForVault);
+      }
+
+      // Navigate to work detail
+      window.location.href = `work-detail.html?id=${workId}&source=api`;
+    }
+
+    // ----------------------------------------
+    // HELPERS - Using escapeHtml, escapeRegex, highlightMatch from dom-utils.js
+    // ----------------------------------------
+
+    // ----------------------------------------
+    // KEYBOARD SHORTCUT (Cmd/Ctrl + K)
+    // ----------------------------------------
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        openSearchModal();
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,5048 @@
+/**
+ * ============================================
+ * MOVIES.JS - Movie Cultural Lineage Data for Early POC
+ * ============================================
+ * 22 Movies in CANONICAL shape (ADR-018)
+ * Structure based on CANONICAL_WORK_SHAPE.md
+ * Converted from legacy format: 2025-12-08
+ * ============================================
+ */
+
+const MOVIES = [
+  {
+    "id": "aw11",
+    "work_type": "animation",
+    "title_display": "Spirited Away",
+    "title_original": "千と千尋の神隠し",
+    "title_romaji": "Sen to Chihiro no Kamikakushi",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 129,
+      "wikidata": "Q631286",
+      "imdb": "tt0245429",
+      "bgm": 1691,
+      "anitabi": "spirited-away"
+    },
+    "date_created_year": 2001,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 125,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.png",
+    "scores": {
+      "imdb": 8.6,
+      "rottenTomatoes": 97,
+      "metacritic": 96
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "coming-of-age"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "identity & naming"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "labor & exploitation"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "Shinto spirituality"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "consumerism critique"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "wonder"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "gentle terror"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "bittersweet"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "nostalgic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "quietly triumphant"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tokyo"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Matsuyama"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Taiwan"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap41",
+          "name_display": "Hayao Miyazaki",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "255"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Co-founder of Studio Ghibli. Born 1941, Tokyo. Known for hand-drawn animation and environmental themes.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap42",
+          "name_display": "Joe Hisaishi",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "256"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Born 1950. Has scored all major Miyazaki films since Nausicaa (1984).",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap43",
+          "name_display": "Toshio Suzuki",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "257"
+            }
+          ]
+        },
+        "role_type": "producer",
+        "role_display": "Producer",
+        "bio": "Studio Ghibli producer since 1989. Key to Ghibli's commercial success.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "Alice in Wonderland"
+        },
+        "note": "Girl falling into strange world",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "The Wizard of Oz"
+        },
+        "note": "Journey through magical realm to return home",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Shinto mythology"
+        },
+        "note": "Eight million spirits, bathhouse purification",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw21",
+          "title_display": "Coco"
+        },
+        "note": "Spirit world visuals and family memory themes - Pixar's Land of the Dead echoes bathhouse spirit realm",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Over the Garden Wall"
+        },
+        "note": "American animation embracing surreal folklore",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Avatar: The Last Airbender"
+        },
+        "note": "Spirit world design, Eastern spiritual themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Edo-Tokyo Open Air Architectural Museum",
+        "city": "Koganei",
+        "country": null,
+        "latitude": 35.7148,
+        "longitude": 139.5089,
+        "connection": "Primary visual reference for bathhouse architecture - confirmed by Miyazaki",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Ghibli Museum",
+        "city": "Mitaka",
+        "country": null,
+        "latitude": 35.6962,
+        "longitude": 139.5704,
+        "connection": "Official museum with Spirited Away production materials",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Dogo Onsen",
+        "city": "Matsuyama",
+        "country": null,
+        "latitude": 33.8512,
+        "longitude": 132.7852,
+        "connection": "Likely inspiration for bathhouse architecture (3,000-year-old onsen)",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Ginzan Onsen",
+        "city": "Obanazawa",
+        "country": null,
+        "latitude": 38.567,
+        "longitude": 140.5253,
+        "connection": "Taisho-era hot spring town - closest real-world equivalent to spirit world atmosphere",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Jiufen Old Street",
+        "city": "New Taipei City",
+        "country": null,
+        "latitude": 25.1096,
+        "longitude": 121.8442,
+        "connection": "Disputed but visually striking - Miyazaki denied, but fans embrace connection",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A shy girl crosses into a spirit bathhouse world, working to save her parents and remember her own name in a surreal coming-of-age journey about courage and letting go.",
+      "story": {
+        "culturalContext": "Created during Japan's 'Lost Decade' of economic stagnation, the film pulses with anxiety about work, identity, and what we lose when we're consumed by consumption. Miyazaki made it specifically for ten-year-old girls entering adolescence in this uncertain era.",
+        "surfaceLayer": "Ten-year-old Chihiro enters an abandoned theme park with her parents, who transform into pigs after eating spirit food. She must work in a bathhouse for spirits to save them, encountering Haku (a river spirit), No-Face (a lonely spirit), and the witch Yubaba who steals her name. Key scenes: the train journey over water, the soot sprites at work, the river spirit's purification.",
+        "typeAesthetic": "Japanese animated feature drawing from Shinto animism, traditional bathhouse architecture, and psychological fantasy. Hand-painted backgrounds with watercolor luminosity, Caravaggesque lighting filtered through cel animation.",
+        "corePhilosophy": "How does a child find their authentic self in a world that wants to consume, rename, and exploit them? Chihiro's journey is about reclaiming identity through work, kindness, and memory.",
+        "receipt": "Hayao Miyazaki: 'I wanted to make a film for ten-year-old girls... I wanted to tell them: Don't worry, it will be all right in the end.'",
+        "observationDetails": [
+          {
+            "label": "Easter Egg",
+            "value": "Totoro appears as a plush toy in Chihiro's belongings"
+          },
+          {
+            "label": "Visual Motif",
+            "value": "Water appears in every major scene transition"
+          },
+          {
+            "label": "Camera Detail",
+            "value": "No villain POV shots - we only see through Chihiro's perspective"
+          },
+          {
+            "label": "Production Note",
+            "value": "112,000+ hand-drawn frames over 3 years"
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "Studio Ghibli's most commercially successful film. Won Academy Award for Best Animated Feature 2003 - first hand-drawn, non-English film to do so. Highest-grossing Japanese film until Demon Slayer (2020).",
+        "production": "Three years production, went over budget. The bathhouse required 1,500+ unique background paintings. 112,000+ animation frames hand-drawn.",
+        "themes": "Names as power - in Japanese folklore, knowing someone's true name grants control. Yubaba's contracts strip workers of identity. The bathhouse functions as metaphor for both Japan's service industry and exploitative capitalism."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Roger Ebert",
+          "quote": "Spirited Away has the power to touch the emotions in a way that seems impossible for animation to do.",
+          "translation": "This film proves animation isn't just for kids - it can move you like live-action never could."
+        }
+      ],
+      "community": [
+        {
+          "quote": "I watched this as a kid and didn't understand it. Rewatched at 25 during a burnout - suddenly it made complete sense. The bathhouse IS corporate life.",
+          "context": "Reddit user"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw12",
+    "work_type": "animation",
+    "title_display": "My Neighbor Totoro",
+    "title_original": "となりのトトロ",
+    "title_romaji": "Tonari no Totoro",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 8392,
+      "wikidata": "Q219923",
+      "imdb": "tt0096283",
+      "bgm": 306,
+      "anitabi": "totoro"
+    },
+    "date_created_year": 1988,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 86,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/0/02/My_Neighbor_Totoro_-_Tonari_no_Totoro_%28Movie_Poster%29.jpg",
+    "scores": {
+      "imdb": 8.1,
+      "rottenTomatoes": 93,
+      "metacritic": 86
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "childhood imagination"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "family & illness anxiety"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "nature spirits"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "postwar rural life"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "gentle"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "safe & magical"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "nostalgic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "quietly sad but hopeful"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Saitama"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Rural countryside"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Nagakute"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap41",
+          "name_display": "Hayao Miyazaki",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "255"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Drew from childhood memories of mother's illness and rural Japan.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap42",
+          "name_display": "Joe Hisaishi",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "256"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Simple piano themes became iconic. The 'Totoro' song is known across Japan.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap44",
+          "name_display": "Kazuo Oga",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "258"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Art Director",
+        "bio": "Painted backgrounds with watercolors that feel like memory.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Shinto animism"
+        },
+        "note": "Forest spirits, nature worship",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "Miyazaki's childhood"
+        },
+        "note": "Mother's illness, rural Japan memories",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Studio Ghibli brand"
+        },
+        "note": "Totoro is the studio logo",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Totoro Forest Fund"
+        },
+        "note": "Conservation effort preserving Sayama Hills",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Pixar animation"
+        },
+        "note": "Lasseter credits Totoro for Pixar's philosophy",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Totoro Forest (Sayama Hills)",
+        "city": "Tokorozawa",
+        "country": null,
+        "latitude": 35.7889,
+        "longitude": 139.4156,
+        "connection": "Inspiration for the forest setting; now protected land",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Satsuki and Mei's House",
+        "city": "Ghibli Park",
+        "country": null,
+        "latitude": 35.18,
+        "longitude": 137.0897,
+        "connection": "Full-scale recreation of the house from the film",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Kurosuke's House (Soot Sprite House)",
+        "city": "Tokorozawa",
+        "country": null,
+        "latitude": 35.7889,
+        "longitude": 139.4156,
+        "connection": "Totoro Fund headquarters in preserved traditional house",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Ghibli Park",
+        "city": "Nagakute",
+        "country": null,
+        "latitude": 35.18,
+        "longitude": 137.0897,
+        "connection": "Theme park bringing Ghibli worlds to life",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "Two sisters move to the countryside while their mother is ill and befriend forest spirits, discovering a quiet world of wind, dust, and huge gentle creatures.",
+      "story": {
+        "surfaceLayer": "Two young sisters, Satsuki and Mei, move with their father to a rural house while their mother recovers from illness in a nearby hospital. Mei discovers small dust spirits (susuwatari) in the house, then wanders into the forest where she falls asleep on a giant, furry creature she names 'Totoro.' Key scenes: Mei tumbling through the forest to find Totoro's lair beneath the camphor tree; the sisters waiting at a bus stop in the rain where Totoro appears and receives an umbrella; the Catbus racing across power lines and treetops; the midnight ritual where the Totoros make seeds sprout into a giant tree.",
+        "culturalContext": "Set in rural Japan 1958, the late Showa period. Post-war Japan was rapidly modernizing; this pastoral landscape was disappearing. The film is an elegy for a Japan that no longer exists.",
+        "typeAesthetic": "Pastoral animation with watercolor backgrounds by Kazuo Oga. Quiet pacing, emphasis on texture: weight of rain, rustle of leaves, dust in sunlight.",
+        "corePhilosophy": "The magic is never explained or questioned. It exists because children believe it does, and because Miyazaki remembers what it felt like to believe.",
+        "receipt": "Time Out: 'Gentle, funny, touching and entirely without pretension. A miniature masterpiece.'",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "The susuwatari (soot sprites) reappear in Spirited Away as bathhouse workers carrying coal - Miyazaki recycled the design but gave them a new role."
+          },
+          {
+            "type": "visual_motif",
+            "detail": "Wind appears in almost every scene: rustling leaves, billowing curtains, swaying grass. Miyazaki uses wind as a character, signaling the presence of spirits and the passage of time."
+          },
+          {
+            "type": "camera",
+            "detail": "The bus stop scene holds on a near-static shot for over two minutes - rain falling, frogs croaking, no dialogue. Miyazaki deliberately paced it to capture the feeling of childhood waiting."
+          },
+          {
+            "type": "production",
+            "detail": "The camphor tree where Totoro lives is a 'yorishiro' - a Shinto concept of objects that can attract and house spirits. The shimenawa (sacred rope) around it marks it as sacred."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "Released as double feature with 'Grave of the Fireflies.' Modest box office but Totoro merchandise saved Studio Ghibli financially. Totoro became the studio's mascot.",
+        "production": "Miyazaki's mother suffered from spinal tuberculosis during his childhood. The fear Satsuki and Mei carry is drawn from lived experience.",
+        "themes": "Totoro embodies kami - spirits inhabiting nature in Shinto belief. The camphor tree is a yorishiro, a vessel for spirits."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "John Lasseter (Pixar)",
+          "quote": "Whenever we get stuck at Pixar, I put on Totoro and we watch it. Within ten minutes, we're inspired again.",
+          "translation": "This film reminds professional animators why they do what they do."
+        }
+      ],
+      "community": [
+        {
+          "quote": "The bus stop scene. That's it. That's the whole feeling of being a kid waiting for something wonderful to happen.",
+          "context": "Film forum"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw13",
+    "work_type": "animation",
+    "title_display": "Ghost in the Shell",
+    "title_original": "攻殻機動隊",
+    "title_romaji": "Kokaku Kidotai",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 9323,
+      "wikidata": "Q310148",
+      "imdb": "tt0113568",
+      "bgm": 1695
+    },
+    "date_created_year": 1995,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 83,
+    "primary_image_url": "https://image.tmdb.org/t/p/original/9gC88zYUBARRSThcG93MvW14sqx.jpg",
+    "scores": {
+      "imdb": 8,
+      "rottenTomatoes": 96,
+      "metacritic": 76
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "identity dissolution"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "mind-body dualism"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "artificial consciousness"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "posthumanism"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "technological transcendence"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "existential melancholy"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cold beauty"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "philosophical unease"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "sublime dread"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "quiet longing"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Hong Kong"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Cyberpunk cityscape"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap45",
+          "name_display": "Mamoru Oshii",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "259"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "Japanese director known for philosophical anime. Earlier work includes Patlabor series.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap46",
+          "name_display": "Masamune Shirow",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "260"
+            }
+          ]
+        },
+        "role_type": "contributor",
+        "role_display": "Original Manga Creator",
+        "bio": "Creator of the original manga serialized 1989-1990.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap47",
+          "name_display": "Kenji Kawai",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "261"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Composed the haunting choral theme mixing traditional Japanese with electronic.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Blade Runner"
+        },
+        "note": "Rain-soaked cities, neon kanji, existential androids",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "William Gibson's Neuromancer"
+        },
+        "note": "Cyberspace as navigable space, console cowboys",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "thematic_kinship",
+        "to_work": {
+          "id": null,
+          "title_display": "Philip K. Dick"
+        },
+        "note": "Ontological uncertainty, unreliable memory, 'What is human?'",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_reference",
+        "to_work": {
+          "id": null,
+          "title_display": "Hong Kong (Kowloon Walled City)"
+        },
+        "note": "Dense vertical urbanism, neon-soaked streets",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "spiritual_sibling",
+        "to_work": {
+          "id": null,
+          "title_display": "Akira (1988)"
+        },
+        "note": "Shared DNA of Japanese cyberpunk, psychic technology themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw14",
+          "title_display": "The Matrix"
+        },
+        "note": "Wachowskis pitched it as 'GitS live-action' - direct conceptual DNA",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Avatar"
+        },
+        "note": "Consciousness transfer, body-as-vessel themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Ex Machina"
+        },
+        "note": "AI consciousness, embodiment questions",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Westworld (TV)"
+        },
+        "note": "Consciousness upload, host/guest dualism",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Cyberpunk 2077"
+        },
+        "note": "Visual language, body modification culture, cyberpunk aesthetic",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Hong Kong cityscape",
+        "city": "Hong Kong",
+        "country": null,
+        "latitude": 22.3193,
+        "longitude": 114.1694,
+        "connection": "Primary visual reference for the cyberpunk urban environment",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Kowloon Walled City (demolished)",
+        "city": "Hong Kong",
+        "country": null,
+        "latitude": 22.3316,
+        "longitude": 114.1871,
+        "connection": "Inspiration for the dense, vertical urbanism - demolished 1994",
+        "place_type": "filming_location",
+        "is_visitable": false
+      },
+      {
+        "id": null,
+        "name_display": "Tokyo",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Production location, Production I.G studio",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A cyborg counter-terrorist agent pursues a mysterious hacker called the Puppet Master, only to confront the boundaries of her own identity, consciousness, and humanity.",
+      "story": {
+        "surfaceLayer": "Major Motoko Kusanagi, a cyborg officer in the counter-cyberterrorist unit Section 9, pursues a hacker known as 'The Puppet Master' who can hack human brains and implant false memories. Key scenes: the opening sequence where Kusanagi's cybernetic body is assembled in a factory; the shelling sequence where she dives off a building into Hong Kong's neon-lit streets; the garbage truck chase through flooded canals; the Puppet Master's damaged cyborg body revealing it is a sentient AI seeking to merge with Kusanagi; the final confrontation in a museum where Kusanagi is nearly torn apart by a spider tank before merging consciousness with the Puppet Master.",
+        "culturalContext": "Released in 1995 during Japan's 'Lost Decade' aftermath. The nation that had imagined itself as the technological future now faced stagnation and uncertainty. The internet was transitioning from military-academic tool to global phenomenon.",
+        "typeAesthetic": "Cyberpunk, philosophical science fiction, neo-noir. Hong Kong urban density and neon-soaked verticality; Ridley Scott's Blade Runner (1982); European art cinema pacing; hand-drawn animation meeting early CGI.",
+        "corePhilosophy": "What defines the self when memory can be fabricated, bodies can be replaced, and consciousness can be copied or merged? The film interrogates the 'ghost' - the irreducible essence of identity.",
+        "receipt": "Mamoru Oshii: 'The film is about the definition of self. What is the self? What is the soul? These are questions humans have been asking since the beginning of civilization.'",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "The cityscape is based on Hong Kong's Kowloon Walled City, demolished in 1994 just before the film's release. The production team photographed it extensively before destruction."
+          },
+          {
+            "type": "visual_motif",
+            "detail": "Water and reflections appear throughout - Kusanagi diving, flooded canals, rain on windows. Water represents the fluid boundary between self and other, organic and synthetic."
+          },
+          {
+            "type": "camera",
+            "detail": "The famous 3-minute 'making of a cyborg' opening sequence has no dialogue - only Kenji Kawai's haunting choral score as Kusanagi's body is assembled, establishing the theme of manufactured identity."
+          },
+          {
+            "type": "production",
+            "detail": "The choral theme uses ancient Japanese wedding song lyrics sung in classical Japanese (Yamato-kotoba), creating an eerie sacredness around the creation of artificial life."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "The Wachowskis famously showed this film to producer Joel Silver, saying 'We want to do this, but live-action.' Direct DNA of The Matrix.",
+        "production": "Production I.G animation. Based on Masamune Shirow's manga. Kenji Kawai's haunting score blends traditional Japanese vocals with electronic elements.",
+        "themes": "Arthur Koestler's 'The Ghost in the Machine' provides the title and conceptual framework. Cartesian mind-body dualism meets Buddhist concepts of selflessness."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "The Wachowskis",
+          "quote": "We showed the anime to the producer and said, 'We want to do this for real.'",
+          "translation": "Ghost in the Shell is the direct conceptual parent of The Matrix."
+        }
+      ],
+      "community": [
+        {
+          "quote": "This film asks questions about identity that feel more relevant now than in 1995. What is 'you' when everything can be copied?",
+          "context": "Film discussion forum"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw14",
+    "work_type": "film",
+    "title_display": "The Matrix",
+    "title_original": "The Matrix",
+    "title_romaji": null,
+    "title_original_lang": "English",
+    "external_ids": {
+      "tmdb": 603,
+      "wikidata": "Q83495",
+      "imdb": "tt0133093"
+    },
+    "date_created_year": 1999,
+    "country_of_origin": "USA (filmed in Australia)",
+    "runtime_minutes": 136,
+    "primary_image_url": "https://image.tmdb.org/t/p/original/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+    "scores": {
+      "imdb": 8.7,
+      "rottenTomatoes": 83,
+      "metacritic": 73
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "simulated reality"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "free will vs. determinism"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "chosen one mythology"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "awakening"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "humanity vs. technology"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "paranoid wonder"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "exhilarating liberation"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "philosophical vertigo"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cool defiance"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "existential dread transformed"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Sydney"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Australia"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Cyberpunk metropolis"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap48",
+          "name_display": "Lana Wachowski & Lilly Wachowski",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "263"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Directors & Writers",
+        "bio": "The Wachowskis. Credited as 'The Wachowski Brothers' at release. Trans filmmakers who later came out.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap49",
+          "name_display": "Keanu Reeves",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "172"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Lead Actor (Neo)",
+        "bio": "Trained for four months in martial arts for the role.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap50",
+          "name_display": "Yuen Woo-ping",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "264"
+            }
+          ]
+        },
+        "role_type": "contributor",
+        "role_display": "Martial Arts Choreographer",
+        "bio": "Legendary choreographer of Hong Kong cinema. Also choreographed Crouching Tiger, Hidden Dragon (2000) and Kill Bill (2003).",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap51",
+          "name_display": "John Gaeta",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "265"
+            }
+          ]
+        },
+        "role_type": "visual_effects",
+        "role_display": "Visual Effects Supervisor",
+        "bio": "Developed the 'bullet time' effect that revolutionized action cinema.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "directly_inspired",
+        "to_work": {
+          "id": "aw13",
+          "title_display": "Ghost in the Shell"
+        },
+        "note": "Wachowskis showed it to producers as their pitch - 'We want to do this for real'",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "cyberpunk_genealogy",
+        "to_work": {
+          "id": null,
+          "title_display": "Blade Runner"
+        },
+        "note": "Inherited rain, neon, dystopian corporate control from the cyberpunk progenitor",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "conceptual_source",
+        "to_work": {
+          "id": null,
+          "title_display": "William Gibson's Neuromancer"
+        },
+        "note": "Matrix as cyberspace, jacking in, console cowboys becoming real",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "philosophical_basis",
+        "to_work": {
+          "id": null,
+          "title_display": "Jean Baudrillard's Simulacra and Simulation"
+        },
+        "note": "Neo hides data inside this book - simulacra vs. reality",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "narrative_structure",
+        "to_work": {
+          "id": null,
+          "title_display": "Plato's Allegory of the Cave"
+        },
+        "note": "Prisoners mistaking shadows for reality - awakening to truth",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "action_vocabulary",
+        "to_work": {
+          "id": null,
+          "title_display": "Hong Kong martial arts cinema"
+        },
+        "note": "Wire-fu brought to Hollywood via Yuen Woo-ping",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "explicit_reference",
+        "to_work": {
+          "id": null,
+          "title_display": "Alice in Wonderland"
+        },
+        "note": "'Follow the white rabbit,' 'down the rabbit hole' - Lewis Carroll",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "thematic_kinship",
+        "to_work": {
+          "id": null,
+          "title_display": "Philip K. Dick"
+        },
+        "note": "Unreliable reality, 'What is real?' philosophical core",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw16",
+          "title_display": "Inception"
+        },
+        "note": "Nested realities, questioning what's real - part of same conceptual family",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Action cinema revolution"
+        },
+        "note": "Bullet time became the most imitated effect of 2000s",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw17"
+        },
+        "note": "Popularized Hong Kong wire-fu in Hollywood; Yuen Woo-ping's work led to his brother choreographing Charlie's Angels",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw18"
+        },
+        "note": "Both used Yuen Woo-ping; established Hong Kong choreography in Hollywood",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Simulation hypothesis discourse"
+        },
+        "note": "Entry point for Bostrom, Musk, mainstream simulation theory",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Video game design"
+        },
+        "note": "Max Payne, Enter the Matrix, countless others adopted bullet time",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Superhero film aesthetics"
+        },
+        "note": "Leather-clad action, philosophical stakes, chosen one narratives",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Martin Place (Lloyd Rees Fountain)",
+        "city": "Sydney CBD",
+        "country": null,
+        "latitude": -33.8677,
+        "longitude": 151.2089,
+        "connection": "Woman in Red training simulation scene - filmed at Pitt Street intersection near fountain",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "52 Martin Place (Colonial State Bank)",
+        "city": "Sydney",
+        "country": null,
+        "latitude": -33.8681,
+        "longitude": 151.2108,
+        "connection": "Government building exterior where Morpheus is held captive by Agent Smith",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Westpac Plaza (Neo's Office)",
+        "city": "Sydney",
+        "country": null,
+        "latitude": -33.8688,
+        "longitude": 151.2072,
+        "connection": "Neo works at Metacortex in this building, chased by Agents through offices",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Aon Tower (Helicopter Rescue)",
+        "city": "Sydney",
+        "country": null,
+        "latitude": -33.8647,
+        "longitude": 151.2044,
+        "connection": "Rooftop where Trinity takes off in helicopter to rescue Morpheus",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Museum Station",
+        "city": "Sydney",
+        "country": null,
+        "latitude": -33.8768,
+        "longitude": 151.2112,
+        "connection": "Underground station where Neo fights Agent Smith",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Pitt & Hunter Streets (Final Phone Call)",
+        "city": "Sydney",
+        "country": null,
+        "latitude": -33.8654,
+        "longitude": 151.2094,
+        "connection": "Neo's final phone call to the machine world, flying off into sky",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A hacker discovers that reality is a simulated prison built by machines, and must choose between comfortable illusion and terrifying freedom to lead humanity's rebellion.",
+      "story": {
+        "surfaceLayer": "Thomas Anderson, a software programmer by day and hacker 'Neo' by night, is contacted by the legendary hacker Morpheus and offered a choice: take a blue pill and forget, or a red pill and learn the truth. Key scenes: Neo choosing the red pill and awakening in a pod, his body connected to a vast machine farm; the 'woman in red' training simulation demonstrating the Matrix's illusions; the lobby shootout where Neo and Trinity destroy a building's security in slow-motion gunfire; the rooftop helicopter rescue; the subway fight where Neo faces Agent Smith; the climactic moment when Neo sees the Matrix as cascading green code and stops bullets mid-air.",
+        "culturalContext": "Arrived at the moment when the internet was transitioning from novelty to infrastructure, and Y2K anxiety permeated Western consciousness. Postmodern philosophy had filtered into popular discourse, making audiences receptive to questions about the nature of reality itself.",
+        "typeAesthetic": "Science Fiction, Action, Cyberpunk, Philosophical Thriller. Visual DNA from Hong Kong wire-fu cinema, Japanese anime (especially Ghost in the Shell), cyberpunk noir. Pioneering 'bullet time' photography, green-tinted color grading for the simulated world.",
+        "corePhilosophy": "What if the reality you trust is a constructed prison, and true freedom requires the terrifying choice to see things as they actually are?",
+        "receipt": "Lana Wachowski: 'We were interested in mythology, theology and higher mathematics. All are ways human beings try to answer bigger questions, as well as The Big Question.'",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "Neo hides his illegal software inside a hollowed-out copy of Jean Baudrillard's 'Simulacra and Simulation' - opened to the chapter 'On Nihilism.' The book is the film's philosophical source text."
+          },
+          {
+            "type": "visual_motif",
+            "detail": "The Matrix is tinted green (from the green phosphor of old monitors), while the real world is tinted blue. Watch for the color grading to shift when characters jack in or out."
+          },
+          {
+            "type": "camera",
+            "detail": "Bullet time was achieved with 120 still cameras arranged in an arc, firing sequentially and then interpolated with CGI. The rooftop dodge required building custom camera rigs that had never existed before."
+          },
+          {
+            "type": "production",
+            "detail": "The cascading green code (the 'digital rain') was created by scanning sushi recipes from the production designer's wife's Japanese cookbooks and manipulating the characters."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "Won 4 Academy Awards (Visual Effects, Film Editing, Sound, Sound Editing). 'Bullet time' became the most imitated visual effect of the 2000s.",
+        "production": "Keanu Reeves and crew trained for four months in martial arts. Yuen Woo-ping choreographed the fights. Neo literally hides data inside a hollowed-out copy of Baudrillard's 'Simulacra and Simulation.'",
+        "themes": "Trans allegory interpretation (confirmed by Lilly Wachowski). Plato's Cave, Gnostic mythology, Buddhist awakening. Unfortunately 'red pill' terminology was co-opted by various movements."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Lilly Wachowski",
+          "quote": "The Matrix is a trans allegory. I'm glad people are talking about that now.",
+          "translation": "The film is about escaping an assigned identity, choosing your true name, and awakening."
+        }
+      ],
+      "community": [
+        {
+          "quote": "This film ruined me as a teenager. I spent months questioning if anything was real. Best existential crisis ever.",
+          "context": "Film discussion thread"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw15",
+    "work_type": "animation",
+    "title_display": "Paprika",
+    "title_original": "パプリカ",
+    "title_romaji": "Papurika",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 4977,
+      "wikidata": "Q215561",
+      "imdb": "tt0851578",
+      "bgm": 1018
+    },
+    "date_created_year": 2006,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 90,
+    "primary_image_url": "https://image.tmdb.org/t/p/original/bLUUr474Go1DfeN1HLjE3rnZXBq.jpg",
+    "scores": {
+      "imdb": 7.7,
+      "rottenTomatoes": 84,
+      "metacritic": 81
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "dreams vs. reality"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "identity fragmentation"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "technology's double edge"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "collective unconscious"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "repressed desires"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "exhilarating"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "anxious"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "liberating"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "surreal wonder"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "creeping dread"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tokyo"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Dreamscape"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap52",
+          "name_display": "Satoshi Kon",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "266"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "1963-2010. Master of reality-bending animation. Died tragically young from pancreatic cancer.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap53",
+          "name_display": "Yasutaka Tsutsui",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "267"
+            }
+          ]
+        },
+        "role_type": "contributor",
+        "role_display": "Original Novelist",
+        "bio": "Pioneer of Japanese science fiction. Wrote the 1993 novel.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap54",
+          "name_display": "Susumu Hirasawa",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "268"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Long-time Kon collaborator. Created the electronic score.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "Federico Fellini's 8 1/2"
+        },
+        "note": "Dream sequences blending with reality, reflexive cinema",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Surrealist cinema (Bunuel, Dali)"
+        },
+        "note": "Dream logic, Un Chien Andalou, subconscious made visible",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "evolved_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Satoshi Kon's Perfect Blue"
+        },
+        "note": "Identity fragmentation themes, reality/delusion boundaries",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "thematic_kinship",
+        "to_work": {
+          "id": null,
+          "title_display": "Philip K. Dick"
+        },
+        "note": "Technology revealing/obscuring reality, unreliable perception",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "technological_genealogy",
+        "to_work": {
+          "id": "aw13",
+          "title_display": "Ghost in the Shell"
+        },
+        "note": "Technology accessing consciousness - from cyberbrain to DC Mini",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw16",
+          "title_display": "Inception"
+        },
+        "note": "Nolan acknowledged the influence - shared dream technology, nested reality layers, dream architects",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Spider-Man: Into the Spider-Verse"
+        },
+        "note": "Visual style, reality-bending animation techniques",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Everything Everywhere All at Once"
+        },
+        "note": "Multiverse identity, surreal imagery, reality as malleable",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Black Mirror"
+        },
+        "note": "Technology accessing dreams/consciousness themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Tokyo",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Setting and production location. Madhouse studio headquarters.",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Shibuya",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.658,
+        "longitude": 139.7016,
+        "connection": "Visual reference for urban dreamscape sequences",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A psychotherapist uses experimental technology to enter patients' dreams, but when the device is stolen, the boundaries between dreams and reality begin catastrophically dissolving.",
+      "story": {
+        "culturalContext": "Emerged during Japan's 'Lost Decade' aftermath (1991-2001). Rising interest in psychiatry and dream research in Japanese pop culture, alongside growing concerns about the internet's effect on identity and reality perception.",
+        "typeAesthetic": "Psychological science fiction, techno-thriller, surrealist fantasy. Influenced by Salvador Dali, Rene Magritte, Japanese ukiyo-e art, pop art imagery, traditional Japanese festival matsuri.",
+        "corePhilosophy": "What happens when the unconscious mind is no longer private? Dreams are not mere escapism but essential terrain where identity is negotiated and psychological wholeness achieved.",
+        "receipt": "Satoshi Kon: 'Dreams are the place where the unconscious becomes conscious. The DC Mini doesn't just show dreams - it shows the truth of who we are that we hide even from ourselves.'",
+        "surfaceLayer": "Dr. Atsuko Chiba uses the experimental DC Mini device to enter patients' dreams as her alter-ego Paprika, a free-spirited dream detective. When the device is stolen, dreams begin invading reality: a massive parade of household appliances, dolls, and Japanese festival figures marches through Tokyo streets. The chairman of the research foundation, revealed to be the mastermind, attempts to merge all consciousness into a single dream. Paprika and Dr. Chiba confront their fragmented identities to stop the dream apocalypse.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The parade sequence features recurring Japanese matsuri imagery - taiko drums, daruma dolls, and maneki-neko cats - representing the collective unconscious of Japanese culture."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "Paprika's red jacket mirrors the outfit worn by the protagonist in Satoshi Kon's earlier film Perfect Blue, creating a visual throughline across his filmography."
+          },
+          {
+            "type": "camera",
+            "detail": "Kon uses his signature 'match cut' technique where objects transform seamlessly between dream and reality, such as a hallway becoming an endless corridor mid-shot."
+          },
+          {
+            "type": "production",
+            "detail": "The film's opening 'Parade' theme by Susumu Hirasawa was composed before animation began, with key sequences animated to match its rhythm."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "Satoshi Kon's final theatrical feature before his death in 2010. Christopher Nolan has acknowledged Paprika's influence on Inception.",
+        "production": "Madhouse studio animation. Based on Yasutaka Tsutsui's 1993 novel. Susumu Hirasawa composed the iconic electronic score.",
+        "themes": "The parade sequence - a massive collection of dream objects marching through reality - became one of anime's most iconic surrealist images."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Christopher Nolan (implied)",
+          "quote": "Paprika's influence on Inception has been widely noted by critics and acknowledged through visual parallels.",
+          "translation": "Inception owes a significant debt to Paprika's dream-logic and visual language."
+        }
+      ],
+      "community": [
+        {
+          "quote": "If you liked Inception, you need to see Paprika. It's wilder, stranger, and in many ways more visually daring.",
+          "context": "Film recommendation thread"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw16",
+    "work_type": "film",
+    "title_display": "Inception",
+    "title_original": "Inception",
+    "title_romaji": null,
+    "title_original_lang": "English",
+    "external_ids": {
+      "tmdb": 27205,
+      "wikidata": "Q25188",
+      "imdb": "tt1375666"
+    },
+    "date_created_year": 2010,
+    "country_of_origin": "USA / UK",
+    "runtime_minutes": 148,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+    "scores": {
+      "imdb": 8.8,
+      "rottenTomatoes": 87,
+      "metacritic": 74
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "dreams vs. reality"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "grief and guilt"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "ideas as viruses"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "time dilation"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "memory as prison"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "redemption"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "intellectually thrilling"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "emotionally devastating"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "vertiginous wonder"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "melancholic longing"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "bittersweet catharsis"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Paris"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tokyo"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Los Angeles"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tangier"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Mombasa"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Calgary"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap55",
+          "name_display": "Christopher Nolan",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "269"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "British-American filmmaker known for complex narratives and practical effects. Spent 10 years developing Inception.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap56",
+          "name_display": "Leonardo DiCaprio",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "270"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Lead Actor (Dom Cobb)",
+        "bio": "Anchors the film's emotional core through his portrayal of a grief-stricken father.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap57",
+          "name_display": "Hans Zimmer",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "271"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Created the iconic 'BRAAAM' sound that defined 2010s trailer music.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "acknowledged_influence",
+        "to_work": {
+          "id": "aw15",
+          "title_display": "Paprika"
+        },
+        "note": "Dream technology, nested reality layers, visual parallels - critics and Nolan acknowledged debt",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "conceptual_genealogy",
+        "to_work": {
+          "id": "aw14",
+          "title_display": "The Matrix"
+        },
+        "note": "Questioning reality, nested worlds, 'Is this real?' - shares same philosophical bloodline",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "technological_consciousness",
+        "to_work": {
+          "id": "aw13",
+          "title_display": "Ghost in the Shell"
+        },
+        "note": "Technology accessing consciousness - part of cyberpunk consciousness-tech lineage",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_reference",
+        "to_work": {
+          "id": null,
+          "title_display": "M.C. Escher"
+        },
+        "note": "Impossible architecture, the Penrose stairs, non-Euclidean geometry",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "narrative_structure",
+        "to_work": {
+          "id": null,
+          "title_display": "Jorge Luis Borges"
+        },
+        "note": "Nested realities, labyrinths, time as maze",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "aesthetic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "James Bond films"
+        },
+        "note": "Globe-trotting locations, heist dynamics, international spectacle",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Film noir"
+        },
+        "note": "Femme fatale (Mal), traumatic past, subjective unreliable reality",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "thematic_kinship",
+        "to_work": {
+          "id": null,
+          "title_display": "Philip K. Dick"
+        },
+        "note": "Unreliable reality, memory manipulation, 'What is real?'",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "2010s trailer music"
+        },
+        "note": "The 'BRAAAM' sound became ubiquitous in Hollywood marketing",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Complex blockbuster discourse"
+        },
+        "note": "Debates about 'smart' blockbusters, intellectual spectacle",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Doctor Strange"
+        },
+        "note": "Reality-bending city sequences, kaleidoscope architecture",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Tenet"
+        },
+        "note": "Nolan's own continuation of time/reality manipulation themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "WandaVision"
+        },
+        "note": "Nested reality layers, grief creating false worlds",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Paris",
+        "city": "Paris",
+        "country": "France",
+        "latitude": 48.8566,
+        "longitude": 2.3522,
+        "connection": "Primary location",
+        "place_type": "landmark",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Pont de Bir-Hakeim",
+        "city": "Paris",
+        "country": null,
+        "latitude": 48.8533,
+        "longitude": 2.286,
+        "connection": "The bridge where Ariadne first experiences dream architecture folding - iconic Inception scene",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Café Debussy (Il Russo Restaurant)",
+        "city": "Paris",
+        "country": null,
+        "latitude": 48.8495,
+        "longitude": 2.3119,
+        "connection": "Café explosion scene where Cobb reveals they're in a dream - now Il Russo restaurant",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Rue Bouchut (City Folding)",
+        "city": "Paris",
+        "country": null,
+        "latitude": 48.8494,
+        "longitude": 2.3116,
+        "connection": "The unforgettable scene where the city folds like a book",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Palais Galliera (Academy Entrance)",
+        "city": "Paris",
+        "country": null,
+        "latitude": 48.8649,
+        "longitude": 2.2986,
+        "connection": "Entrance to the fictional architecture academy where Cobb recruits Ariadne",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Tangier Medina",
+        "city": "Tangier",
+        "country": null,
+        "latitude": 35.7595,
+        "longitude": -5.834,
+        "connection": "Mombasa chase sequence (Morocco stood in for Kenya)",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Tokyo (Saito's Castle)",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Opening Saito heist sequence at Japanese castle, bullet train scenes",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Los Angeles (Van Chase)",
+        "city": "Los Angeles",
+        "country": null,
+        "latitude": 34.0522,
+        "longitude": -118.2437,
+        "connection": "Downtown LA, the van free-falling dream level, Cobb's home sequences",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A skilled thief who steals secrets from dreams must plant an idea in a corporate heir's mind while confronting the guilt-ridden projection of his dead wife trapped in his subconscious.",
+      "story": {
+        "culturalContext": "Arrived in 2010 during Hollywood's domination by franchises and sequels. A bold gamble: an original, high-concept intellectual blockbuster. Post-2008 financial crisis made corporate intrigue themes resonant.",
+        "typeAesthetic": "Science Fiction, Psychological Thriller, Heist Film. Practical effects married to CGI; M.C. Escher impossible geometry; IMAX-scale spectacle grounded in tactile realism; muted color palette with strategic warm accents.",
+        "corePhilosophy": "How do we know what's real? And does it matter if we choose the dream? The film asks whether our subjective experience is any less valid than 'objective' reality.",
+        "receipt": "Christopher Nolan: 'The idea of an emotional cool-down period after an intense experience is something I carried over from my own experiences.'",
+        "surfaceLayer": "Dom Cobb leads a team of specialists who enter dreams to extract information. Hired for 'inception' - planting an idea rather than stealing one - they must descend through three nested dream levels to convince a corporate heir to dissolve his father's empire. In Paris, Ariadne learns to architect dream spaces by folding the city upon itself. A rotating hotel hallway hosts a zero-gravity fight. In a snow fortress, the team battles projections while Cobb confronts Mal, his dead wife's shade who sabotages every mission. The film ends with Cobb's spinning top wobbling - but the camera cuts away before we see if it falls.",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "Cobb wears his wedding ring only in dreams - in the final scene, his hand is bare when he spins the top, suggesting he is in reality."
+          },
+          {
+            "type": "visual_motif",
+            "detail": "Each dream level has a distinct color temperature: warm amber for level one (rain), cool grey for level two (hotel), stark white-blue for level three (snow)."
+          },
+          {
+            "type": "camera",
+            "detail": "The hallway fight was filmed in a 100-foot rotating corridor set that actually spun 360 degrees, with Joseph Gordon-Levitt performing the fight choreography inside."
+          },
+          {
+            "type": "production",
+            "detail": "The 'BRAAAM' brass sound was created by slowing down Edith Piaf's 'Non, je ne regrette rien' - the same song used as the 'kick' to wake dreamers."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "$836.8 million worldwide box office. Won 4 Academy Awards (Cinematography, Sound Mixing, Sound Editing, Visual Effects). One of the most discussed film endings of the 2010s.",
+        "production": "Nolan spent 10 years developing the script. The rotating hallway fight was built as a practical set that actually rotated. Filmed across six countries.",
+        "themes": "The spinning top ending deliberately remains ambiguous. Cobb's wedding ring appears only in dreams - a detail that suggests the ending is reality."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Roger Ebert",
+          "quote": "A movie that plays with the fabric of reality by layering dreams within dreams.",
+          "translation": "Nolan created a puzzle box that rewards multiple viewings."
+        }
+      ],
+      "community": [
+        {
+          "quote": "I don't care what anyone says - the top wobbles. He's home. Let me have this.",
+          "context": "Endless debate thread"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw17",
+    "work_type": "film",
+    "title_display": "Charlie's Angels",
+    "title_original": "Charlie's Angels",
+    "title_romaji": null,
+    "title_original_lang": "English",
+    "external_ids": {
+      "tmdb": 10530,
+      "wikidata": "Q461248",
+      "imdb": "tt0160127"
+    },
+    "date_created_year": 2000,
+    "country_of_origin": "USA",
+    "runtime_minutes": 98,
+    "primary_image_url": "https://image.tmdb.org/t/p/original/iHTmZs0BmkwMCYi8rhvMWC5G4EM.jpg",
+    "scores": {
+      "imdb": 5.5,
+      "rottenTomatoes": 68,
+      "metacritic": 56
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "female empowerment"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "chosen family"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "spectacle as liberation"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "competence as joy"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "exuberant"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "playful"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "triumphant"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "irreverent"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Los Angeles"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "California"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Malibu"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap58",
+          "name_display": "Drew Barrymore",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "272"
+            }
+          ]
+        },
+        "role_type": "producer",
+        "role_display": "Producer & Actor (Dylan)",
+        "bio": "Developed the project for 7 years. Wanted female action heroes who have fun.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap59",
+          "name_display": "Cameron Diaz",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "273"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Actor (Natalie)",
+        "bio": "Physical comedy star who embraced the wire work and martial arts.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap60",
+          "name_display": "Lucy Liu",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "274"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Actor (Alex)",
+        "bio": "Brought martial arts credibility. Would later star as O-Ren Ishii in Kill Bill Vol. 1 (2003).",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap61",
+          "name_display": "McG",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "275"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "Music video director making feature debut. Brought MTV kinetic energy.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap62",
+          "name_display": "Yuen Cheung-Yan",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "276"
+            }
+          ]
+        },
+        "role_type": "contributor",
+        "role_display": "Martial Arts Choreographer",
+        "bio": "Brother of legendary Yuen Woo-ping (The Matrix, Kill Bill). Brought Hong Kong wire-fu expertise to Charlie's Angels.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "remake_of",
+        "to_work": {
+          "id": null,
+          "title_display": "Charlie's Angels TV series (1976-1981)"
+        },
+        "note": "Original 'jiggle TV' phenomenon",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": "aw14"
+        },
+        "note": "Western adoption of Hong Kong wire-fu, brought martial arts choreography to mainstream; both used Yuen family choreographers",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Hong Kong martial arts cinema"
+        },
+        "note": "Wire work, rhythmic fight choreography - Yuen Cheung-Yan (brother of Yuen Woo-ping)",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "stylistic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "MTV music video aesthetics"
+        },
+        "note": "McG's kinetic editing background",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "contemporaneous_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Buffy the Vampire Slayer"
+        },
+        "note": "Female empowerment through combat competence",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw18"
+        },
+        "note": "Lucy Liu's success proved female martial arts viability; mainstream acceptance opened doors",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Kingsman franchise"
+        },
+        "note": "Playful irreverence toward spy conventions",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Ocean's 8"
+        },
+        "note": "Female ensemble heist/action blueprint",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Birds of Prey"
+        },
+        "note": "Following the Angels template",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Malibu",
+        "city": "Malibu",
+        "country": null,
+        "latitude": 34.0259,
+        "longitude": -118.7798,
+        "connection": "Beach house locations, California coastal setting",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Los Angeles",
+        "city": "Los Angeles",
+        "country": null,
+        "latitude": 34.0522,
+        "longitude": -118.2437,
+        "connection": "Primary setting and production location",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Universal Studios",
+        "city": "Universal City",
+        "country": null,
+        "latitude": 34.1381,
+        "longitude": -118.3534,
+        "connection": "Several interior sequences filmed here",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "Three elite female spies blend martial arts mastery, technological savvy, and unbreakable friendship to thwart a tech mogul's revenge plot - all while having the time of their lives.",
+      "story": {
+        "culturalContext": "Released at the apex of Y2K optimism, when 'girl power' had matured from sloganeering into mainstream representation. Hollywood was ready to embrace women who could fight, flirt, and save the world in the same scene.",
+        "typeAesthetic": "Action-comedy, spy film, nostalgic reboot. Hong Kong wire-fu cinema, MTV music video editing, late-90s/Y2K fashion maximalism, pop art color palettes.",
+        "corePhilosophy": "Women can be simultaneously hyper-competent, deeply feminine, mutually supportive, and absolutely lethal - and none of these qualities diminish the others.",
+        "receipt": "Drew Barrymore: 'I wanted to make a movie about women who love each other, who are smart and capable, who don't need to be rescued, and who get to have as much fun as any male action hero ever did.'",
+        "surfaceLayer": "Three women - Natalie, Dylan, and Alex - work as secret agents for the unseen Charlie, investigating the kidnapping of tech mogul Eric Knox. Disguised as everything from geishas to belly dancers to race car pit crews, they infiltrate villain Roger Corwin's operation. Key action sequences include a wire-assisted fight in a mansion, an elaborate rescue from a castle tower, and a climactic beach house battle. Knox is revealed as the true villain seeking revenge on Charlie. The Angels defeat him using teamwork, gadgets, and Hong Kong-style martial arts - never using guns.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The Angels are framed in triangular compositions throughout the film - standing, fighting, and posing in three-point formations that emphasize their unity as a team."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The opening flight sequence contains a split-second frame of a newspaper with the headline 'Angels Save Day' - foreshadowing the film's ending."
+          },
+          {
+            "type": "camera",
+            "detail": "McG employs 'bullet time' slow-motion during the opening plane fight, consciously referencing The Matrix (1999) which had premiered the previous year."
+          },
+          {
+            "type": "production",
+            "detail": "The final beach house set was a complete practical build in Malibu, with wire rigs hidden in the ceiling for the extensive aerial fight choreography."
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "$264 million worldwide box office. Drew Barrymore developed the project for seven years as producer. Launched McG's directing career.",
+        "production": "Yuen Cheung-Yan (brother of Yuen Woo-ping) choreographed the action. The leads trained for six months in martial arts. The film deliberately avoided guns - Angels solve problems through intelligence and teamwork.",
+        "themes": "Rode the wave of female-led action (Buffy, Xena, La Femme Nikita) while adding playful camp and genuine friendship."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Entertainment Weekly (2000)",
+          "quote": "Barrymore's Angels don't kick butt despite their femininity - they kick butt because of it.",
+          "translation": "The film doesn't ask women to act like men to be powerful."
+        }
+      ],
+      "community": [
+        {
+          "quote": "This movie is pure joy. Three women having the time of their lives while being completely badass. That energy is rare.",
+          "context": "Nostalgic rewatch review"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw18",
+    "work_type": "film",
+    "title_display": "Kill Bill: Volume 1",
+    "title_original": "Kill Bill: Volume 1",
+    "title_romaji": null,
+    "title_original_lang": "English",
+    "external_ids": {
+      "tmdb": 24,
+      "wikidata": "Q155476",
+      "imdb": "tt0266697"
+    },
+    "date_created_year": 2003,
+    "country_of_origin": "USA (produced in China, Japan)",
+    "runtime_minutes": 111,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/2/2c/Kill_Bill_Volume_1.png",
+    "scores": {
+      "imdb": 8.2,
+      "rottenTomatoes": 85,
+      "metacritic": 69
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "revenge"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "betrayal"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "female warrior"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "motherhood violated"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "honor codes"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "violence as ritual"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cold fury"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cathartic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "operatic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "darkly humorous"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "exhilarating"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "melancholic"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tokyo"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Okinawa"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Texas"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "China"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap63",
+          "name_display": "Quentin Tarantino",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "277"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Master of cinematic remix and reference. Fourth feature film.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap64",
+          "name_display": "Uma Thurman",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "278"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Lead Actor (The Bride)",
+        "bio": "Co-created the character with Tarantino. Trained extensively in sword fighting.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap50",
+          "name_display": "Yuen Woo-ping",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "264"
+            }
+          ]
+        },
+        "role_type": "contributor",
+        "role_display": "Martial Arts Choreographer",
+        "bio": "Legendary Hong Kong choreographer. Also choreographed The Matrix (1999) and Crouching Tiger, Hidden Dragon (2000).",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap65",
+          "name_display": "Sonny Chiba",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "279"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Actor (Hattori Hanzo)",
+        "bio": "Japanese action legend playing the retired swordsmith.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap60",
+          "name_display": "Lucy Liu",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "274"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Actor (O-Ren Ishii)",
+        "bio": "Japanese-Chinese-American crime boss with animated origin sequence. Also starred in Charlie's Angels (2000).",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "primary_model",
+        "to_work": {
+          "id": "aw19"
+        },
+        "note": "Chapter format, snow-blood imagery, female avenger archetype, uses Meiko Kaji's theme song 'Shura no Hana'",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_vocabulary",
+        "to_work": {
+          "id": null,
+          "title_display": "Shaw Brothers films"
+        },
+        "note": "Wide masters, whip pans, blood spray aesthetics",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "direct_homage",
+        "to_work": {
+          "id": null,
+          "title_display": "Game of Death"
+        },
+        "note": "Yellow tracksuit, floor-by-floor boss battles",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "aesthetic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Italian giallo"
+        },
+        "note": "Saturated color palettes, stylized violence",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "martial_arts_choreography",
+        "to_work": {
+          "id": "aw14"
+        },
+        "note": "Both used Yuen Woo-ping as choreographer, popularized Hong Kong wire-fu in Hollywood",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "female_action_precedent",
+        "to_work": {
+          "id": "aw17"
+        },
+        "note": "Lucy Liu appears in both; proved female martial arts could be mainstream",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw20"
+        },
+        "note": "Operatic violence as ritual, elaborate assassin mythology, visual poetry in action",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Female action cinema"
+        },
+        "note": "Proved female-led martial arts could dominate box office",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Neo-grindhouse revival"
+        },
+        "note": "Tarantino/Rodriguez's Grindhouse followed",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "House of Blue Leaves",
+        "city": "Tokyo",
+        "country": "Japan",
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Primary location",
+        "place_type": "landmark",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Gonpachi Restaurant (House of Blue Leaves inspiration)",
+        "city": "Nishi-Azabu",
+        "country": null,
+        "latitude": 35.6593,
+        "longitude": 139.7223,
+        "connection": "Real restaurant that inspired the House of Blue Leaves set design - known as 'Kill Bill restaurant'",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Rainbow Bridge (O-Ren Trailing Scene)",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6369,
+        "longitude": 139.7639,
+        "connection": "The Bride trails O-Ren on her motorcycle across this illuminated bridge",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Shinjuku (Motorcycle Chase)",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6938,
+        "longitude": 139.7034,
+        "connection": "The Bride trails O-Ren through Shinjuku along Yasukuni-dori",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Beijing Film Studios",
+        "city": "Beijing",
+        "country": null,
+        "latitude": 39.9765,
+        "longitude": 116.288,
+        "connection": "House of Blue Leaves interior, Hattori Hanzo's sushi bar, and Okinawa scenes were all filmed here",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A betrayed assassin awakens from a coma and begins systematically executing the colleagues who massacred her wedding party and stole her unborn child.",
+      "story": {
+        "surfaceLayer": "A woman in a yellow Bruce Lee tracksuit fights her way through dozens of yakuza bodyguards in a Tokyo nightclub. The Crazy 88 sequence unfolds in a blue-lit restaurant: katanas clash, severed limbs fly, blood sprays in arterial geysers. Earlier, an anime sequence depicts a child witnessing her parents' murder by the yakuza. The Bride extracts a legendary samurai sword from a retired swordsmith in Okinawa before arriving in Tokyo on a motorcycle, trailing her target through neon streets to the House of Blue Leaves.",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "The Bride's yellow tracksuit is a direct homage to Bruce Lee's outfit in Game of Death (1978) - the same floor-by-floor boss battle structure applies"
+          },
+          {
+            "type": "visual_motif",
+            "detail": "Blood as visual art: the climactic snow garden fight deliberately echoes Lady Snowblood, with crimson blood blooming on white snow"
+          },
+          {
+            "type": "camera",
+            "detail": "Tarantino uses a silhouette sequence during the Crazy 88 fight - partially to achieve an R-rating, partially as homage to Japanese chambara shadow-puppet staging"
+          },
+          {
+            "type": "production",
+            "detail": "The House of Blue Leaves interior was built at Beijing Film Studios - despite being set in Tokyo, most 'Japan' scenes were filmed in China"
+          }
+        ],
+        "culturalContext": "Emerged in 2003 at the intersection of post-Matrix appetite for Hong Kong martial arts, DVD-era cult film revival, and Tarantino's evolution from dialogue-driven crime films to action spectacle.",
+        "typeAesthetic": "Martial arts revenge film, neo-grindhouse, postmodern action. Split screens (Brian De Palma), saturated color palettes (Italian giallo), anime sequences (Production I.G), Shaw Brothers wide-angle kung fu framing.",
+        "corePhilosophy": "Revenge as a purifying ritual - neither condemned nor celebrated, but treated as an inevitable force when the deepest human bonds are violated.",
+        "receipt": "Quentin Tarantino: 'The Bride is one of the few characters I've written that I actually love... She's my Joan of Arc. She's not just justified in her violence - she's righteous.'"
+      },
+      "deep_dive": {
+        "overview": "$180.9 million worldwide. Fourth Tarantino feature. Career-defining 'remix cinema' - synthesizing grindhouse, anime, kung fu, and samurai traditions into mainstream blockbuster.",
+        "production": "Yuen Woo-ping choreographed the fights. Production I.G animated the O-Ren origin sequence. Uma Thurman co-created the character concept with Tarantino.",
+        "themes": "Roots female protagonist's power in maternal rage rather than sex appeal. Each chapter explicitly credits its influences through visual and musical homage."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Roger Ebert",
+          "quote": "Tarantino creates sequences of such beauty and intensity that even the violence becomes balletic.",
+          "translation": "The film elevates exploitation cinema to high art."
+        }
+      ],
+      "community": [
+        {
+          "quote": "The House of Blue Leaves fight is the greatest action sequence ever filmed. I will die on this hill.",
+          "context": "Action movie discussion"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw19",
+    "work_type": "film",
+    "title_display": "Lady Snowblood",
+    "title_original": "修羅雪姫",
+    "title_romaji": "Shurayukihime",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 20679,
+      "wikidata": "Q1544949",
+      "imdb": "tt0158714"
+    },
+    "date_created_year": 1973,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 97,
+    "primary_image_url": "https://image.tmdb.org/t/p/original/wkcbaqCoYEXDUnSQ6NTnB2C7H05.jpg",
+    "scores": {
+      "imdb": 7.5,
+      "rottenTomatoes": 95,
+      "metacritic": null
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "generational revenge"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "female vengeance incarnate"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "the cost of hatred"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "justice outside law"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cold beauty"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "tragic inevitability"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "blood as poetry"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "melancholy fury"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Meiji-era"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Snowscape"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap66",
+          "name_display": "Meiko Kaji",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "280"
+            }
+          ]
+        },
+        "role_type": "actor",
+        "role_display": "Lead Actor (Yuki)",
+        "bio": "Iconic 'revenge woman' of 1970s Japanese cinema. Performed the theme song 'Shura no Hana' (Flower of Carnage).",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap67",
+          "name_display": "Toshiya Fujita",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "281"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "New Wave-adjacent director who elevated exploitation material.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap68",
+          "name_display": "Kazuo Koike",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "282"
+            }
+          ]
+        },
+        "role_type": "writer",
+        "role_display": "Original Manga Writer",
+        "bio": "Also created Lone Wolf and Cub. Master of vengeance narratives.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap69",
+          "name_display": "Kazuo Kamimura",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "283"
+            }
+          ]
+        },
+        "role_type": "artist",
+        "role_display": "Original Manga Artist",
+        "bio": "Created the visual style of the source manga.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Classic chambara films"
+        },
+        "note": "Zatoichi, Sleepy Eyes of Death series",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "aesthetic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Kabuki theater"
+        },
+        "note": "Stylized poses, blood as theatrical element",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Ukiyo-e art"
+        },
+        "note": "Compositional framing, nature as emotional mirror",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "narrative_structure",
+        "to_work": {
+          "id": null,
+          "title_display": "Film noir"
+        },
+        "note": "Flashback structure, fatalistic worldview",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": "aw18"
+        },
+        "note": "Tarantino's explicit homage, uses 'Shura no Hana' theme song, chapter structure, snow-blood imagery",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Sympathy for Lady Vengeance"
+        },
+        "note": "Park Chan-wook's Korean continuation",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Female revenge cinema globally"
+        },
+        "note": "Proved exploitation could be art",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null
+        },
+        "note": "Template for modern female warriors - Beatrix Kiddo, modern action cinema",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Tokyo",
+        "city": "Tokyo",
+        "country": null,
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Production location, urban sequences",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Nikko",
+        "city": "Tochigi Prefecture",
+        "country": null,
+        "latitude": 36.75,
+        "longitude": 139.5978,
+        "connection": "Snow-covered forest locations",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A woman born in prison becomes a living instrument of vengeance, hunting down the four people who destroyed her family across Meiji-era Japan, blood blooming on snow.",
+      "story": {
+        "surfaceLayer": "A woman in a white kimono walks through a snowy landscape, her umbrella concealing a blade. She confronts her targets one by one - each kill marked by explosive arterial spray that blooms red against pristine white snow. In flashback, her mother dies in a women's prison moments after giving birth, passing on a list of four names. The child Yuki is raised by a priest who trains her as an assassin. As an adult, she hunts each of her family's destroyers across Meiji-era Japan, her sword hidden within an elegant parasol.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Blood on snow is the film's signature image - the stark contrast of crimson arterial spray against white became the defining aesthetic that Tarantino later recreated in Kill Bill"
+          },
+          {
+            "type": "easter_egg",
+            "detail": "Meiko Kaji's theme song 'Shura no Hana' (Flower of Carnage) was used by Tarantino in Kill Bill Vol. 1 - she performed it herself for the film"
+          },
+          {
+            "type": "camera",
+            "detail": "The chapter structure uses manga-style intertitles and freeze-frames - a technique later adopted wholesale by Kill Bill"
+          },
+          {
+            "type": "production",
+            "detail": "The umbrella sword was specially designed for the film - director Fujita wanted a weapon that could be concealed within feminine elegance, subverting expectations"
+          }
+        ],
+        "culturalContext": "Emerged in 1973 during the 'pinky violence' boom in Japanese exploitation cinema - a subgenre featuring female protagonists in sexually charged, ultra-violent narratives. Represents the peak artistic achievement of the women's revenge exploitation cycle.",
+        "typeAesthetic": "Jidaigeki (period drama), revenge tragedy, pinky violence, chambara (sword film). Ukiyo-e woodblock prints, kabuki theater staging, blood as visual element (arterial spray as art), manga panel compositions.",
+        "corePhilosophy": "Can a human being raised solely for revenge ever be more than a weapon? Yuki is both tragic heroine and living curse - denied the possibility of an ordinary life.",
+        "receipt": "Kazuo Koike (manga creator): 'Yuki is not a character who chooses revenge - she is revenge. She was conceived for it, born for it, raised for it.'"
+      },
+      "deep_dive": {
+        "overview": "Based on Kazuo Koike and Kazuo Kamimura's manga. Meiko Kaji's theme song 'Shura no Hana' was later used in Kill Bill. Tarantino's primary source text.",
+        "production": "Toho production. Director Toshiya Fujita brought New Wave sensibilities to exploitation material. Meiko Kaji became the iconic 'revenge woman' of 1970s Japanese cinema.",
+        "themes": "Snow as canvas for blood became the film's defining image. The chapter structure directly influenced Kill Bill."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Quentin Tarantino",
+          "quote": "Lady Snowblood is one of the most beautiful films ever made. I watch it constantly.",
+          "translation": "Kill Bill is fundamentally a love letter to this film."
+        }
+      ],
+      "community": [
+        {
+          "quote": "The image of blood on snow is so beautiful you forget you're watching violence. That's the genius of this film.",
+          "context": "Cult cinema forum"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw20",
+    "work_type": "film",
+    "title_display": "John Wick",
+    "title_original": "John Wick",
+    "title_romaji": null,
+    "title_original_lang": "English",
+    "external_ids": {
+      "tmdb": 245891,
+      "wikidata": "Q17062917",
+      "imdb": "tt2911666"
+    },
+    "date_created_year": 2014,
+    "country_of_origin": "USA",
+    "runtime_minutes": 101,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/9/98/John_Wick_TeaserPoster.jpg",
+    "scores": {
+      "imdb": 7.4,
+      "rottenTomatoes": 86,
+      "metacritic": 68
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "grief weaponized"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "honor among killers"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "consequences of cruelty"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "mythological violence"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cold fury"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "cathartic rage"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "elegiac sadness"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "visceral satisfaction"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "New York City"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Brooklyn"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Manhattan"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap70",
+          "name_display": "Chad Stahelski",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "284"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "Former stunt coordinator turned director. Was Keanu Reeves' stunt double in The Matrix trilogy.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap49",
+          "name_display": "Keanu Reeves",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "172"
+            }
+          ]
+        },
+        "role_type": "producer",
+        "role_display": "Lead Actor & Executive Producer",
+        "bio": "Trained extensively. Does 90%+ of his own stunts. Also executive produced.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap71",
+          "name_display": "Derek Kolstad",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "285"
+            }
+          ]
+        },
+        "role_type": "writer",
+        "role_display": "Writer",
+        "bio": "Created the character and mythology.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap72",
+          "name_display": "David Leitch",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "286"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Co-Director (uncredited)",
+        "bio": "Went on to direct Atomic Blonde, Deadpool 2, Bullet Train.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "John Woo's heroic bloodshed films"
+        },
+        "note": "The Killer, Hard Boiled - balletic gunplay, emotional weight",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "operatic_violence",
+        "to_work": {
+          "id": "aw18"
+        },
+        "note": "Violence as ritual choreography, elaborate assassin underworld mythology",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "Le Samourai"
+        },
+        "note": "Stoic hitman, minimalist dialogue, honor code",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "draws_from",
+        "to_work": {
+          "id": null,
+          "title_display": "Japanese chambara/samurai films"
+        },
+        "note": "Code of honor, retired warrior narrative",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "aesthetic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Cowboy Bebop"
+        },
+        "note": "Melancholy hitman, stylized violence",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "practical_action_evolution",
+        "to_work": {
+          "id": "aw14"
+        },
+        "note": "Chad Stahelski was Keanu Reeves' stunt double in The Matrix; evolved practical fighting",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Atomic Blonde"
+        },
+        "note": "Leitch's solo directorial debut, same visual DNA",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Nobody"
+        },
+        "note": "Bob Odenkirk trained by 87Eleven",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "TV action choreography"
+        },
+        "note": "Daredevil hallway fights, The Mandalorian",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Video games"
+        },
+        "note": "Sifu, Hotline Miami aesthetic echoes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "The Continental Hotel",
+        "city": "New York City",
+        "country": "USA",
+        "latitude": 40.7128,
+        "longitude": -74.006,
+        "connection": "Primary location",
+        "place_type": "landmark",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Beaver Building (Continental Hotel Exterior)",
+        "city": "Manhattan",
+        "country": null,
+        "latitude": 40.70522,
+        "longitude": -74.00857,
+        "connection": "The flatiron-shaped building serves as the Continental Hotel exterior facade",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Cunard Building (Continental Hotel Lobby)",
+        "city": "Manhattan",
+        "country": null,
+        "latitude": 40.7048,
+        "longitude": -74.013,
+        "connection": "The austere deco lobby where Winston (Lance Reddick) offers service",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Hotel Wolcott (Speakeasy/Club)",
+        "city": "Midtown Manhattan",
+        "country": null,
+        "latitude": 40.7472,
+        "longitude": -73.9879,
+        "connection": "The Continental's basement club in Chapter One",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Gold Bar (Red Circle Club)",
+        "city": "Lower East Side",
+        "country": null,
+        "latitude": 40.717,
+        "longitude": -73.99,
+        "connection": "The Red Circle nightclub where John Wick confronts Iosef",
+        "place_type": "filming_location",
+        "is_visitable": false
+      }
+    ],
+    "ai": {
+      "glance": "A grieving retired assassin returns to the criminal underworld when gangsters kill his dog - the last gift from his dying wife - unleashing precise, unstoppable vengeance.",
+      "story": {
+        "surfaceLayer": "A man in a black suit moves through a nightclub, dispatching enemies with clinical precision - two shots to the torso, one to the head. Earlier, Russian gangsters break into his home, kill his beagle puppy, and steal his vintage Mustang. He retrieves weapons from beneath his basement concrete floor. At the Continental Hotel, a concierge greets assassins by name; gold coins are the only currency. The final confrontation occurs in the rain at a harbor, where John Wick beats his enemy to death. Throughout, characters whisper about 'the pencil' - a legendary story of three men killed with a single pencil.",
+        "observationDetails": [
+          {
+            "type": "easter_egg",
+            "detail": "The 'pencil' story is referenced but never shown - characters describe John killing three men in a bar with a pencil, establishing his mythic reputation without depicting it"
+          },
+          {
+            "type": "visual_motif",
+            "detail": "The Continental Hotel uses gold coins as currency and operates under strict 'no business on Continental grounds' rules - creating an elaborate underworld with its own economy and laws"
+          },
+          {
+            "type": "camera",
+            "detail": "Gun fu sequences use wide shots and long takes to showcase the choreography - deliberately avoiding quick cuts so audiences can see Keanu Reeves actually performing the moves"
+          },
+          {
+            "type": "production",
+            "detail": "Keanu Reeves trained for 4 months with Taran Tactical Innovations, learning actual three-gun competition techniques - his reload animations are real tactical procedures, not Hollywood invention"
+          }
+        ],
+        "culturalContext": "Emerged in 2014 during peak superhero saturation and CGI-heavy blockbusters. Audiences craved something rawer - action they could feel in their bones. A deliberate counterpunch: practical stunts, visible choreography, a star willing to do his own fighting.",
+        "typeAesthetic": "Neo-noir action thriller, revenge film, gun fu. Hong Kong 'heroic bloodshed' cinema (John Woo), Japanese yakuza films, graphic novel visual framing, video game level design, film noir lighting.",
+        "corePhilosophy": "What happens when grief has no outlet except violence? John Wick asks whether honor can exist within brutality, and whether vengeance truly heals.",
+        "receipt": "Chad Stahelski: 'People ask me what John Wick is about. I tell them: it's about a guy who lost everything, and the world learns why you don't take anything else from him.'"
+      },
+      "deep_dive": {
+        "overview": "$88.8 million worldwide on $20-30 million budget. Launched a franchise and revitalized Keanu Reeves' action career. Created by stunt coordinators.",
+        "production": "Directors Chad Stahelski and David Leitch were former stuntmen. Keanu Reeves trained for 4+ months in weapons and martial arts. Pioneered 'gun fu' as mainstream genre.",
+        "themes": "The Continental Hotel established elaborate assassin mythology. 'Rules' give structure to the underworld - violating them has consequences. The dog represents everything Wick lost."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Variety",
+          "quote": "John Wick represents a return to form for American action cinema - brutal, beautiful, and uncompromising.",
+          "translation": "Hollywood remembered how to make action movies that don't rely on CGI."
+        }
+      ],
+      "community": [
+        {
+          "quote": "They killed his dog. His DOG. Every single death after that is completely justified.",
+          "context": "Universal audience reaction"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw21",
+    "work_type": "animation",
+    "title_display": "Coco",
+    "title_original": "Coco",
+    "title_romaji": null,
+    "title_original_lang": "English / Spanish",
+    "external_ids": {
+      "tmdb": 354912,
+      "wikidata": "Q20003546",
+      "imdb": "tt2380307"
+    },
+    "date_created_year": 2017,
+    "country_of_origin": "USA (set in Mexico)",
+    "runtime_minutes": 105,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg",
+    "scores": {
+      "imdb": 8.4,
+      "rottenTomatoes": 97,
+      "metacritic": 81
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "family legacy"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "memory & mortality"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "dreams vs. duty"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "ancestral bonds"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "forgiveness"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "bittersweet"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "heartwarming"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "tearful catharsis"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "joyful celebration"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "gentle grief"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Mexico"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Guanajuato"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Oaxaca"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Michoacan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Land of the Dead"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap73",
+          "name_display": "Lee Unkrich",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "238"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "Pixar veteran. Previously directed Toy Story 3. Led the six-year development process.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap74",
+          "name_display": "Adrian Molina",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "347"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Co-Director & Co-Writer",
+        "bio": "Mexican-American animator who brought authentic cultural perspective.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap75",
+          "name_display": "Michael Giacchino",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "197"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Oscar-winning composer. Incorporated traditional Mexican musical elements.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap76",
+          "name_display": "Anthony Gonzalez",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "348"
+            }
+          ]
+        },
+        "role_type": "voice_actor",
+        "role_display": "Voice Actor (Miguel)",
+        "bio": "12 years old during recording. Brings authentic youthful energy.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap77",
+          "name_display": "Gael Garcia Bernal",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "349"
+            }
+          ]
+        },
+        "role_type": "voice_actor",
+        "role_display": "Voice Actor (Hector)",
+        "bio": "Mexican film star bringing authenticity to the charming trickster.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "influenced_by",
+        "to_work": {
+          "id": "aw11",
+          "title_display": "Spirited Away"
+        },
+        "note": "Spirit world aesthetics, journey to understand family ancestry and memory",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Mexican muralism (Diego Rivera, Jose Clemente Orozco)"
+        },
+        "note": "Monumental visual storytelling, community narratives, vibrant color palettes celebrating Mexican identity",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "thematic_kinship",
+        "to_work": {
+          "id": null,
+          "title_display": "Gabriel Garcia Marquez magical realism"
+        },
+        "note": "Magical realism tradition - coexistence of living and dead as natural, One Hundred Years of Solitude family memory themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "cultural_foundation",
+        "to_work": {
+          "id": null,
+          "title_display": "Dia de los Muertos cultural tradition"
+        },
+        "note": "Indigenous Aztec/P'urhepecha traditions merged with Catholic All Saints Day - memory keeping the dead alive",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "visual_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Oaxacan folk art (alebrije wood carvings)"
+        },
+        "note": "Pedro Linares' paper mache dream creatures, Manuel Jimenez's wood carving tradition",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "aesthetic_influence",
+        "to_work": {
+          "id": null,
+          "title_display": "Golden Age Mexican cinema (1930s-1960s)"
+        },
+        "note": "Visual storytelling traditions of Emilio Fernandez, Gabriel Figueroa cinematography",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "differentiated_from",
+        "to_work": {
+          "id": null,
+          "title_display": "The Book of Life (2014)"
+        },
+        "note": "Earlier Dia de los Muertos animation; Pixar deliberately took different approach with cultural consultation",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Encanto"
+        },
+        "note": "Disney's continued Latin American cultural celebration with family and intergenerational trauma themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Soul"
+        },
+        "note": "Pixar's further exploration of afterlife/pre-life realms, influenced by Coco's success with metaphysical themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Industry cultural consultation practices"
+        },
+        "note": "New benchmark for authentic representation - 6 year research process became model",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Mexican tourism"
+        },
+        "note": "40% increase in visitors to Guanajuato, Oaxaca alebrije sales tripled, renewed interest in Dia de los Muertos traditions",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Representation discourse in animation"
+        },
+        "note": "Demonstrated commercial viability of culturally specific stories told with authenticity",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Guanajuato City",
+        "city": "Guanajuato",
+        "country": null,
+        "latitude": 21.019,
+        "longitude": -101.2574,
+        "connection": "Primary visual inspiration for the Land of the Dead - colorful hillside architecture",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Oaxaca",
+        "city": "Oaxaca",
+        "country": null,
+        "latitude": 17.0732,
+        "longitude": -96.7266,
+        "connection": "Source of alebrije (spirit guide) folk art tradition",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Santa Fe de la Laguna",
+        "city": "Michoacan",
+        "country": null,
+        "latitude": 19.5833,
+        "longitude": -101.5667,
+        "connection": "Inspiration for Miguel's village Santa Cecilia",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Patzcuaro",
+        "city": "Michoacan",
+        "country": null,
+        "latitude": 19.5167,
+        "longitude": -101.6083,
+        "connection": "Famous for elaborate Dia de los Muertos celebrations",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Mixquic",
+        "city": "Mexico City",
+        "country": null,
+        "latitude": 19.2333,
+        "longitude": -98.9667,
+        "connection": "Traditional Dia de los Muertos cemetery celebrations",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A young Mexican boy accidentally enters the Land of the Dead on Dia de los Muertos and discovers the true story of his family while learning that love transcends death through memory.",
+      "story": {
+        "culturalContext": "Emerged during heightened conversation about authentic representation in Hollywood. Pixar committed to a six-year research and consultation process. The film arrived amid U.S.-Mexico political tensions, making its loving portrayal a quiet but powerful statement.",
+        "surfaceLayer": "Twelve-year-old Miguel Rivera defies his family's generational ban on music to pursue his dream of becoming a musician like his idol Ernesto de la Cruz. On Dia de los Muertos, he steals a guitar from de la Cruz's mausoleum and is transported to the Land of the Dead, a vast glowing city built on towers of the remembered. He meets Hector, a tattered skeleton desperate to cross the marigold bridge before his photo is forgotten. Key sequences: the marigold petal bridge spanning worlds, the alebrije spirit guides soaring through neon-lit streets, and the final 'Remember Me' sung to Mama Coco as her eyes fill with recognition.",
+        "observationDetails": [
+          {
+            "label": "Easter Egg",
+            "value": "A Nemo plush appears in Mama Coco's room, and the Pizza Planet truck is visible in Santa Cecilia - continuing Pixar's cross-film traditions"
+          },
+          {
+            "label": "Visual Motif",
+            "value": "Marigold petals appear in nearly every scene transition between worlds - they're the cempasuchil flower Aztecs believed guided spirits home"
+          },
+          {
+            "label": "Camera Detail",
+            "value": "The Land of the Dead reveal uses a 180-degree camera rotation as Miguel crosses the bridge, shifting from muted grays to explosive saturated color"
+          },
+          {
+            "label": "Production Note",
+            "value": "The skeleton characters have 127 unique joints each (vs. 38 for a typical human model) to capture the fluidity of traditional Mexican calaca puppets"
+          }
+        ],
+        "typeAesthetic": "Family drama, fantasy-adventure, musical. Mexican folk art (papel picado, sugar skulls, alebrije wood carvings), Art Nouveau, Golden Age Mexican cinema, Guanajuato architecture, marigold symbolism.",
+        "corePhilosophy": "What keeps the dead alive? Not fame, not monuments, but being held in the memory of those who loved you. True death is being forgotten - true life is being remembered with love.",
+        "receipt": "Lee Unkrich: 'We realized early on that the real story wasn't about death - it was about family. The Day of the Dead isn't a morbid holiday; it's a celebration of the ongoing connection between the living and those who came before them.'"
+      },
+      "deep_dive": {
+        "overview": "Highest-grossing film of all time in Mexico ($57.8 million). Won Academy Awards for Best Animated Feature and Best Original Song ('Remember Me'). $807 million worldwide.",
+        "production": "Six years of research and cultural consultation. Lalo Alcaraz and Marcela Davison Aviles served as cultural consultants. Pixar team made multiple trips to Mexico.",
+        "themes": "The 'second death' concept - when the last person who remembers you dies, you disappear from the Land of the Dead. Alebrijes (spirit guides) drawn from Oaxacan folk art tradition."
+      }
+    },
+    "voices": {
+      "expert": [
+        {
+          "source": "Guillermo del Toro",
+          "quote": "Coco gets Mexico right in a way that few films from outside have ever managed.",
+          "translation": "The film earned respect from Mexican cultural icons."
+        }
+      ],
+      "community": [
+        {
+          "quote": "I'm a grown man and I sobbed uncontrollably during 'Remember Me.' This movie DESTROYED me.",
+          "context": "Universal adult reaction"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw22",
+    "work_type": "animation",
+    "title_display": "Your Name",
+    "title_original": "君の名は。",
+    "title_romaji": "Kimi no Na wa.",
+    "title_original_lang": "Japanese",
+    "external_ids": {
+      "tmdb": 372058,
+      "wikidata": "Q20814989",
+      "imdb": "tt5311514",
+      "bgm": 172486,
+      "anitabi": "your-name"
+    },
+    "date_created_year": 2016,
+    "country_of_origin": "Japan",
+    "runtime_minutes": 106,
+    "primary_image_url": "https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png",
+    "scores": {
+      "imdb": 8.4,
+      "rottenTomatoes": 98,
+      "metacritic": 79
+    },
+    "tag_relations": [
+      {
+        "tag_type": "theme",
+        "tag_label": "body-swap"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "fate & connection"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "disaster & memory"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "rural vs urban"
+      },
+      {
+        "tag_type": "theme",
+        "tag_label": "time manipulation"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "longing"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "bittersweet"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "romantic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "melancholic"
+      },
+      {
+        "tag_type": "emotion",
+        "tag_label": "hopeful"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Japan"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Tokyo"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Hida"
+      },
+      {
+        "tag_type": "geo",
+        "tag_label": "Gifu"
+      }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap78",
+          "name_display": "Makoto Shinkai",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "188"
+            }
+          ]
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Born 1973. Known for emotionally resonant anime featuring stunning visual landscapes and themes of distance and connection.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap79",
+          "name_display": "RADWIMPS",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "351"
+            }
+          ]
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Japanese rock band. Their songs 'Zenzenzense' and 'Sparkle' became massive hits.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap80",
+          "name_display": "Mone Kamishiraishi",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "350"
+            }
+          ]
+        },
+        "role_type": "voice_actor",
+        "role_display": "Voice Actor (Mitsuha)",
+        "bio": "Japanese actress who brought Mitsuha to life with emotional depth.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap81",
+          "name_display": "Ryunosuke Kamiki",
+          "name_native": null,
+          "image_url": null,
+          "external_ids": [
+            {
+              "source": "tmdb",
+              "external_id": "352"
+            }
+          ]
+        },
+        "role_type": "voice_actor",
+        "role_display": "Voice Actor (Taki)",
+        "bio": "Veteran voice actor known for numerous anime roles.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "The Girl Who Leapt Through Time"
+        },
+        "note": "Time-manipulation romance in anime form",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": "aw11",
+          "title_display": "Spirited Away"
+        },
+        "note": "Supernatural Japanese coming-of-age",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "inspired_by",
+        "to_work": {
+          "id": null,
+          "title_display": "Freaky Friday"
+        },
+        "note": "Body-swap narrative structure",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Weathering with You"
+        },
+        "note": "Shinkai's follow-up exploring similar themes of connection vs. disaster",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Suzume"
+        },
+        "note": "Shinkai's 2022 film continuing disaster and supernatural themes",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      },
+      {
+        "relation_type": "influenced",
+        "to_work": {
+          "id": null,
+          "title_display": "Anime pilgrimage tourism"
+        },
+        "note": "Your Name's real-world locations became global tourist destinations",
+        "confidence": "corroborated",
+        "source_type": "secondary"
+      }
+    ],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Suga Shrine (Stairs)",
+        "city": "Shinjuku",
+        "country": null,
+        "latitude": 35.6897,
+        "longitude": 139.7199,
+        "connection": "The iconic staircase where Taki and Mitsuha finally meet - most visited anime pilgrimage site",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Hida Furukawa Station",
+        "city": "Hida",
+        "country": null,
+        "latitude": 36.2367,
+        "longitude": 137.1858,
+        "connection": "Model for Itomori's train station where Taki arrives searching for Mitsuha",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Suwa Lake",
+        "city": "Nagano",
+        "country": null,
+        "latitude": 36.0542,
+        "longitude": 138.0833,
+        "connection": "Inspiration for the fictional Lake Itomori crater lake",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Yotsuya Station Area",
+        "city": "Shinjuku",
+        "country": null,
+        "latitude": 35.6859,
+        "longitude": 139.73,
+        "connection": "Taki's neighborhood with the pedestrian overpass scenes",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "National Art Center Tokyo",
+        "city": "Roppongi",
+        "country": null,
+        "latitude": 35.6651,
+        "longitude": 139.7267,
+        "connection": "Location of Taki and Mitsuha's date scene",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "Two teenagers mysteriously swap bodies across time and space, racing against fate to save each other and a town from catastrophe in this romantic fantasy about connection and memory.",
+      "story": {
+        "culturalContext": "Released during a period when Japan grappled with the 2011 Tohoku earthquake and tsunami. The film channels collective trauma into a hopeful narrative about human connection transcending disaster.",
+        "surfaceLayer": "Tokyo high schooler Taki and rural girl Mitsuha wake up in each other's bodies periodically. As they navigate each other's lives, they fall in love. Taki discovers Mitsuha's town was destroyed by a comet years ago - the swaps crossed time. He travels to save her and the town.",
+        "typeAesthetic": "Japanese animated feature blending photorealistic backgrounds with expressive character animation. Known for stunning depictions of light, weather, and cityscapes. Tokyo rendered with meticulous accuracy.",
+        "corePhilosophy": "What threads connect us across time and space? The red thread of fate (musubi) runs through the film - the idea that certain souls are destined to meet, even if they must bend time to do so.",
+        "receipt": "Makoto Shinkai: 'I wanted to make a film about the feeling that somewhere, someone is thinking about you right now.'",
+        "observationDetails": [
+          {
+            "label": "Visual Motif",
+            "value": "Braided cords (kumihimo) represent the intertwining of time and souls"
+          },
+          {
+            "label": "Easter Egg",
+            "value": "The comet Tiamat named after the Mesopotamian goddess of chaos"
+          },
+          {
+            "label": "Camera Detail",
+            "value": "Golden hour lighting used for emotionally significant moments"
+          },
+          {
+            "label": "Production Note",
+            "value": "Over 1,800 individual backgrounds painted"
+          }
+        ]
+      },
+      "deep_dive": {
+        "overview": "Became the highest-grossing anime film ever at release. First non-Ghibli anime to earn over $200M worldwide. Sparked 'seichi junrei' (anime pilgrimage) phenomenon.",
+        "production": "Makoto Shinkai's breakthrough after years of indie work. Produced by CoMix Wave Films. RADWIMPS composed the soundtrack, integral to the narrative.",
+        "themes": "The film explores Shinto concept of 'musubi' - the mystical interconnectedness of all things. Braided cords literally visualize this through kumihimo craft."
+      }
+    },
+    "voices": {
+      "creator": [
+        {
+          "quote": "I wanted to make a film about the feeling that somewhere, someone is thinking about you right now. That even if you can't see them, you're connected.",
+          "context": "Makoto Shinkai on the film's core theme"
+        }
+      ],
+      "expert": [
+        {
+          "quote": "Your Name represents a new era for anime - emotionally sophisticated films that resonate globally while remaining deeply Japanese in sensibility.",
+          "context": "Film critic analysis"
+        }
+      ],
+      "community": [
+        {
+          "quote": "I've never cried so hard at an animated film. The ending destroyed me.",
+          "context": "Common audience reaction"
+        }
+      ]
+    }
+  },
+  {
+    "id": "aw23",
+    "work_type": "animation",
+    "title_display": "Perfect Blue",
+    "title_original": "パーフェクトブルー",
+    "title_romaji": "Paafekuto Buruu",
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0156887"
+    },
+    "date_created_year": 1997,
+    "country_of_origin": "Japan",
+    "runtime_minutes": null,
+    "primary_image_url": "https://image.tmdb.org/t/p/w500/6WTiOCfDPP8XV4jqfloiVWf7KHq.jpg",
+    "scores": null,
+    "tag_relations": [],
+    "person_roles": [],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Tokyo",
+        "city": null,
+        "country": null,
+        "latitude": 35.6762,
+        "longitude": 139.6503,
+        "connection": "Urban setting",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A psychological thriller about a pop idol's descent into paranoia as she transitions to acting, blurring the lines between reality and delusion. Satoshi Kon's directorial debut influenced Darren Aronofsky.",
+      "story": {
+        "culturalContext": "Released in 1997 during the height of Japanese idol culture, the film emerged alongside the rise of the internet and early fan websites. Satoshi Kon prophetically depicted how technology would enable voyeurism, stalking, identity theft, and dehumanization years before social media made such concerns mainstream.",
+        "typeAesthetic": "Psychological thriller, psychological horror, anime noir. Influenced by Alfred Hitchcock's paranoid narratives, the film employs disorienting editing that seamlessly blends reality, performance, and delusion. The animation style shifts between clean idol imagery and increasingly fragmented, unsettling sequences.",
+        "corePhilosophy": "What happens when the gap between public image and private self becomes unbridgeable? Kon explored how celebrity culture, male gaze, and media consumption fragment female identity, stating: 'There's a gap between the image people see of me and what I see myself. Perfect Blue is about the tragedy caused by that gap becoming too large.'",
+        "receipt": "Satoshi Kon: 'I think it is a problem everybody has, male or female, famous or anonymous. I mean, there's a gap between the image people see of me and what I see myself. Perfect Blue is about the tragedy caused by that gap becoming too large.'",
+        "surfaceLayer": "Mima Kirigoe leaves her J-pop idol group CHAM! to pursue an acting career, taking a controversial role involving a rape scene in a TV drama. As she distances herself from her idol persona, she discovers a website called 'Mima's Room' that documents her daily life in disturbing detail. Members of the production begin dying violently. Mima's grip on reality fractures as she cannot distinguish between her performances, her memories, and her fantasies. Key scenes: the traumatic filming of the rape scene intercut with a concert; Mima's apartment filling with fish as reality breaks down; the climactic rooftop chase where identities finally collide.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Reflections and screens appear throughout - mirrors, TV monitors, computer screens, train windows - each showing a different 'Mima' and questioning which image is real."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "Darren Aronofsky purchased remake rights and recreated the bathtub scream shot in Requiem for a Dream. The film's influence extends to Black Swan's doppelganger themes."
+          },
+          {
+            "type": "camera",
+            "detail": "Kon pioneered seamless match cuts that transition between reality and fantasy mid-action, making it impossible to identify the moment reality shifts - a technique he would perfect in Paprika."
+          },
+          {
+            "type": "production",
+            "detail": "Originally planned as a live-action film, budget constraints led to animation. The Kobe earthquake damaged the original production studio, forcing relocation. Kon rewrote the screenplay significantly, adding the reality-blurring elements absent from the source novel."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw24",
+    "work_type": "animation",
+    "title_display": "Akira",
+    "title_original": "アキラ",
+    "title_romaji": "Akira",
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0094625"
+    },
+    "date_created_year": 1988,
+    "country_of_origin": "Japan",
+    "runtime_minutes": null,
+    "primary_image_url": "https://image.tmdb.org/t/p/w500/neZ0ykEsPqxamsX6o5QNUFILQrz.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "power & corruption" },
+      { "tag_type": "theme", "tag_label": "cyberpunk dystopia" },
+      { "tag_type": "theme", "tag_label": "psychic abilities" },
+      { "tag_type": "emotion", "tag_label": "visceral" },
+      { "tag_type": "emotion", "tag_label": "chaotic" },
+      { "tag_type": "geo", "tag_label": "Japan" },
+      { "tag_type": "geo", "tag_label": "Tokyo" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap72",
+          "name_display": "Katsuhiro Otomo",
+          "name_native": "大友克洋",
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Creator",
+        "bio": "Japanese manga artist and filmmaker. Created the original Akira manga (1982-1990) and directed the film adaptation.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Neo-Tokyo (Tokyo Bay)",
+        "city": null,
+        "country": null,
+        "latitude": 35.6195,
+        "longitude": 139.7745,
+        "connection": "Fictional setting",
+        "place_type": "filming_location",
+        "is_visitable": false
+      }
+    ],
+    "ai": {
+      "glance": "In dystopian 2019 Neo-Tokyo, a biker gang member gains destructive psychic powers after a motorcycle accident. Landmark anime that defined cyberpunk aesthetics and influenced global cinema.",
+      "story": {
+        "culturalContext": "Released in 1988 during Japan's economic bubble, Akira reflects anxieties about unchecked technological progress, youth alienation, and the trauma of atomic destruction that still haunted Japanese consciousness. The film's vision of Neo-Tokyo, rebuilt after a mysterious explosion, echoes both Hiroshima's destruction and Japan's miraculous postwar reconstruction.",
+        "typeAesthetic": "Cyberpunk, dystopian science fiction, post-apocalyptic action. The film pioneered full 24-frames-per-second animation (unprecedented for anime), pre-recorded dialogue for lip-sync accuracy, and an unprecedented level of visual detail. The aesthetic combines neon-soaked urban decay with biomechanical horror, creating a template for cyberpunk that influenced The Matrix, Ghost in the Shell, and countless others.",
+        "corePhilosophy": "What happens when power exceeds the capacity to control it? Akira explores the dangerous intersection of youth rebellion, military-industrial ambition, and psychic evolution - asking whether humanity can survive its own potential. The film suggests that evolution itself might be violent, uncontrollable, and terrifying.",
+        "receipt": "Katsuhiro Otomo on retaining creative control: 'I agreed to an anime film adaptation of the series on the condition that I retained creative control of the project - this insistence was based on my experiences working on Harmagedon.'",
+        "surfaceLayer": "In 2019, Neo-Tokyo rises from the ashes of the city destroyed in 1988. Kaneda leads a teenage biker gang through violent territorial wars. During a confrontation, his friend Tetsuo crashes into an escaped psychic child and begins developing uncontrollable powers. The military attempts to contain Tetsuo while scientists reference 'Akira' - the child whose power destroyed old Tokyo. Key scenes: the iconic motorcycle slide with its light trail; Tetsuo's flesh consuming medical equipment; Kaneda's desperate chase through Neo-Tokyo's neon canyons; the apocalyptic finale where Tetsuo's power threatens to consume everything.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The color red dominates - Kaneda's bike, the cape Tetsuo wears, blood, and the final explosion. Red represents both power and destruction, youth and death, linking the characters' fates to Japan's nuclear trauma."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The film predicted 2020 Tokyo Olympics would be canceled due to a catastrophe. The real 2020 Olympics were postponed due to COVID-19, making this an eerie prophecy."
+          },
+          {
+            "type": "camera",
+            "detail": "Otomo insisted on animating across all 24 frames per second rather than the industry-standard shortcuts. This created unprecedented smoothness in motion, particularly in the iconic bike sequences."
+          },
+          {
+            "type": "production",
+            "detail": "With a budget of 1.1 billion yen ($10 million), Akira was the most expensive anime film ever made at the time. It contains over 160,000 animation cels and used 327 different colors, including 50 created exclusively for the film."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw25",
+    "work_type": "film",
+    "title_display": "Blade Runner",
+    "title_original": "Blade Runner",
+    "title_romaji": null,
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0083658"
+    },
+    "date_created_year": 1982,
+    "country_of_origin": "United States",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BNzQzMzJhZTEtOWM4NS00MTdhLTg0YjgtMjM4MDRkZjUwZDBlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "what makes us human" },
+      { "tag_type": "theme", "tag_label": "artificial life" },
+      { "tag_type": "theme", "tag_label": "neo-noir dystopia" },
+      { "tag_type": "emotion", "tag_label": "melancholic" },
+      { "tag_type": "emotion", "tag_label": "existential" },
+      { "tag_type": "geo", "tag_label": "Los Angeles" },
+      { "tag_type": "geo", "tag_label": "USA" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap73",
+          "name_display": "Ridley Scott",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director",
+        "bio": "British filmmaker. Directed Alien, Gladiator, The Martian. Known for visually striking sci-fi and historical epics.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap74",
+          "name_display": "Philip K. Dick",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "writer",
+        "role_display": "Original Author",
+        "bio": "American science fiction author. Wrote 'Do Androids Dream of Electric Sheep?' (1968), the source novel.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Bradbury Building, Los Angeles",
+        "city": null,
+        "country": null,
+        "latitude": 34.0503,
+        "longitude": -118.2478,
+        "connection": "Sebastian's apartment and final showdown",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Union Station, Los Angeles",
+        "city": null,
+        "country": null,
+        "latitude": 34.0561,
+        "longitude": -118.2365,
+        "connection": "Police station of the future",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A blade runner must pursue and terminate four replicants who have escaped to Earth. Ridley Scott's neo-noir vision of 2019 Los Angeles defined dystopian sci-fi aesthetics.",
+      "story": {
+        "culturalContext": "Released in 1982 as Silicon Valley was transforming the world, the film anticipated anxieties about artificial intelligence, corporate power, and the erosion of human uniqueness. Based on Philip K. Dick's 'Do Androids Dream of Electric Sheep?' (1968), it arrived during the Reagan era's faith in technology alongside environmental decay.",
+        "typeAesthetic": "Neo-noir science fiction, cyberpunk progenitor, dystopian thriller. Visual futurist Syd Mead designed the 2019 Los Angeles as layered urban decay - Art Deco architecture crowded by Asian neon advertisements, perpetual rain, and oppressive industrial towers. Cinematographer Jordan Cronenweth used shafts of light cutting through smoke and rain, creating what he called an 'invasion of privacy' aesthetic.",
+        "corePhilosophy": "What constitutes humanity when memories can be implanted and empathy can be simulated? The Voight-Kampff test measures empathy to identify replicants, yet the film's replicants often display more passion and love of life than the humans who hunt them. As science fiction author William Gibson noted: 'Blade Runner changed the way the world looks and how we look at the world.'",
+        "receipt": "Ridley Scott on scale and cinematography: 'Scale is always difficult in backlots and I think we pulled the scale off. The trick about scale is: don't go too wide - it'll give yourself away.'",
+        "surfaceLayer": "In 2019 Los Angeles, former blade runner Rick Deckard is forced out of retirement to 'retire' (kill) four escaped Nexus-6 replicants who have returned to Earth seeking extended life from their creator, Dr. Tyrell. Deckard falls for Rachael, a replicant who believes she is human. Key scenes: the Voight-Kampff test revealing Rachael's nature; the origami unicorn's implications about Deckard's identity; Roy Batty's confrontation with his maker ('I want more life, father'); the rooftop climax where Roy saves Deckard and delivers the 'Tears in Rain' monologue before dying.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Eyes appear obsessively throughout - the opening shot of an eye reflecting the city, the Voight-Kampff machine measuring pupil dilation, Tyrell's owl's eyes, Roy killing Tyrell by crushing his eyes. Eyes represent the soul, perception, and the inability to see truth."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The 'Tears in Rain' monologue was partially improvised by Rutger Hauer the night before filming. The original script was longer; Hauer trimmed it and added 'All those moments will be lost in time, like tears in rain.'"
+          },
+          {
+            "type": "camera",
+            "detail": "Scott wanted cinematography similar to Citizen Kane's use of 'shafts of light.' Every shot features smoke, rain, or haze to catch light and give volume to space, linking shots together through atmospheric continuity."
+          },
+          {
+            "type": "production",
+            "detail": "Scott created over 1,000 storyboards before production. Syd Mead, originally hired only to design vehicles, became the film's visual futurist, designing the entire world. Multiple cuts exist - Scott's preferred 'Final Cut' (2007) removes the studio-mandated voiceover."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw26",
+    "work_type": "film",
+    "title_display": "2001: A Space Odyssey",
+    "title_original": "2001: A Space Odyssey",
+    "title_romaji": null,
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0062622"
+    },
+    "date_created_year": 1968,
+    "country_of_origin": "United Kingdom",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BMmNlYzRiNDctZWNhMi00MzI4LThkZTctMTUzMmZkMmFmNThmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "human evolution" },
+      { "tag_type": "theme", "tag_label": "artificial intelligence" },
+      { "tag_type": "theme", "tag_label": "cosmic mystery" },
+      { "tag_type": "emotion", "tag_label": "awe" },
+      { "tag_type": "emotion", "tag_label": "existential wonder" },
+      { "tag_type": "geo", "tag_label": "United Kingdom" },
+      { "tag_type": "geo", "tag_label": "USA" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap70",
+          "name_display": "Stanley Kubrick",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director, Producer & Screenwriter",
+        "bio": "American filmmaker known for meticulous perfectionism. Directed The Shining, A Clockwork Orange, Full Metal Jacket.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap71",
+          "name_display": "Arthur C. Clarke",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "writer",
+        "role_display": "Screenwriter & Novelist",
+        "bio": "British science fiction author. Wrote the novel concurrently with film production. Known for Rendezvous with Rama.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Monument Valley, Arizona/Utah",
+        "city": null,
+        "country": null,
+        "latitude": 36.998,
+        "longitude": -110.0985,
+        "connection": "Dawn of Man sequence",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "Humanity's journey from prehistoric apes to space-faring species, encountering a mysterious monolith at each evolutionary leap. Kubrick's masterpiece pioneered 205 special effects sequences unprecedented for its time.",
+      "story": {
+        "culturalContext": "Released in 1968 during the Space Race, Vietnam War protests, and a year before the Moon landing, the film arrived at a moment when humanity's future felt both limitless and precarious. Kubrick and Arthur C. Clarke sought to create 'the proverbial good science fiction movie' that took space travel seriously while grappling with humanity's cosmic insignificance.",
+        "typeAesthetic": "Epic science fiction, philosophical cinema, visual tone poem. Kubrick rejected conventional narrative and dialogue in favor of what he called 'a progression of moods and feelings.' Using Homer's Odyssey as inspiration, he noted: 'For the Greeks the vast stretches of the sea must have had the same sort of mystery and remoteness that space has for our generation.'",
+        "corePhilosophy": "What is humanity's place in the universe, and what force might guide our evolution? The film refuses easy answers - the monolith remains unexplained, HAL's malfunction ambiguous, and the Star Child's meaning open. Kubrick deliberately cultivated mystery: 'I tried to create a visual experience that bypasses verbalized pigeonholing and directly penetrates the subconscious.'",
+        "receipt": "Stanley Kubrick: 'A film is - or should be - more like music than like fiction. It should be a progression of moods and feelings. The theme, what's behind the emotion, the meaning, all that comes later.'",
+        "surfaceLayer": "The film spans four million years across four acts. 'The Dawn of Man': prehistoric apes encounter a black monolith and discover tools/weapons. 'TMA-1': Dr. Floyd investigates a monolith excavated on the Moon that sends a signal toward Jupiter. 'Jupiter Mission': astronauts Dave and Frank travel to Jupiter while the AI HAL 9000 malfunctions and kills the crew. 'Jupiter and Beyond the Infinite': Dave passes through the Star Gate, ages in a mysterious room, and is reborn as a Star Child orbiting Earth.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The match cut from a bone weapon to a spacecraft - humanity's first tool to its most advanced - spans four million years in a single edit, suggesting technology is merely an extension of primitive violence."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "HAL's name is not derived from IBM (one letter shifted back), despite urban legend. Kubrick and Clarke denied this, stating HAL stands for Heuristically programmed ALgorithmic computer. The coincidence embarrassed both filmmakers."
+          },
+          {
+            "type": "camera",
+            "detail": "The Star Gate sequence used slit-scan photography developed by Douglas Trumbull - a camera technique creating the illusion of infinite movement through space by exposing film through a moving slit over hours-long takes."
+          },
+          {
+            "type": "production",
+            "detail": "Production took four years. Kubrick rejected Alex North's original score in favor of existing classical music - particularly Strauss's 'Also sprach Zarathustra' (referencing Nietzsche's superman concept) and Ligeti's avant-garde compositions for the monolith scenes."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw27",
+    "work_type": "film",
+    "title_display": "Pan's Labyrinth",
+    "title_original": "El laberinto del fauno",
+    "title_romaji": null,
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0457430"
+    },
+    "date_created_year": 2006,
+    "country_of_origin": "Spain",
+    "runtime_minutes": null,
+    "primary_image_url": "https://image.tmdb.org/t/p/w500/z7xXihu5wHuSMWymq5VAulPVuvg.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "innocence vs fascism" },
+      { "tag_type": "theme", "tag_label": "dark fairy tale" },
+      { "tag_type": "theme", "tag_label": "escapism & reality" },
+      { "tag_type": "emotion", "tag_label": "haunting" },
+      { "tag_type": "emotion", "tag_label": "bittersweet" },
+      { "tag_type": "geo", "tag_label": "Spain" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap75",
+          "name_display": "Guillermo del Toro",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Mexican filmmaker known for dark fantasy. Directed The Shape of Water, Pacific Rim, Crimson Peak.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Sierra de Guadarrama, Spain",
+        "city": null,
+        "country": null,
+        "latitude": 40.7833,
+        "longitude": -4,
+        "connection": "Old mill set location",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "In post-Civil War Spain, a girl discovers a labyrinth guarded by a faun who sets her three tasks. Del Toro's dark fairy tale juxtaposes brutal reality with magical escapism.",
+      "story": {
+        "culturalContext": "Set in 1944, five years after the Spanish Civil War, during Franco's brutal suppression of Republican guerrillas. Del Toro used the labyrinth as metaphor: 'A maze is a place where you get lost, but a labyrinth is essentially a place of transit: an ethical, moral transit to one inevitable centre.' The film addresses Spain's unhealed wound - a civil war whose trauma persisted through decades of fascist rule.",
+        "typeAesthetic": "Dark fantasy, gothic fairy tale, historical drama. Del Toro draws from European folklore, Spanish surrealism, and the Brothers Grimm's original dark tales (before Victorian sanitization). The creature design - the Faun, the Pale Man - blends Art Nouveau organic forms with decay and terror. The color palette sharply divides: cold blues and greens for reality, warm ambers for fantasy.",
+        "corePhilosophy": "When is disobedience virtue? Del Toro stated that 'virtuous disobedience' is the film's core theme - 'obeying an evil authority is no virtue at all.' The film asks whether fantasy provides escape from horror or the strength to resist it. Ofelia's refusal to obey murderous commands - whether from Vidal or the Faun - defines her humanity.",
+        "receipt": "Guillermo del Toro: 'One of the dangers of fascism and one of the dangers of true evil in our world is that it's very attractive. Most people make their villains ugly and nasty and I think, no, fascism has a whole concept of design that made it attractive to the weak-willed.'",
+        "surfaceLayer": "Eleven-year-old Ofelia travels with her pregnant mother to join her new stepfather, Captain Vidal, as he hunts Republican resistance fighters. Ofelia discovers an ancient labyrinth where a faun tells her she is Princess Moanna, reborn, who must complete three tasks to reclaim her throne in the underworld. Key scenes: the Pale Man banquet where Ofelia eats forbidden grapes; Vidal's methodical torture of prisoners; the mandrake root under the mother's bed; Ofelia's final choice to protect her baby brother rather than spill innocent blood.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The Pale Man's hands have eyes in their palms - he sees by reaching. His banquet table, laden with untouched food while people starve outside, directly parallels Vidal's feast earlier in the film. Both monsters represent fascism's consuming, blind hunger."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The priest at Vidal's dinner speaks lines taken verbatim from speeches a real priest gave to Republican prisoners in fascist concentration camps. Del Toro found this during research for The Devil's Backbone."
+          },
+          {
+            "type": "camera",
+            "detail": "Fantasy sequences are shot with warmer light and more curved, organic camera movements. Reality scenes use colder tones and rigid, militaristic framing - the visual grammar itself divides the two worlds."
+          },
+          {
+            "type": "production",
+            "detail": "Doug Jones performed both the Faun and the Pale Man in extensive prosthetics, learning Spanish phonetically to deliver his lines. The film won three Academy Awards while del Toro turned down studio demands to shoot in English."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw28",
+    "work_type": "film",
+    "title_display": "Parasite",
+    "title_original": "기생충",
+    "title_romaji": "Gisaengchung",
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt6751668"
+    },
+    "date_created_year": 2019,
+    "country_of_origin": "South Korea",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "class warfare" },
+      { "tag_type": "theme", "tag_label": "social inequality" },
+      { "tag_type": "theme", "tag_label": "dark comedy" },
+      { "tag_type": "emotion", "tag_label": "tense" },
+      { "tag_type": "emotion", "tag_label": "darkly humorous" },
+      { "tag_type": "geo", "tag_label": "South Korea" },
+      { "tag_type": "geo", "tag_label": "Seoul" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap76",
+          "name_display": "Bong Joon-ho",
+          "name_native": "봉준호",
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "South Korean filmmaker. Directed Memories of Murder, The Host, Snowpiercer. First non-English film to win Best Picture Oscar.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Jahamun Tunnel Stairs, Seoul",
+        "city": null,
+        "country": null,
+        "latitude": 37.5912,
+        "longitude": 126.9685,
+        "connection": "Symbolic staircase",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Changsin-dong, Seoul",
+        "city": null,
+        "country": null,
+        "latitude": 37.5745,
+        "longitude": 127.0094,
+        "connection": "Kim family neighborhood",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A poor family infiltrates a wealthy household by posing as unrelated tutors and servants. First non-English film to win Best Picture Oscar, exploring class warfare through architecture and geography.",
+      "story": {
+        "culturalContext": "Released in 2019 amid South Korea's growing inequality crisis, where 'Hell Joseon' became slang for the nation's brutal class stratification. The film reflects a society where a university degree no longer guarantees escape from poverty, where 'semi-basement' apartments (banjiha) house over 200,000 Koreans, and where the rich literally live on higher ground safe from floods.",
+        "typeAesthetic": "Dark comedy, thriller, social satire. Bong Joon-ho's signature genre-mixing defies categorization - the film shifts from comedy to heist film to horror with seamless precision. Production designer Lee Ha-jun built both the Kim's cramped semi-basement and the Park's modernist mansion as elaborate sets, allowing the architecture itself to tell the class story.",
+        "corePhilosophy": "Who is the parasite? The poor family exploiting the rich, or the rich whose lifestyle depends on invisible labor? Bong refuses simple answers, observing: 'The film is about the coexistence of two classes who don't recognize each other, and who might mutually destroy each other.' The title's meaning shifts throughout - everyone is feeding off someone.",
+        "receipt": "Bong Joon-ho on the semi-basement: 'You're still half overground, so there's this hope and this sense that you still have access to sunlight and you haven't completely fallen to the basement yet. It's this weird mixture of hope and fear that you can fall even lower.'",
+        "surfaceLayer": "The impoverished Kim family - parents Ki-taek and Chung-sook, son Ki-woo, daughter Ki-jung - live in a semi-basement apartment, folding pizza boxes for income. When Ki-woo cons his way into tutoring the wealthy Park family's daughter, the Kims systematically replace the household staff. Key scenes: Ki-woo's discovery of the hidden bunker; the flood sequence where water flows from the rich hills down to drown the poor; the birthday party eruption; the 'smell' that Ki-taek cannot hide - the scent of poverty that the Parks detect without recognizing.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Stairs dominate the film - the Kims descend from the Park mansion down 162 steps during the flood. Bong described Parasite as 'a stairway movie' where vertical movement represents social position. The Kims climb stairs to reach wealth; they descend to return to poverty."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The Park mansion's lawn was built on the same lot as the Kims' neighborhood. Production designer Lee Ha-jun demolished the Kim's set to reveal the mansion beneath - making the class metaphor physically literal."
+          },
+          {
+            "type": "camera",
+            "detail": "Wide shots in the Park house emphasize horizontal space and light; tight shots in the Kim's basement compress and darken. When the flood comes, water flows downhill through the frame - from Park territory toward Kim territory."
+          },
+          {
+            "type": "production",
+            "detail": "Both houses were built as complete, practical sets rather than using real locations. The Park house cost over $2 million to construct and took three months to build. Every detail was controlled to serve the story of spatial inequality."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw29",
+    "work_type": "film",
+    "title_display": "The Grand Budapest Hotel",
+    "title_original": "The Grand Budapest Hotel",
+    "title_romaji": null,
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt2278388"
+    },
+    "date_created_year": 2014,
+    "country_of_origin": "Germany",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "nostalgia for old Europe" },
+      { "tag_type": "theme", "tag_label": "friendship & loyalty" },
+      { "tag_type": "theme", "tag_label": "end of an era" },
+      { "tag_type": "emotion", "tag_label": "whimsical" },
+      { "tag_type": "emotion", "tag_label": "melancholic" },
+      { "tag_type": "geo", "tag_label": "Germany" },
+      { "tag_type": "geo", "tag_label": "Eastern Europe" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap77",
+          "name_display": "Wes Anderson",
+          "name_native": null,
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "American filmmaker with distinctive visual style. Directed Moonrise Kingdom, The Royal Tenenbaums, Fantastic Mr. Fox.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Kaufhaus Goerlitz, Germany",
+        "city": null,
+        "country": null,
+        "latitude": 51.1528,
+        "longitude": 14.9869,
+        "connection": "Hotel lobby interiors",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Bastei Bridge, Saxon Switzerland",
+        "city": null,
+        "country": null,
+        "latitude": 50.9633,
+        "longitude": 14.0719,
+        "connection": "Wedding scene backdrop",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A legendary concierge at a famous European hotel becomes embroiled in theft, murder, and a family inheritance dispute. Anderson filmed in Goerlitz using Art Nouveau architecture.",
+      "story": {
+        "culturalContext": "Inspired by the life and writings of Stefan Zweig (1881-1942), an Austrian Jewish writer whose elegant world was destroyed by fascism. Anderson discovered Zweig in a Parisian bookshop and became obsessed with his autobiography 'The World of Yesterday,' which mourns a vanished Central European civilization. The fictional Republic of Zubrowka evokes the lost Mitteleuropa between the wars.",
+        "typeAesthetic": "Comedy-drama, caper film, nostalgic fantasy. Anderson employs multiple aspect ratios: 1.33:1 (Academy) for the 1930s sequences, 2.35:1 (anamorphic) for 1968, and 1.85:1 for the present. The aesthetic draws from Ernst Lubitsch comedies ('Trouble in Paradise'), 1930s European cinema, and the Art Nouveau/Art Deco architecture of the period. Anderson openly jokes he 'stole' from Zweig.",
+        "corePhilosophy": "What happens when elegance and civilization confront barbarism? The film mourns the destruction of a refined world - not through grand tragedy but through the lens of comedy and craft. Anderson explored the German concept of 'Sehnsucht' - 'a very specific type of nostalgia for something you can't quite put your finger on, something you miss but can't name.'",
+        "receipt": "Wes Anderson on old-fashioned techniques: 'I like to see if we can experiment with old-fashioned techniques that I've always really liked. I love miniatures and different kinds of animations - things that are like magic tricks. I'm drawn to those. I feel like they have a certain charm.'",
+        "surfaceLayer": "In the 1930s, legendary concierge M. Gustave maintains perfect service at the Grand Budapest Hotel in the fictional Republic of Zubrowka. When his wealthy elderly lover Madame D. dies and leaves him a priceless painting, her villainous family accuses him of murder. With his loyal lobby boy Zero, Gustave flees, joins a secret society of concierges, breaks out of prison, and races against encroaching fascism. Key scenes: the theft of 'Boy with Apple'; the prison escape with Mendl's pastries; the chase through the alpine monastery; the shootout at the hotel as fascists close in.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Pink dominates the 1930s sequences - Mendl's pastry boxes, the hotel's famous exterior paint. As fascism rises, the palette shifts to military greens and grays. Pink represents the fragile, beautiful world being destroyed."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The painting 'Boy with Apple' is an original work created for the film. It parodies Northern Renaissance portraiture, and its theft drives the entire plot - a MacGuffin representing threatened cultural heritage."
+          },
+          {
+            "type": "camera",
+            "detail": "Anderson's signature planimetric composition (camera perpendicular to surfaces) and whip pans create a storybook flatness. The hotel miniatures were practical models shot to appear life-sized, mixing artifice and reality."
+          },
+          {
+            "type": "production",
+            "detail": "Filmed in Goerlitz, Germany - a town whose preserved pre-war architecture made it the only suitable location. The production hired 200 local extras as hotel guests. Anderson referenced 1930s films from 'directors from Odessa or Warsaw or Berlin' making movies in Hollywood about Eastern Europe."
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw31",
+    "work_type": "animation",
+    "title_display": "Princess Mononoke",
+    "title_original": "もののけ姫",
+    "title_romaji": "Mononoke-hime",
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0119698"
+    },
+    "date_created_year": 1997,
+    "country_of_origin": "Japan",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BNGIzY2IzODQtNThmMi00ZDE4LWI5YzAtNzNlZTM1ZjYyYjUyXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "nature vs industrialization" },
+      { "tag_type": "theme", "tag_label": "Shinto animism" },
+      { "tag_type": "theme", "tag_label": "moral ambiguity" },
+      { "tag_type": "emotion", "tag_label": "epic" },
+      { "tag_type": "emotion", "tag_label": "haunting" },
+      { "tag_type": "geo", "tag_label": "Japan" },
+      { "tag_type": "geo", "tag_label": "Yakushima" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap41",
+          "name_display": "Hayao Miyazaki",
+          "name_native": "宮崎駿",
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Co-founder of Studio Ghibli. Born 1941, Tokyo. Known for hand-drawn animation and environmental themes.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap42",
+          "name_display": "Joe Hisaishi",
+          "name_native": "久石譲",
+          "image_url": null
+        },
+        "role_type": "composer",
+        "role_display": "Composer",
+        "bio": "Japanese composer known for Ghibli film scores. Long-time collaborator with Miyazaki.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Shiratani Unsuikyo, Yakushima",
+        "city": null,
+        "country": null,
+        "latitude": 30.3678,
+        "longitude": 130.5392,
+        "connection": "Mossy forest inspiration",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Yakushima Island",
+        "city": null,
+        "country": null,
+        "latitude": 30.35,
+        "longitude": 130.5,
+        "connection": "UNESCO site; Miyazaki research location",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "A young prince, infected by a demon, journeys to find a cure and becomes entangled in a war between forest gods and humans. Miyazaki's team visited Yakushima's ancient cedar forests for inspiration.",
+      "story": {
+        "culturalContext": "Set in Japan's Muromachi period (14th-16th century), the film emerged from Miyazaki's reading of revisionist medieval scholarship that challenged romantic views of premodern Japan. The film refuses both nostalgia for a harmonious past and demonization of industrialization - instead presenting conflict between humans and nature as an eternal, unsolvable condition.",
+        "typeAesthetic": "Epic fantasy, environmental fable, samurai drama. Miyazaki took his art directors to Yakushima Island to study its ancient cedar forests and moss-covered landscapes. The result - dense, luminous forests inhabited by kodama (tree spirits) - reimagines Shinto animism through ecological anxiety. The film blends historical realism with pure fantasy: Lady Eboshi's ironworks are historically accurate; the Forest Spirit is divine mystery.",
+        "corePhilosophy": "Is harmony between humanity and nature possible, or must we simply learn to live with perpetual conflict? Miyazaki rejected happy endings: 'In his project pitch for the film, Miyazaki explains how a conflict that pits humanity against nature cannot have a happy ending: any form of victory is by definition Pyrrhic.' The forest is not innocent; humans are not simply villains.",
+        "receipt": "Hayao Miyazaki: 'I tried to depict not a realistic forest, but a forest that exists in the hearts of Japanese people, a forest that has existed since time immemorial. Even though we live in the modern age, we still have the sense that somewhere, deep in the mountains where we have never set foot, there is a dreamlike place with deep forests, beautiful greenery, and pure water.'",
+        "surfaceLayer": "Prince Ashitaka, cursed by a demon-possessed boar god, travels west seeking a cure. He finds Iron Town, where Lady Eboshi leads former prostitutes and lepers in manufacturing firearms while clear-cutting the ancient forest. In the forest lives San (Princess Mononoke), raised by wolf gods, who attacks Iron Town in revenge. Ashitaka loves both worlds and tries to mediate as war escalates. Key scenes: the Forest Spirit's nighttime transformation into the Nightwalker; the boar clan's suicidal charge against Iron Town; San and Ashitaka returning the Forest Spirit's head as the forest regenerates - but never to its former glory.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "The kodama - small white forest spirits who click their heads - appear throughout healthy forest scenes. Their presence indicates the forest's spiritual health; their absence signals destruction. Miyazaki drew them from Japanese folklore where they represent trees' souls."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The Forest Spirit's face was modeled on a Noh mask called 'Shakumi' - a neutral expression that appears to change emotion depending on angle and lighting. The design creates ambiguity: is the Spirit benevolent, indifferent, or terrifying?"
+          },
+          {
+            "type": "camera",
+            "detail": "Miyazaki uses unusually long held shots of landscape and atmosphere - the train arriving at the forest, mist rising from trees. These 'ma' (emptiness) sequences give the film its meditative quality despite action scenes."
+          },
+          {
+            "type": "production",
+            "detail": "With a budget of 2.35 billion yen, Princess Mononoke was the most expensive anime film ever made in Japan at that time. Miyazaki personally drew or retouched nearly 80,000 of the 144,000 total animation cels, reportedly saying 'I don't care if the studio goes bankrupt.'"
+          }
+        ]
+      }
+    },
+    "voices": null
+  },
+  {
+    "id": "aw32",
+    "work_type": "animation",
+    "title_display": "Grave of the Fireflies",
+    "title_original": "火垂るの墓",
+    "title_romaji": "Hotaru no Haka",
+    "title_original_lang": null,
+    "external_ids": {
+      "imdb": "tt0095327"
+    },
+    "date_created_year": 1988,
+    "country_of_origin": "Japan",
+    "runtime_minutes": null,
+    "primary_image_url": "https://m.media-amazon.com/images/M/MV5BZmY2NjUzNDQtNTgxNC00M2Q4LTljOWQtMjNjNDBjNWUxNmJlXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg",
+    "scores": null,
+    "tag_relations": [
+      { "tag_type": "theme", "tag_label": "war's impact on children" },
+      { "tag_type": "theme", "tag_label": "sibling love" },
+      { "tag_type": "theme", "tag_label": "anti-war" },
+      { "tag_type": "emotion", "tag_label": "devastating" },
+      { "tag_type": "emotion", "tag_label": "tender" },
+      { "tag_type": "geo", "tag_label": "Japan" },
+      { "tag_type": "geo", "tag_label": "Kobe" }
+    ],
+    "person_roles": [
+      {
+        "person": {
+          "id": "ap78",
+          "name_display": "Isao Takahata",
+          "name_native": "高畑勲",
+          "image_url": null
+        },
+        "role_type": "director",
+        "role_display": "Director & Writer",
+        "bio": "Co-founder of Studio Ghibli. Directed Only Yesterday, Pom Poko, The Tale of the Princess Kaguya.",
+        "source_type": "primary"
+      },
+      {
+        "person": {
+          "id": "ap79",
+          "name_display": "Akiyuki Nosaka",
+          "name_native": "野坂昭如",
+          "image_url": null
+        },
+        "role_type": "writer",
+        "role_display": "Original Author",
+        "bio": "Japanese author. Wrote the 1967 semi-autobiographical novel based on his wartime experiences.",
+        "source_type": "primary"
+      }
+    ],
+    "work_relations": [],
+    "places": [
+      {
+        "id": null,
+        "name_display": "Kobe Sannomiya Station",
+        "city": null,
+        "country": null,
+        "latitude": 34.6953,
+        "longitude": 135.1956,
+        "connection": "Opening and closing scene",
+        "place_type": "filming_location",
+        "is_visitable": true
+      },
+      {
+        "id": null,
+        "name_display": "Nishinomiya, Hyogo",
+        "city": null,
+        "country": null,
+        "latitude": 34.7378,
+        "longitude": 135.3417,
+        "connection": "Aunt's house location",
+        "place_type": "filming_location",
+        "is_visitable": true
+      }
+    ],
+    "ai": {
+      "glance": "Two siblings struggle to survive in Kobe during the final months of WWII after their mother dies in a firebombing. Based on author Nosaka's semi-autobiographical account of losing his sister.",
+      "story": {
+        "culturalContext": "Based on Akiyuki Nosaka's 1967 semi-autobiographical short story, written to exorcise his guilt over his younger sister's death from malnutrition during WWII. Director Isao Takahata experienced the Okayama firebombing as a nine-year-old, fleeing barefoot in pajamas. The film arrived in 1988 as Japan's economic bubble peaked - a deliberate confrontation between postwar prosperity and wartime suffering.",
+        "typeAesthetic": "War drama, animated realism, tragedy. Takahata rejected typical anime stylization for detailed realism - the firebombing scenes recreate incendiary bomb behavior with documentary precision. The film's palette shifts from warm prewar memories to ashen grays as circumstances deteriorate. Studio Ghibli released it as a double feature with My Neighbor Totoro - devastating tragedy paired with gentle comfort.",
+        "corePhilosophy": "Is this an anti-war film? Takahata vehemently denied it: 'When statesmen start the next war, they'll say, We're fighting a war so we won't be in that position. It's a war for self-defense.' He believed showing victimhood cannot prevent war - nations always believe they're the victims. Instead, the film preserves war memory for future generations, with an unstated critique of Seita's pride that prevents him from swallowing humiliation to save his sister.",
+        "receipt": "Isao Takahata: 'Grave of the Fireflies is not at all an anti-war anime and contains absolutely no such message. Japan was devastated by the war. We should never forget that, just as we should never forget that we also inflicted a lot of suffering on other countries.'",
+        "surfaceLayer": "Kobe, 1945. The film opens with its ending: fourteen-year-old Seita dies of starvation in Sannomiya Station. His ghost, joined by his four-year-old sister Setsuko's spirit, narrates. Their mother dies horrifically in the firebombing; their naval officer father is away at war. They move to their aunt's house but leave after her resentment becomes unbearable. Living in an abandoned hillside shelter, Seita cannot provide enough food. Key scenes: their mother's bandaged body in the schoolyard morgue; Setsuko sucking on marbles she pretends are fruit drops; Seita's theft of food during air raids; Setsuko's death, cremation, and her ashes placed in the candy tin.",
+        "observationDetails": [
+          {
+            "type": "visual_motif",
+            "detail": "Fireflies appear throughout - symbols of fleeting beauty, souls of the dead, and the incendiary bombs that killed their mother. The Japanese title 'Hotaru no Haka' can mean both 'Grave of Fireflies' and 'Fire Dropping Grave,' linking the insects to falling bombs."
+          },
+          {
+            "type": "easter_egg",
+            "detail": "The Sakuma fruit drops tin that becomes Setsuko's grave marker was a real wartime product. After the film's release, the manufacturer saw sales surge and eventually created commemorative tins featuring the film's imagery."
+          },
+          {
+            "type": "camera",
+            "detail": "Takahata drew from his personal experience of the Okayama firebombing. He criticized other films' inaccurate depictions: 'They include no sparks or explosions. I was there and I experienced it, so I know what it was like.' The film's air raid scenes show the actual physics of incendiary attacks."
+          },
+          {
+            "type": "production",
+            "detail": "Author Akiyuki Nosaka, whose real sister died of malnutrition, had rejected all live-action adaptation offers, arguing contemporary children could not convincingly portray wartime suffering. He approved animation because only drawing could recreate the vanished, scorched landscape accurately."
+          }
+        ]
+      }
+    },
+    "voices": null
+  }
+];
+
+window.MOVIES = MOVIES;
+
+// Generate DNA graph data from MOVIES (matching data.js pattern)
+function generateMovieDNAGraphData() {
+  var nodes = [];
+  var edges = [];
+  var nodeIds = new Set();
+  var edgeIds = new Set();
+
+  var slugify = function(str) {
+    return String(str).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+  };
+
+  var addNode = function(node) {
+    if (!nodeIds.has(node.id)) {
+      nodeIds.add(node.id);
+      nodes.push(node);
+    }
+  };
+
+  var addEdge = function(edge) {
+    var edgeKey = edge.source + '|' + edge.target + '|' + edge.relation;
+    if (!edgeIds.has(edgeKey)) {
+      edgeIds.add(edgeKey);
+      edges.push(edge);
+    }
+  };
+
+  MOVIES.forEach(function(work) {
+    // Work node
+    var workNodeId = 'work_' + slugify(work.id);
+    addNode({
+      id: workNodeId,
+      type: 'work',
+      label: work.title_display || work.title,
+      year: work.date_created_year || work.year,
+      workId: work.id,
+      image: work.primary_image_url || work.image,
+      data: { glance: work.glance || '' }
+    });
+
+    // Tags
+    if (work.tag_relations && Array.isArray(work.tag_relations)) {
+      work.tag_relations.forEach(function(tr) {
+        var tagId = 'tag_' + tr.tag_type + '_' + slugify(tr.tag_label);
+        addNode({ id: tagId, type: 'tag_' + tr.tag_type, label: tr.tag_label, data: {} });
+        addEdge({ source: workNodeId, target: tagId, relation: 'has_' + tr.tag_type });
+      });
+    }
+
+    // People from person_roles
+    if (work.person_roles && Array.isArray(work.person_roles)) {
+      work.person_roles.forEach(function(pr) {
+        var personName = pr.person?.name_display || pr.person?.name;
+        if (!personName) return;
+        var personId = 'person_' + slugify(personName);
+        addNode({
+          id: personId,
+          type: 'person',
+          label: personName,
+          image: pr.person?.image_url,
+          data: { role: pr.role_type }
+        });
+        addEdge({ source: personId, target: workNodeId, relation: pr.role_type || 'created', role_type: pr.role_type });
+      });
+    }
+
+    // Work relations (lineage) - only add edges to works with valid IDs
+    if (work.work_relations && Array.isArray(work.work_relations)) {
+      work.work_relations.forEach(function(wr) {
+        if (!wr.to_work || !wr.to_work.id) return; // Skip null IDs
+        var relatedWorkId = 'work_' + slugify(wr.to_work.id);
+        // Add phantom node for referenced work if not in MOVIES
+        var isInMovies = MOVIES.some(function(m) { return m.id === wr.to_work.id; });
+        if (!isInMovies && !nodeIds.has(relatedWorkId)) {
+          addNode({
+            id: relatedWorkId,
+            type: 'work',
+            label: wr.to_work.title_display || wr.to_work.title || 'Unknown',
+            isPhantom: true,
+            data: {}
+          });
+        }
+        addEdge({ source: workNodeId, target: relatedWorkId, relation: wr.relation_type || 'related' });
+      });
+    }
+  });
+
+  return { nodes: nodes, edges: edges };
+}
+
+// Cache and lazy getter (matching data.js pattern)
+var _movieDNAGraphCache = null;
+function getMovieDNAGraphData() {
+  if (!_movieDNAGraphCache) {
+    _movieDNAGraphCache = generateMovieDNAGraphData();
+  }
+  return _movieDNAGraphCache;
+}
+
+Object.defineProperty(window, 'MOVIE_DNA_GRAPH_DATA', {
+  get: function() { return getMovieDNAGraphData(); },
+  configurable: true
+});

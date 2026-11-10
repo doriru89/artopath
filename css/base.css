@@ -1,0 +1,224 @@
+/* Import Inter font - must be first */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/**
+ * ============================================
+ * BASE.CSS - Reset, Typography, Color Tokens
+ * Style: Impressionist + Ghibli Forest + Patagonia Clarity
+ * ============================================
+ */
+
+/* ----------------------------------------
+   CSS RESET
+   ---------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-light);
+  background: var(--forest-deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ----------------------------------------
+   COLOR TOKENS (Ghibli + Impressionist)
+   ---------------------------------------- */
+:root {
+  /* Forest / Nature */
+  --forest-deep: #1a2f1a;       /* Dark forest green - primary bg */
+  --forest-mid: #2d4a3e;        /* Totoro forest */
+  --forest-light: #4a6b5d;      /* Lighter forest */
+  --forest-glow: #5d8a6b;       /* Glowing forest */
+
+  /* Sky / Water (Monet) */
+  --sky-soft: #87a7b3;          /* Soft sky blue */
+  --sky-deep: #5a7d8a;          /* Deeper sky */
+  --water-light: #a8c8d4;       /* Light water reflection */
+
+  /* Earth / Warmth */
+  --earth-warm: #c4a574;        /* Warm ochre */
+  --earth-deep: #8b7355;        /* Deep earth */
+  --earth-light: #d4c4a4;       /* Light sand */
+
+  /* Spirit / Magic */
+  --spirit-glow: #a8d4e6;       /* Spirit world blue */
+  --spirit-purple: #9b8ec4;     /* Magical purple */
+  --spirit-pink: #d4a8b4;       /* Soft pink */
+
+  /* Accent (Van Gogh) */
+  --accent-gold: #d4a847;       /* Van Gogh yellow/gold */
+  --accent-orange: #d4854a;     /* Warm orange */
+  --accent-blue: #4a7bd4;       /* Starry night blue */
+
+  /* Text */
+  --text-light: #f5f0e8;        /* Warm white */
+  --text-muted: #b8b0a4;        /* Muted text */
+  --text-dark: #2a2a2a;         /* Dark text */
+
+  /* UI */
+  --card-bg: rgba(45, 74, 62, 0.85);      /* Semi-transparent forest */
+  --card-border: rgba(168, 212, 230, 0.2); /* Spirit glow border */
+  --overlay: rgba(26, 47, 26, 0.7);        /* Dark overlay */
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 30px rgba(168, 212, 230, 0.3);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --duration-entrance: 800ms;
+  --duration-constellation: 1200ms;
+}
+
+/* ----------------------------------------
+   TYPOGRAPHY (Patagonia-like Clarity)
+   ---------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-light);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-muted);
+  max-width: 65ch;
+}
+
+a {
+  color: var(--spirit-glow);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+a:hover {
+  color: var(--accent-gold);
+}
+
+/* ----------------------------------------
+   UTILITY CLASSES
+   ---------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Screen reader only (alias) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Skip link - visible on focus */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 10px;
+  z-index: 9999;
+  padding: 0.75rem 1rem;
+  background: var(--forest-deep);
+  color: var(--text-light);
+  border: 2px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  transition: top var(--duration-fast) var(--ease-smooth);
+}
+
+.skip-link:focus {
+  top: 10px;
+  outline: none;
+}
+
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.text-accent { color: var(--accent-gold); }
+
+/* ----------------------------------------
+   SCROLLBAR (Impressionist style)
+   ---------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--forest-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--forest-mid);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--forest-light);
+}
