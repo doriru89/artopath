@@ -101,11 +101,27 @@
     return null;
   }
 
+  // AI generation is off in the frozen demo: it would spend API credits and write into the shared account.
+  const AI_OFF = /^(regenerate-section\/|stream\/|ai\/(?!camera-scan)|.*[?&]add_ai=true)/;
+  const RealEventSource = window.EventSource;
+  if (RealEventSource) {
+    window.EventSource = function (url, cfg) {
+      if (!apiKey(url)) return new RealEventSource(url, cfg);
+      console.info('[snapshot] AI generation is off in this demo:', url);
+      const es = new EventTarget();
+      Object.assign(es, { url, readyState: 2, withCredentials: false, onopen: null, onmessage: null, onerror: null, close() {} });
+      setTimeout(() => { const ev = new Event('error'); es.dispatchEvent(ev); if (es.onerror) es.onerror(ev); }, 0);
+      return es;
+    };
+    Object.assign(window.EventSource, { CONNECTING: 0, OPEN: 1, CLOSED: 2 });
+  }
+
   window.fetch = async function (input, init) {
     const url = typeof input === 'string' ? input : (input && input.url) || String(input);
     const method = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
     const key = apiKey(url);
     if (!key) return realFetch(input, init);
+    if (AI_OFF.test(key)) return json({ error: 'AI generation is off in this demo' }, 403);
 
     if (method !== 'GET') {
       const faked = fakeWrite(key.split('?')[0], method, init && init.body);

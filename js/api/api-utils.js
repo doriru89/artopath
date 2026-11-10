@@ -2278,9 +2278,9 @@ function addWorkToVault(work) {
       work_type: work.work_type || work.type || 'unknown',
       year: work.date_created_year || work.year || '',
       quality_tier: work.quality_tier || 'skeleton',
-      stage: 'vault',
-      is_loved: false,
-      loved: false,
+      stage: work.loved ? 'loved' : 'vault',
+      is_loved: !!work.loved,
+      loved: !!work.loved,
       explored: true,
       added_at: new Date().toISOString(),
     });
@@ -2290,7 +2290,7 @@ function addWorkToVault(work) {
   fetch(`${API_BASE}/user/vault/${workId}/stage/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ stage: 'vault' }),
+    body: JSON.stringify({ stage: work.loved ? 'loved' : 'vault' }),
   }).then(resp => {
     if (!resp.ok) console.error('[Vault] Failed to add work via API:', resp.status);
     else if (DEBUG) console.log('[Vault] Added work via API:', workId);
@@ -2309,6 +2309,13 @@ function updateWorkInVault(workId, updates) {
     Object.assign(entry, updates);
     if (updates.loved === true) entry.stage = 'loved';
     if (updates.loved === false && entry.stage === 'loved') entry.stage = 'vault';
+    if (typeof updates.loved === 'boolean') {
+      fetch(`${API_BASE}/user/vault/${workId}/stage/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stage: entry.stage }),
+      }).catch(e => console.error('[Vault] API error updating love:', e.message));
+    }
   }
   return getVaultData();
 }
