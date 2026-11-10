@@ -478,6 +478,10 @@
         searchModal.addEventListener('click', handleModalClick);
       }
 
+      // Warm the search dataset (and wake the Cloud Run backend) as soon as the
+      // page loads, so it's usually ready before the first keystroke.
+      ensureAllWorksReady().catch(() => {});
+
       const searchInputEl = document.getElementById('searchInput');
       if (searchInputEl) {
         searchInputEl.addEventListener('input', () => handleSearch(searchInputEl.value));
@@ -777,11 +781,26 @@
         return;
       }
 
-      // Ensure canonical dataset is ready
-      try {
-        await ensureAllWorksReady();
-      } catch (e) {
+      // Show feedback immediately — never leave the user staring at a frozen box.
+      document.getElementById('searchLoadingText').textContent = 'Searching...';
+      document.getElementById('searchLoading').style.display = 'block';
+
+      // Don't block on the full dataset (it pages through the API and can take
+      // seconds on a cold start). Wait briefly; if it isn't ready, search the
+      // bundled seed works now and re-run this query once the dataset lands.
+      const ready = ensureAllWorksReady().catch(e => {
         console.warn('[Hero] ensureAllWorksReady failed, continuing with available data:', e);
+      });
+      const settled = await Promise.race([
+        ready.then(() => true),
+        new Promise(r => setTimeout(() => r(false), 150))
+      ]);
+      if (!settled) {
+        if (!ALL_WORKS.length) getSeedDataset();
+        ready.then(() => {
+          const input = document.getElementById('searchInput');
+          if (input && input.value === query) handleSearch(query);
+        });
       }
 
       // 1. Immediate local search through ALL_WORKS + SEEDED_ARTWORKS
